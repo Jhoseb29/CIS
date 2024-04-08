@@ -11,7 +11,8 @@ build:
 test:
   stage: test
   script:
-    - find . -name '*.csproj' -exec grep -l '<IsTestProject>true</IsTestProject>' {} + | xargs -I {} dotnet test {}
+    - find . -name '*Tests*.csproj' -exec dotnet test {} \;
+
 
 stylecheck:
   stage: stylecheck
@@ -22,7 +23,6 @@ stylecheck:
 coverage:
   stage: test
   script:
-    - dotnet test --collect:"XPlat Code Coverage" /p:CoverletOutputFormat=opencover
     - |
       for project in $(find . -type f -name '*Tests*.csproj'); do
         dotnet test --no-build $project
@@ -31,6 +31,8 @@ coverage:
   artifacts:
     paths:
       - '**/*.coverage'
+  dependencies:
+    - test
 
 
 
