@@ -1,0 +1,6 @@
+@CIS_API_HostAddress = http://localhost:5192
+
+GET {{CIS_API_HostAddress}}/cis-api/v1/topics
+Accept: application/json
+
+###

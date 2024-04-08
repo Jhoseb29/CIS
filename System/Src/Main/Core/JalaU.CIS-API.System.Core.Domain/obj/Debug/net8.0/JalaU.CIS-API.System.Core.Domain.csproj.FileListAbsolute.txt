@@ -1,0 +1,12 @@
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/bin/Debug/net8.0/JalaU.CIS-API.System.Core.Domain.deps.json
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/bin/Debug/net8.0/JalaU.CIS-API.System.Core.Domain.dll
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/bin/Debug/net8.0/JalaU.CIS-API.System.Core.Domain.pdb
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Domain.AssemblyInfoInputs.cache
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Domain.AssemblyInfo.cs
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Domain.csproj.CoreCompileInputs.cache
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Domain.dll
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/Debug/net8.0/refint/JalaU.CIS-API.System.Core.Domain.dll
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Domain.pdb
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/Debug/net8.0/ref/JalaU.CIS-API.System.Core.Domain.dll
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Domain.csproj.AssemblyReference.cache

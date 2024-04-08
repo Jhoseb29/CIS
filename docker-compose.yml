@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: sd3db
+    restart: always
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./Src/Main/Data/ConfigurationFiles/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    environment:
+      MYSQL_USER: "root"
+      MYSQL_ROOT_PASSWORD: "sd5"

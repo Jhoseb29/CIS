@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: cis-api-database
+    restart: always
+    ports:
+      - "5002:3306"
+    volumes:
+      - ./Src/Main/Data/ConfigurationFiles/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    environment:
+      MYSQL_USER: "SABROSITOZ"
+      MYSQL_PASSWORD: "ositoz"
+      MYSQL_ROOT_PASSWORD: "root"

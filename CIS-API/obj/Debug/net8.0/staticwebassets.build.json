@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "9z6ur3WJrhWRg8mt8th5thzTFI/8QM+aw0trWcTPCS8=",
+  "Source": "CIS-API",
+  "BasePath": "_content/CIS-API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

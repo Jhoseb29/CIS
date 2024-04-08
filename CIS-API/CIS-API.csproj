@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>CIS_API</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\JalaU.CIS-API.System.Api.Restful.csproj" />
+    <ProjectReference Include="..\System\Src\Main\Core\JalaU.CIS-API.System.Core.Application\JalaU.CIS-API.System.Core.Application.csproj" />
+    <ProjectReference Include="..\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\JalaU.CIS-API.System.Data.Persistance.csproj" />
+  </ItemGroup>
+
+</Project>

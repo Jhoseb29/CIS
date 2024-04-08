@@ -1,0 +1,24 @@
+stages:
+  - build
+  - test
+  - stylecheck
+
+build:
+  stage: build
+  script:
+    - dotnet build MySolution.sln
+
+test:
+  stage: test
+  script:
+    - dotnet test MyProject.Tests.csproj
+
+stylecheck:
+  stage: stylecheck
+  script:
+    - dotnet tool install -g stylecop.analyzers
+    - find . -name '*.csproj' -exec dotnet stylecop {} \;
+
+
+
+
