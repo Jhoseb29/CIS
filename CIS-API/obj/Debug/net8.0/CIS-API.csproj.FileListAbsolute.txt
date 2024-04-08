@@ -44,3 +44,4 @@
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/CIS-API/bin/Debug/net8.0/JalaU.CIS-API.System.Core.Application.pdb
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/CIS-API/bin/Debug/net8.0/JalaU.CIS-API.System.Data.Persistance.pdb
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/CIS-API/bin/Debug/net8.0/JalaU.CIS-API.System.Core.Domain.pdb
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/CIS-API/obj/Debug/net8.0/CIS-API.sourcelink.json

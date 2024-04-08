@@ -13,3 +13,4 @@
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Application/obj/Debug/net8.0/refint/JalaU.CIS-API.System.Core.Application.dll
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Application/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Application.pdb
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Application/obj/Debug/net8.0/ref/JalaU.CIS-API.System.Core.Application.dll
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Application/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Application.sourcelink.json

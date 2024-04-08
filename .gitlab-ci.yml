@@ -6,19 +6,31 @@ stages:
 build:
   stage: build
   script:
-    - dotnet build MySolution.sln
+    - find . -name '*.csproj' ! -name '*Tests*' -exec dotnet build {} \;
 
 test:
   stage: test
   script:
-    - dotnet test MyProject.Tests.csproj
+    - find . -name '*.csproj' -exec grep -l '<IsTestProject>true</IsTestProject>' {} + | xargs -I {} dotnet test {}
 
 stylecheck:
   stage: stylecheck
   script:
     - dotnet tool install -g stylecop.analyzers
-    - find . -name '*.csproj' -exec dotnet stylecop {} \;
-
+    - find . -name '*.csproj' ! -name '*Tests*' -exec dotnet stylecop {} \;
+  
+coverage:
+  stage: test
+  script:
+    - dotnet test --collect:"XPlat Code Coverage" /p:CoverletOutputFormat=opencover
+    - |
+      for project in $(find . -type f -name '*Tests*.csproj'); do
+        dotnet test --no-build $project
+        coverlet $(dirname $project)/bin/Debug/netcoreapp3.1/$(basename $project .csproj).dll --target "dotnet" --targetargs "test $project --no-build" --format opencover
+      done
+  artifacts:
+    paths:
+      - '**/*.coverage'
 
 
 

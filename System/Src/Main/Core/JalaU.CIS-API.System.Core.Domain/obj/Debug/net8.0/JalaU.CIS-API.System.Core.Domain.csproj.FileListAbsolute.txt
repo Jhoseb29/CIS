@@ -10,3 +10,4 @@
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Domain.pdb
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/Debug/net8.0/ref/JalaU.CIS-API.System.Core.Domain.dll
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Domain.csproj.AssemblyReference.cache
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Domain.sourcelink.json

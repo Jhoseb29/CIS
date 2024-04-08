@@ -2,8 +2,10 @@
 
 namespace JalaU.CIS_API.System.Data.Persistance;
 
-public class TopicRepository : IRepository<Topic>
+public class TopicRepository(AppDbContext appDbContext) : IRepository<Topic>
 {
+    private readonly AppDbContext _appDbContext = appDbContext;
+
     public IEnumerable<Topic> GetAll()
     {
         throw new NotImplementedException();

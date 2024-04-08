@@ -1,0 +1,572 @@
+---
+openapi: 3.0.3
+info:
+  title: CIS API
+  description: "This solution is a platform that allows collective creativity, where users can propose arbitrary topics for discussion (e.g., “Recommended study habits,” “Reduce global warming,” etc.). For each proposed topic, users can submit innovative ideas related to that topic. Users can also vote for the best ideas proposed by other users within each topic."
+  contact:
+    email: sabrositoz@university.jala
+  version: 1.0.0
+servers:
+- url: http://localhost:8080
+tags:
+- name: users
+  description: Users on the CIS.
+- name: topics
+  description: Topics on the CIS.
+- name: ideas
+  description: Ideas on the CIS.
+- name: votes
+  description: Votes on the CIS.
+paths:
+  /users:
+    get:
+      tags:
+      - users
+      summary: Get a Users list.
+      description: Get the registered Users list.
+      responses:
+        "200":
+          description: Users list successfuly retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        "500":
+          description: Internal Server Error.
+    post:
+      tags:
+      - users
+      summary: Create a new User.
+      description: Create a new User in the CIS.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequestDTO'
+        required: true
+      responses:
+        "201":
+          description: User successfuly created.
+        "400":
+          description: Invalid input data.
+        "500":
+          description: Internal Server Error.
+  /users/{userId}:
+    get:
+      tags:
+      - users
+      summary: Get a User by Id.
+      description: Returns a User.
+      parameters:
+      - name: userId
+        in: path
+        description: User's ID.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: User details successfuly retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "404":
+          description: User not found.
+        "500":
+          description: Internal Server Error.
+    put:
+      tags:
+      - users
+      summary: Update a User.
+      description: Update an existing User Data.
+      parameters:
+      - name: userId
+        in: path
+        description: User's ID.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: User successfuly updated.
+        "400":
+          description: Invalid input data.
+        "404":
+          description: User not found.
+        "500":
+          description: Internal Server Error.
+    delete:
+      tags:
+      - users
+      summary: Delete a User.
+      description: Delete a User by Id.
+      parameters:
+      - name: userId
+        in: path
+        description: User's ID.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: User successfuly deleted.
+        "404":
+          description: User not found.
+        "500":
+          description: Internal Server Error.
+  /topics:
+    get:
+      tags:
+      - topics
+      summary: Get a Topics list.
+      description: Get the registered Topics list.
+      responses:
+        "200":
+          description: Topics list successfuly retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Topic'
+        "500":
+          description: Internal Server Error.
+    post:
+      tags:
+      - topics
+      summary: Create a new topic.
+      description: Create a new topic in the CIS.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TopicRequestDTO'
+        required: true
+      responses:
+        "201":
+          description: Topic successfuly created.
+        "400":
+          description: Invalid input data.
+        "500":
+          description: Internal Server Error.
+  /topics/{topicId}:
+    get:
+      tags:
+      - topics
+      summary: Get a Topic by Id.
+      description: Returns a Topic.
+      parameters:
+      - name: topicId
+        in: path
+        description: Topic's ID.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Topic details successfuly retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Topic'
+        "404":
+          description: Topic not found.
+        "500":
+          description: Internal Server Error.
+    put:
+      tags:
+      - topics
+      summary: Update a Topic.
+      description: Update an existing Topic Data.
+      parameters:
+      - name: topicId
+        in: path
+        description: Topic's ID.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TopicRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: Topic successfuly updated.
+        "400":
+          description: Invalid input data.
+        "404":
+          description: Topic not found.
+        "500":
+          description: Internal Server Error.
+    delete:
+      tags:
+      - topics
+      summary: Delete a Topic.
+      description: Delete a Topic by Id.
+      parameters:
+      - name: topicId
+        in: path
+        description: Topic's ID.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Topic successfuly deleted.
+        "404":
+          description: Topic not found.
+        "500":
+          description: Internal Server Error.
+  /ideas:
+    get:
+      tags:
+      - ideas
+      summary: Get an Ideas list.
+      description: Get the registered Ideas list.
+      responses:
+        "200":
+          description: Ideas list successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Idea'
+        "500":
+          description: Internal Server Error.
+    post:
+      tags:
+      - ideas
+      summary: Create a new idea.
+      description: Create a new idea in the CIS.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IdeaRequestDTO'
+        required: true
+      responses:
+        "201":
+          description: Idea successfully created.
+        "400":
+          description: Invalid input data.
+        "500":
+          description: Internal Server Error.
+  /ideas/{ideaId}:
+    get:
+      tags:
+      - ideas
+      summary: Get an Idea by Id.
+      description: Returns an Idea.
+      parameters:
+      - name: ideaId
+        in: path
+        description: Idea's ID.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Idea details successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Idea'
+        "404":
+          description: Idea not found.
+        "500":
+          description: Internal Server Error.
+    put:
+      tags:
+      - ideas
+      summary: Update an Idea.
+      description: Update an existing Idea Data.
+      parameters:
+      - name: ideaId
+        in: path
+        description: Idea's ID.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IdeaRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: Idea successfully updated.
+        "400":
+          description: Invalid input data.
+        "404":
+          description: Idea not found.
+        "500":
+          description: Internal Server Error.
+    delete:
+      tags:
+      - ideas
+      summary: Delete an Idea.
+      description: Delete an Idea by Id.
+      parameters:
+      - name: ideaId
+        in: path
+        description: Idea's ID.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Idea successfully deleted.
+        "404":
+          description: Idea not found.
+        "500":
+          description: Internal Server Error.
+  /votes:
+    get:
+      tags:
+      - votes
+      summary: Get a Votes list.
+      description: Get the registered Votes list.
+      responses:
+        "200":
+          description: Votes list successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vote'
+        "500":
+          description: Internal Server Error.
+    post:
+      tags:
+      - votes
+      summary: Create a new vote.
+      description: Create a new vote in the CIS.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoteRequestDTO'
+        required: true
+      responses:
+        "201":
+          description: Vote successfully created.
+        "400":
+          description: Invalid input data.
+        "500":
+          description: Internal Server Error.
+  /votes/{voteId}:
+    get:
+      tags:
+      - votes
+      summary: Get a Vote by Id.
+      description: Returns a Vote.
+      parameters:
+      - name: voteId
+        in: path
+        description: Vote's ID.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Vote details successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vote'
+        "404":
+          description: Vote not found.
+        "500":
+          description: Internal Server Error.
+    put:
+      tags:
+      - votes
+      summary: Update a Vote.
+      description: Update an existing Vote Data.
+      parameters:
+      - name: voteId
+        in: path
+        description: Vote's ID.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoteRequestDTO'
+        required: true
+      responses:
+        "200":
+          description: Vote successfully updated.
+        "400":
+          description: Invalid input data.
+        "404":
+          description: Vote not found.
+        "500":
+          description: Internal Server Error.
+    delete:
+      tags:
+      - votes
+      summary: Delete a Vote.
+      description: Delete a Vote by Id.
+      parameters:
+      - name: voteId
+        in: path
+        description: Vote's ID.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Vote successfully deleted.
+        "404":
+          description: Vote not found.
+        "500":
+          description: Internal Server Error.
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: UUID
+        name:
+          type: string
+        login:
+          type: string
+    UserRequestDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        login:
+          type: string
+        password:
+          type: string
+    Topic:
+      type: object
+      properties:
+        id:
+          type: string
+          format: GUID
+        title:
+          type: string
+        description:
+          type: string
+        date:
+          type: object
+          format: DateTime
+        labels:
+          type: array
+          format: JSON
+          items:
+            type: string
+        userId:
+          type: string
+          format: UUID
+    TopicRequestDTO:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        labels:
+          type: array
+          format: JSON
+          items:
+            type: string
+    Idea:
+      type: object
+      properties:
+        id:
+          type: string
+          format: GUID
+        title:
+          type: string
+        description:
+          type: string
+        date:
+          type: object
+          format: DateTime
+        userId:
+          type: string
+          format: UUID
+        topicId:
+          type: string
+          format: UUID
+    IdeaRequestDTO:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        date:
+          type: object
+          format: DateTime
+        topicId:
+          type: string
+          format: UUID
+    Vote:
+      type: object
+      properties:
+        id:
+          type: string
+          format: GUID
+        positive:
+          type: boolean
+        userId:
+          type: string
+          format: UUID
+        ideaId:
+          type: string
+          format: UUID
+    VoteRequestDTO:
+      type: object
+      properties:
+        positive:
+          type: boolean
+        ideaId:
+          type: string
+          format: UUID

@@ -13,3 +13,4 @@
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Api/JalaU.CIS-API.System.Api.Restful/bin/Debug/net8.0/JalaU.CIS-API.System.Core.Domain.pdb
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Api/JalaU.CIS-API.System.Api.Restful/obj/Debug/net8.0/JalaU.CIS-API.System.Api.Restful.csproj.AssemblyReference.cache
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Api/JalaU.CIS-API.System.Api.Restful/obj/Debug/net8.0/JalaU.CI.D68FD841.Up2Date
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Api/JalaU.CIS-API.System.Api.Restful/obj/Debug/net8.0/JalaU.CIS-API.System.Api.Restful.sourcelink.json
