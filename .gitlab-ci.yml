@@ -19,7 +19,7 @@ test:
 stylecheck:
   stage: stylecheck
   script:
-    - dotnet tool install -g stylecop.analyzers
+    - dotnet add package StyleCop.Analyzers --version 1.1.118
     - find . -name '*.csproj' ! -name '*Tests*' -exec dotnet stylecop {} \;
   
 coverage:
