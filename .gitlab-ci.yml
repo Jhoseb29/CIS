@@ -23,11 +23,7 @@ stylecheck:
 coverage:
   stage: test
   script:
-    - |
-      for project in $(find . -type f -name '*Tests*.csproj'); do
-        dotnet test --no-build $project
-        coverlet $(dirname $project)/bin/Debug/netcoreapp3.1/$(basename $project .csproj).dll --target "dotnet" --targetargs "test $project --no-build" --format opencover
-      done
+    - find . -name '*Tests*.csproj' -exec bash -c 'dotnet test "$1" && coverlet "$(dirname "$1")/bin/Debug/netcoreapp3.1/$(basename "$1" .csproj).dll" --target "dotnet" --targetargs "test $1 --no-build" --format opencover' _ {} \;
   artifacts:
     paths:
       - '**/*.coverage'
