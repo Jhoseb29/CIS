@@ -22,4 +22,9 @@
     <Using Include="NUnit.Framework" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Main\Core\JalaU.CIS-API.System.Core.Application\JalaU.CIS-API.System.Core.Application.csproj" />
+    <ProjectReference Include="..\..\..\Main\Core\JalaU.CIS-API.System.Core.Domain\JalaU.CIS-API.System.Core.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

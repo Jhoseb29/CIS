@@ -4,6 +4,80 @@
     "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Test/Core/JalaU.CIS-API.Tests.Core.Domain/JalaU.CIS-API.Tests.Core.Domain.csproj": {}
   },
   "projects": {
+    "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/JalaU.CIS-API.System.Core.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/JalaU.CIS-API.System.Core.Domain.csproj",
+        "projectName": "JalaU.CIS-API.System.Core.Domain",
+        "projectPath": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/JalaU.CIS-API.System.Core.Domain.csproj",
+        "packagesPath": "/home/university/.nuget/packages/",
+        "outputPath": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/university/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.3, 8.0.3]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.3, 8.0.3]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.203/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Test/Core/JalaU.CIS-API.Tests.Core.Domain/JalaU.CIS-API.Tests.Core.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -25,7 +99,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/JalaU.CIS-API.System.Core.Domain.csproj": {
+                "projectPath": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/JalaU.CIS-API.System.Core.Domain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

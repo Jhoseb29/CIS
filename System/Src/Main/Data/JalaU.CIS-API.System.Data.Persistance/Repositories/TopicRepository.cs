@@ -18,7 +18,9 @@ public class TopicRepository(AppDbContext appDbContext) : IRepository<Topic>
 
     public Topic Save(Topic entity)
     {
-        throw new NotImplementedException();
+        _appDbContext.Add(entity);
+        _appDbContext.SaveChanges();
+        return entity;
     }
 
     public Topic Delete(Topic entity)
