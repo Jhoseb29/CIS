@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<RuleSet Name="Rule for fixing separation of colons" Description="" ToolsVersion="15.0">
+    <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+        <Rule Id="SA1111" Action="None" />
+        <Rule Id="SA1633" Action="None" />
+        <Rule Id="SA1200" Action="None" />
+    </Rules>
+</RuleSet>

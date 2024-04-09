@@ -1,3 +1,8 @@
+//-----------------------------------------------------------------------
+// <copyright file="Program.cs" company="Jala University">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 using System.Text.Json.Serialization;
 using JalaU.CIS_API.System.Api.Restful;
 using JalaU.CIS_API.System.Core.Application;
@@ -35,7 +40,5 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
 
 app.Run();

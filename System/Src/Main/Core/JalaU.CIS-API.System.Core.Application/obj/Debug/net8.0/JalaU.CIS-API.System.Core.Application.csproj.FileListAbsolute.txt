@@ -8,9 +8,9 @@
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Application/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Application.AssemblyInfoInputs.cache
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Application/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Application.AssemblyInfo.cs
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Application/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Application.csproj.CoreCompileInputs.cache
+/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Application/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Application.sourcelink.json
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Application/obj/Debug/net8.0/JalaU.CI.595E2248.Up2Date
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Application/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Application.dll
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Application/obj/Debug/net8.0/refint/JalaU.CIS-API.System.Core.Application.dll
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Application/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Application.pdb
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Application/obj/Debug/net8.0/ref/JalaU.CIS-API.System.Core.Application.dll
-/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Application/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Application.sourcelink.json

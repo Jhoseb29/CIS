@@ -3,12 +3,11 @@ image: mcr.microsoft.com/dotnet/sdk:8.0
 stages:
   - build
   - test
-  - stylecheck
   
 before_script:
   - dotnet tool install -g coverlet.console
 
-build:
+build_and_StyleCope:
   stage: build
   script:
     - find . -name '*.csproj' ! -name '*Tests*' -exec dotnet build {} \;
@@ -18,13 +17,6 @@ test:
   script:
     - find . -name '*Tests*.csproj' -exec dotnet test {} \;
 
-
-stylecheck:
-  stage: stylecheck
-  script:
-    - dotnet add package StyleCop.Analyzers --version 1.1.118
-    - find . -name '*.csproj' ! -name '*Tests*' -exec dotnet stylecop {} \;
-  
 coverage:
   stage: test
   script:

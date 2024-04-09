@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CIS-API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fa3264e388f984f458bd65d3dec5a19d6574f7d9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f02e03ba013de94f2905dcd6ca130ba0024d2161")]
 [assembly: System.Reflection.AssemblyProductAttribute("CIS-API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CIS-API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
