@@ -31,7 +31,7 @@ builder.Services.AddScoped<EnforceJsonResponseFilter>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//prueba pa subir la rama
+
 var app = builder.Build();
 app.MapControllers();
 
