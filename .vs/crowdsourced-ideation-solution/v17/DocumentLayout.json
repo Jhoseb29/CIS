@@ -54,8 +54,7 @@
               "RelativeToolTip": "System\\Src\\Main\\Data\\JalaU.CIS-API.System.Data.Persistance\\Context\\AppDbContext.cs",
               "ViewState": "AQIAAAsAAAAAAAAAAAAIwBYAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-11T06:37:58.344Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-11T06:37:58.344Z"
             },
             {
               "$type": "Document",
@@ -80,8 +79,7 @@
               "RelativeToolTip": "System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Application\\Services\\TopicService.cs",
               "ViewState": "AQIAAAkAAAAAAAAAAAAAABgAAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-11T06:00:50.304Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-11T06:00:50.304Z"
             },
             {
               "$type": "Document",
@@ -93,8 +91,7 @@
               "RelativeToolTip": "System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Domain\\Entities\\Topic.cs",
               "ViewState": "AQIAABgAAAAAAAAAAAAAAB4AAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-11T04:53:36.96Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-11T04:53:36.96Z"
             },
             {
               "$type": "Document",
@@ -106,8 +103,7 @@
               "RelativeToolTip": "System\\Src\\Main\\Api\\JalaU.CIS-API.System.Api.Restful\\Controllers\\TopicController.cs",
               "ViewState": "AQIAABUAAAAAAAAAAAAAACYAAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-11T04:52:55.262Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-11T04:52:55.262Z"
             }
           ]
         }
