@@ -28,6 +28,7 @@ builder
 builder.Services.AddScoped<IService<Topic>, TopicService>();
 builder.Services.AddScoped<IRepository<Topic>, TopicRepository>();
 builder.Services.AddScoped<EnforceJsonResponseFilter>();
+builder.Services.AddScoped<TopicService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

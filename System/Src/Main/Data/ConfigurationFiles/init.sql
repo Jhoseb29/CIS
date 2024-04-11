@@ -10,17 +10,17 @@ CREATE TABLE users
   UNIQUE INDEX `id_UNIQUE` (id ASC) 
 );
 
-CREATE TABLE topics
-(
-    id              VARCHAR(36) NOT NULL,
-    title           VARCHAR(200) NOT NULL,
-    description     VARCHAR(500) NOT NULL,
-    date            DATETIME NOT NULL,
-    labels          JSON NOT NULL,
-    userId          VARCHAR(36) NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY(userId) REFERENCES users(id),
-    UNIQUE INDEX id_UNIQUE (id ASC)
+CREATE TABLE topics (
+  id            VARCHAR(36) NOT NULL,
+  title         VARCHAR(200) NOT NULL,
+  description   VARCHAR(500) NOT NULL,
+  date          DATETIME NOT NULL,
+  labels        JSON NOT NULL,
+  userId        VARCHAR(36) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (userId) REFERENCES users(id),
+  UNIQUE INDEX id_UNIQUE (id ASC),
+  UNIQUE INDEX title_UNIQUE (title ASC)
 );
 
 CREATE TABLE ideas

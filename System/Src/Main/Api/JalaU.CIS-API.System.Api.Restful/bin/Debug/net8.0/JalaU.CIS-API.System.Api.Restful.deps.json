@@ -8,7 +8,9 @@
     ".NETCoreApp,Version=v8.0": {
       "JalaU.CIS-API.System.Api.Restful/1.0.0": {
         "dependencies": {
+          "JalaU.CIS-API.System.Core.Application": "1.0.0",
           "JalaU.CIS-API.System.Core.Domain": "1.0.0",
+          "JalaU.CIS-API.System.Data.Persistance": "1.0.0",
           "Microsoft.AspNetCore.OpenApi": "8.0.3",
           "StyleCop.Analyzers": "1.1.118",
           "Swashbuckle.AspNetCore": "6.5.0"
@@ -138,12 +140,28 @@
           }
         }
       },
+      "JalaU.CIS-API.System.Core.Application/1.0.0": {
+        "dependencies": {
+          "JalaU.CIS-API.System.Core.Domain": "1.0.0"
+        },
+        "runtime": {
+          "JalaU.CIS-API.System.Core.Application.dll": {}
+        }
+      },
       "JalaU.CIS-API.System.Core.Domain/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "8.0.3"
         },
         "runtime": {
           "JalaU.CIS-API.System.Core.Domain.dll": {}
+        }
+      },
+      "JalaU.CIS-API.System.Data.Persistance/1.0.0": {
+        "dependencies": {
+          "JalaU.CIS-API.System.Core.Domain": "1.0.0"
+        },
+        "runtime": {
+          "JalaU.CIS-API.System.Data.Persistance.dll": {}
         }
       }
     }
@@ -287,7 +305,17 @@
       "path": "swashbuckle.aspnetcore.swaggerui/6.5.0",
       "hashPath": "swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
     },
+    "JalaU.CIS-API.System.Core.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "JalaU.CIS-API.System.Core.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "JalaU.CIS-API.System.Data.Persistance/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace JalaU.CIS_API.System.Api.Restful;
 
+using JalaU.CIS_API.System.Core.Application;
 using JalaU.CIS_API.System.Core.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -19,12 +20,12 @@ using Microsoft.Extensions.Logging;
 /// <param name="service">The service instance for managing topics.</param>
 [ApiController]
 [Route("cis-api/v1/topics")]
-public class TopicController(ILogger<TopicController> logger, IService<Topic> service)
+public class TopicController(ILogger<TopicController> logger, IService<Topic> service, TopicService topicService)
     : ControllerBase
 {
     private readonly IService<Topic> service = service;
     private readonly ILogger<TopicController> logger = logger;
-
+    private TopicService topicService = topicService;
     /// <summary>
     /// Retrieves a list of topics.
     /// </summary>
@@ -32,22 +33,18 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     [HttpGet]
     public ActionResult GetTopics()
     {
-        Dictionary<string, object> topicsMap = [];
-        List<Topic> topics =
-        [
-            new Topic
-            {
-                Id = Guid.NewGuid(),
-                Title = "Help, I can't sleep",
-                Description = "Long life to Software Dev 3",
-                Date = DateTime.Now,
-                Labels = ["#IFeelSleepy"],
-                UserId = Guid.NewGuid(),
-            },
-        ];
+        List<Topic> topicRepo = topicService.GetAll();
+        List<Topic> topicList = new List<Topic>();
 
-        topicsMap.Add("count", topics.Count);
-        topicsMap.Add("topics", topics);
+        foreach (var topic in topicRepo)
+        {
+            topicList.Add(topic);
+        }
+
+        Dictionary<string, object> topicsMap = [];
+
+        topicsMap.Add("count", topicList.Count);
+        topicsMap.Add("topics", topicList);
 
         return this.Ok(topicsMap);
     }

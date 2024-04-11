@@ -11,3 +11,16 @@
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/Debug/net8.0/refint/JalaU.CIS-API.System.Core.Domain.dll
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/Debug/net8.0/JalaU.CIS-API.System.Core.Domain.pdb
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/Debug/net8.0/ref/JalaU.CIS-API.System.Core.Domain.dll
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Core\JalaU.CIS-API.System.Core.Domain\obj\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.dll
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Core\JalaU.CIS-API.System.Core.Domain\obj\Debug\net8.0\refint\JalaU.CIS-API.System.Core.Domain.dll
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Core\JalaU.CIS-API.System.Core.Domain\obj\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.pdb
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Core\JalaU.CIS-API.System.Core.Domain\bin\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.deps.json
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Core\JalaU.CIS-API.System.Core.Domain\bin\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.dll
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Core\JalaU.CIS-API.System.Core.Domain\bin\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.pdb
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Core\JalaU.CIS-API.System.Core.Domain\obj\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.csproj.AssemblyReference.cache
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Core\JalaU.CIS-API.System.Core.Domain\obj\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Core\JalaU.CIS-API.System.Core.Domain\obj\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.AssemblyInfoInputs.cache
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Core\JalaU.CIS-API.System.Core.Domain\obj\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.AssemblyInfo.cs
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Core\JalaU.CIS-API.System.Core.Domain\obj\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.csproj.CoreCompileInputs.cache
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Core\JalaU.CIS-API.System.Core.Domain\obj\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.sourcelink.json
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Core\JalaU.CIS-API.System.Core.Domain\obj\Debug\net8.0\ref\JalaU.CIS-API.System.Core.Domain.dll

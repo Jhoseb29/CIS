@@ -1,25 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/JalaU.CIS-API.System.Core.Domain.csproj": {}
+    "C:\\Users\\abbyb\\OneDrive\\Escritorio\\crowdsourced-ideation-solution\\System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Domain\\JalaU.CIS-API.System.Core.Domain.csproj": {}
   },
   "projects": {
-    "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/JalaU.CIS-API.System.Core.Domain.csproj": {
+    "C:\\Users\\abbyb\\OneDrive\\Escritorio\\crowdsourced-ideation-solution\\System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Domain\\JalaU.CIS-API.System.Core.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/JalaU.CIS-API.System.Core.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\abbyb\\OneDrive\\Escritorio\\crowdsourced-ideation-solution\\System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Domain\\JalaU.CIS-API.System.Core.Domain.csproj",
         "projectName": "JalaU.CIS-API.System.Core.Domain",
-        "projectPath": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/JalaU.CIS-API.System.Core.Domain.csproj",
-        "packagesPath": "/home/university/.nuget/packages/",
-        "outputPath": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/",
+        "projectPath": "C:\\Users\\abbyb\\OneDrive\\Escritorio\\crowdsourced-ideation-solution\\System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Domain\\JalaU.CIS-API.System.Core.Domain.csproj",
+        "packagesPath": "C:\\Users\\abbyb\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\abbyb\\OneDrive\\Escritorio\\crowdsourced-ideation-solution\\System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Domain\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/university/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\abbyb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -65,22 +72,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[8.0.3, 8.0.3]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[8.0.3, 8.0.3]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

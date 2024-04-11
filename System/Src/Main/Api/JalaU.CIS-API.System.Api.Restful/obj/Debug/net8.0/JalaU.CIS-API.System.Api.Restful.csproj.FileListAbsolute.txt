@@ -14,3 +14,23 @@
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Api/JalaU.CIS-API.System.Api.Restful/obj/Debug/net8.0/JalaU.CIS-API.System.Api.Restful.csproj.AssemblyReference.cache
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Api/JalaU.CIS-API.System.Api.Restful/obj/Debug/net8.0/JalaU.CI.D68FD841.Up2Date
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Api/JalaU.CIS-API.System.Api.Restful/obj/Debug/net8.0/JalaU.CIS-API.System.Api.Restful.sourcelink.json
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.dll
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\refint\JalaU.CIS-API.System.Api.Restful.dll
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.pdb
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\bin\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.deps.json
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\bin\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.dll
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\bin\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.pdb
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\bin\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.dll
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\bin\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.pdb
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.csproj.AssemblyReference.cache
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.AssemblyInfoInputs.cache
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.AssemblyInfo.cs
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.csproj.CoreCompileInputs.cache
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.sourcelink.json
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CI.D68FD841.Up2Date
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\ref\JalaU.CIS-API.System.Api.Restful.dll
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\bin\Debug\net8.0\JalaU.CIS-API.System.Core.Application.dll
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\bin\Debug\net8.0\JalaU.CIS-API.System.Data.Persistance.dll
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\bin\Debug\net8.0\JalaU.CIS-API.System.Core.Application.pdb
+C:\Users\abbyb\OneDrive\Escritorio\crowdsourced-ideation-solution\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\bin\Debug\net8.0\JalaU.CIS-API.System.Data.Persistance.pdb
