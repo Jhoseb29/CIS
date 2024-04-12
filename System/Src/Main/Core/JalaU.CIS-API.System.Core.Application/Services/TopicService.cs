@@ -28,7 +28,8 @@ public class TopicService(IRepository<Topic> topicRepository) : IService<Topic>
     /// <inheritdoc/>
     public Topic GetById(Guid guid)
     {
-        throw new NotImplementedException();
+        Topic topic = this.topicRepository.GetById(guid);
+        return topic;
     }
 
     /// <inheritdoc/>

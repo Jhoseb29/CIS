@@ -3,6 +3,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+
 namespace JalaU.CIS_API.System.Api.Restful;
 
 using JalaU.CIS_API.System.Core.Application;
@@ -26,6 +27,7 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
 {
     private readonly IService<Topic> service = service;
     private readonly ILogger<TopicController> logger = logger;
+
     /// <summary>
     /// Retrieves a list of topics.
     /// </summary>
@@ -33,13 +35,18 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     [HttpGet]
     public ActionResult GetTopics([FromQuery] int? pageSize, [FromQuery] int pageNumber = 1)
     {
-        if (pageNumber != 1) { pageNumber = 1; }
+        if (pageNumber != 1)
+        {
+            pageNumber = 1;
+        }
 
         // Method to inject data without injecting directly on the database, for proofing purposes.
         // List<Topic> topicRepo = this.GenerateSampleTopics(15);
         List<Topic> topicRepo = this.service.GetAll();
 
-        int startIndex = (pageNumber - 1) * (pageSize ?? topicRepo.Count); // If pageSize is null, show all records.
+        int startIndex =
+            (pageNumber - 1) *
+            (pageSize ?? topicRepo.Count); // If pageSize is null, show all records.
         int endIndex = Math.Min(startIndex + (pageSize ?? topicRepo.Count), topicRepo.Count);
 
         List<Topic> topicList = topicRepo.GetRange(startIndex, endIndex - startIndex);
@@ -61,26 +68,23 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     }
 
     /// <summary>
-    /// Simulate a list of topics like it were came from a databse.
+    /// Retrieves a single topic by its ID.
     /// </summary>
-    /// <returns>A bunch of topics, depending on how much we specify on the call: List<Topic> topicRepo = this.GenerateSampleTopics(15);.</returns>
-    private List<Topic> GenerateSampleTopics(int count)
+    /// <param name="topicId">The ID of the topic to retrieve.</param>
+    /// <returns>An action result containing the retrieved topic,
+    /// or NotFound if no topic is found with the specified ID.</returns>
+    [HttpGet("{topicId}")]
+    public ActionResult GetTopicById(Guid topicId)
     {
-        List<Topic> topics = new List<Topic>();
+        Topic topic = this.service.GetById(topicId);
 
-        for (int i = 0; i < count; i++)
+        if (topic == null)
         {
-            topics.Add(new Topic
-            {
-                Id = Guid.NewGuid(),
-                Title = $"Topic Title {i + 1}",
-                Description = $"Topic Description {i + 1}",
-                Date = DateTime.Now.AddDays(-i),
-                Labels = new List<string> { $"Label {i + 1}" },
-                UserId = Guid.NewGuid(),
-            });
+            return this.NotFound();
         }
-
-        return topics;
+        else
+        {
+            return this.Ok(topic);
+        }
     }
 }
