@@ -30,6 +30,13 @@ public class TopicRepository(AppDbContext appDbContext) : IRepository<Topic>
     }
 
     /// <inheritdoc/>
+    public Topic GetByTitle(string title)
+    {
+        Topic topic = this.appDbContext.topics.FirstOrDefault(t => t.Title == title);
+        return topic;
+    }
+
+    /// <inheritdoc/>
     public Topic Save(Topic entity)
     {
         this.appDbContext.Add(entity);
