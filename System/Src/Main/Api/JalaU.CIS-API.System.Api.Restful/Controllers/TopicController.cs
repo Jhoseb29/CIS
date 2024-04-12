@@ -31,14 +31,16 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     /// </summary>
     /// <returns>An action result containing a dictionary with information about topics.</returns>
     [HttpGet]
-    public ActionResult GetTopics([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    public ActionResult GetTopics([FromQuery] int? pageSize, [FromQuery] int pageNumber = 1)
     {
+        if (pageNumber != 1) { pageNumber = 1; }
+
+        // Method to inject data without injecting directly on the database, for proofing purposes.
+        // List<Topic> topicRepo = this.GenerateSampleTopics(15);
         List<Topic> topicRepo = this.service.GetAll();
 
-        // <Topic> topicRepo = this.GenerateSampleTopics(15);  //Method to inject data without injecting directly on the database, for proofing purposes.
-
-        int startIndex = (pageNumber - 1) * pageSize;
-        int endIndex = Math.Min(startIndex + pageSize, topicRepo.Count);
+        int startIndex = (pageNumber - 1) * (pageSize ?? topicRepo.Count); // If pageSize is null, show all records.
+        int endIndex = Math.Min(startIndex + (pageSize ?? topicRepo.Count), topicRepo.Count);
 
         List<Topic> topicList = topicRepo.GetRange(startIndex, endIndex - startIndex);
 
@@ -61,7 +63,7 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     /// <summary>
     /// Simulate a list of topics like it were came from a databse.
     /// </summary>
-    /// <returns>A bunch of topics, depending on how much we specify on the call: <Topic> topicRepo = this.GenerateSampleTopics(15);.</returns>
+    /// <returns>A bunch of topics, depending on how much we specify on the call: List<Topic> topicRepo = this.GenerateSampleTopics(15);.</returns>
     private List<Topic> GenerateSampleTopics(int count)
     {
         List<Topic> topics = new List<Topic>();
