@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CIS-API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3a0f205889ad2ce05f1e672e1c6f528750769ef2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3c901b9a0c63da5a32b3a59c1bed202f047dec5f")]
 [assembly: System.Reflection.AssemblyProductAttribute("CIS-API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CIS-API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
