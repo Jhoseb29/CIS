@@ -14,3 +14,19 @@
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Data/JalaU.CIS-API.System.Data.Persistance/obj/Debug/net8.0/JalaU.CIS-API.System.Data.Persistance.pdb
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Data/JalaU.CIS-API.System.Data.Persistance/obj/Debug/net8.0/ref/JalaU.CIS-API.System.Data.Persistance.dll
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Data/JalaU.CIS-API.System.Data.Persistance/obj/Debug/net8.0/JalaU.CIS-API.System.Data.Persistance.sourcelink.json
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\bin\Debug\net8.0\JalaU.CIS-API.System.Data.Persistance.deps.json
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\bin\Debug\net8.0\JalaU.CIS-API.System.Data.Persistance.dll
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\bin\Debug\net8.0\JalaU.CIS-API.System.Data.Persistance.pdb
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\bin\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.dll
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\bin\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.pdb
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\obj\Debug\net8.0\JalaU.CIS-API.System.Data.Persistance.csproj.AssemblyReference.cache
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\obj\Debug\net8.0\JalaU.CIS-API.System.Data.Persistance.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\obj\Debug\net8.0\JalaU.CIS-API.System.Data.Persistance.AssemblyInfoInputs.cache
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\obj\Debug\net8.0\JalaU.CIS-API.System.Data.Persistance.AssemblyInfo.cs
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\obj\Debug\net8.0\JalaU.CIS-API.System.Data.Persistance.csproj.CoreCompileInputs.cache
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\obj\Debug\net8.0\JalaU.CIS-API.System.Data.Persistance.sourcelink.json
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\obj\Debug\net8.0\JalaU.CI.97E85C24.Up2Date
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\obj\Debug\net8.0\JalaU.CIS-API.System.Data.Persistance.dll
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\obj\Debug\net8.0\refint\JalaU.CIS-API.System.Data.Persistance.dll
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\obj\Debug\net8.0\JalaU.CIS-API.System.Data.Persistance.pdb
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\obj\Debug\net8.0\ref\JalaU.CIS-API.System.Data.Persistance.dll

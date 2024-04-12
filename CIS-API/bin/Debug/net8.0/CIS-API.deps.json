@@ -11,7 +11,7 @@
           "JalaU.CIS-API.System.Api.Restful": "1.0.0",
           "JalaU.CIS-API.System.Core.Application": "1.0.0",
           "JalaU.CIS-API.System.Data.Persistance": "1.0.0",
-          "Microsoft.EntityFrameworkCore": "8.0.3",
+          "Microsoft.EntityFrameworkCore": "8.0.4",
           "Pomelo.EntityFrameworkCore.MySql": "8.0.2",
           "StyleCop.Analyzers": "1.1.118",
           "Swashbuckle.AspNetCore": "6.5.0"
@@ -20,43 +20,43 @@
           "CIS-API.dll": {}
         }
       },
-      "Microsoft.AspNetCore.OpenApi/8.0.3": {
+      "Microsoft.AspNetCore.OpenApi/8.0.4": {
         "dependencies": {
           "Microsoft.OpenApi": "1.4.3"
         },
         "runtime": {
           "lib/net8.0/Microsoft.AspNetCore.OpenApi.dll": {
-            "assemblyVersion": "8.0.3.0",
-            "fileVersion": "8.0.324.11615"
+            "assemblyVersion": "8.0.4.0",
+            "fileVersion": "8.0.424.17014"
           }
         }
       },
-      "Microsoft.EntityFrameworkCore/8.0.3": {
+      "Microsoft.EntityFrameworkCore/8.0.4": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Abstractions": "8.0.3",
-          "Microsoft.EntityFrameworkCore.Analyzers": "8.0.3",
+          "Microsoft.EntityFrameworkCore.Abstractions": "8.0.4",
+          "Microsoft.EntityFrameworkCore.Analyzers": "8.0.4",
           "Microsoft.Extensions.Caching.Memory": "8.0.0",
           "Microsoft.Extensions.Logging": "8.0.0"
         },
         "runtime": {
           "lib/net8.0/Microsoft.EntityFrameworkCore.dll": {
-            "assemblyVersion": "8.0.3.0",
-            "fileVersion": "8.0.324.11510"
+            "assemblyVersion": "8.0.4.0",
+            "fileVersion": "8.0.424.16902"
           }
         }
       },
-      "Microsoft.EntityFrameworkCore.Abstractions/8.0.3": {
+      "Microsoft.EntityFrameworkCore.Abstractions/8.0.4": {
         "runtime": {
           "lib/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {
-            "assemblyVersion": "8.0.3.0",
-            "fileVersion": "8.0.324.11510"
+            "assemblyVersion": "8.0.4.0",
+            "fileVersion": "8.0.424.16902"
           }
         }
       },
-      "Microsoft.EntityFrameworkCore.Analyzers/8.0.3": {},
+      "Microsoft.EntityFrameworkCore.Analyzers/8.0.4": {},
       "Microsoft.EntityFrameworkCore.Relational/8.0.2": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "8.0.3",
+          "Microsoft.EntityFrameworkCore": "8.0.4",
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0"
         },
         "runtime": {
@@ -184,7 +184,7 @@
       "JalaU.CIS-API.System.Api.Restful/1.0.0": {
         "dependencies": {
           "JalaU.CIS-API.System.Core.Domain": "1.0.0",
-          "Microsoft.AspNetCore.OpenApi": "8.0.3",
+          "Microsoft.AspNetCore.OpenApi": "8.0.4",
           "Swashbuckle.AspNetCore": "6.5.0"
         },
         "runtime": {
@@ -193,7 +193,8 @@
       },
       "JalaU.CIS-API.System.Core.Application/1.0.0": {
         "dependencies": {
-          "JalaU.CIS-API.System.Core.Domain": "1.0.0"
+          "JalaU.CIS-API.System.Core.Domain": "1.0.0",
+          "JalaU.CIS-API.System.Data.Persistance": "1.0.0"
         },
         "runtime": {
           "JalaU.CIS-API.System.Core.Application.dll": {}
@@ -201,7 +202,7 @@
       },
       "JalaU.CIS-API.System.Core.Domain/1.0.0": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "8.0.3"
+          "Microsoft.EntityFrameworkCore": "8.0.4"
         },
         "runtime": {
           "JalaU.CIS-API.System.Core.Domain.dll": {}
@@ -223,33 +224,33 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Microsoft.AspNetCore.OpenApi/8.0.3": {
+    "Microsoft.AspNetCore.OpenApi/8.0.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-mUq0UL+H7UtA3Jud/7/BC7n5W2c4zCvTFUa2hE2+/oQqATa4oGHb87ETON09SEWkcbBRTz3WM16kTE+zuoXq2A==",
-      "path": "microsoft.aspnetcore.openapi/8.0.3",
-      "hashPath": "microsoft.aspnetcore.openapi.8.0.3.nupkg.sha512"
+      "sha512": "sha512-TFiXbP0tqRgJKcpiCSSp79q6QaiF8gqRhZgrU48FQajhVkiwHSp1O1b1hkYC4Ehl4clbk3pHwdfwN9mRtDAFbQ==",
+      "path": "microsoft.aspnetcore.openapi/8.0.4",
+      "hashPath": "microsoft.aspnetcore.openapi.8.0.4.nupkg.sha512"
     },
-    "Microsoft.EntityFrameworkCore/8.0.3": {
+    "Microsoft.EntityFrameworkCore/8.0.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-QUPQbeq4yCjgIL/6PzkhfwhljXmai3CNOsErWFJ/WJ1Z41V8+At0Bi4PT8/2pX25kPgf83g0CUKIZd0QbeKT4A==",
-      "path": "microsoft.entityframeworkcore/8.0.3",
-      "hashPath": "microsoft.entityframeworkcore.8.0.3.nupkg.sha512"
+      "sha512": "sha512-/kyu9pXuxQvhg8RO/oN5Q5Og7cDIVvZtrt1z48rX7Yido+zEGkUkp3/Bjd9u45N2uuPPF8mn2pKDlAewCvv3/Q==",
+      "path": "microsoft.entityframeworkcore/8.0.4",
+      "hashPath": "microsoft.entityframeworkcore.8.0.4.nupkg.sha512"
     },
-    "Microsoft.EntityFrameworkCore.Abstractions/8.0.3": {
+    "Microsoft.EntityFrameworkCore.Abstractions/8.0.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-cW+SKdx34wZ25ZVKCpk/6+6z27wrZlQ1qXyx7UWpy34s9CyAojH0QiYlV/2owNOGSAH67rm+LxAjUOicsqlGzQ==",
-      "path": "microsoft.entityframeworkcore.abstractions/8.0.3",
-      "hashPath": "microsoft.entityframeworkcore.abstractions.8.0.3.nupkg.sha512"
+      "sha512": "sha512-S50pjtPNOvRktacaO6UAhvGCPMT56wxqEq8fQfcjaSUySPGba6mKWo6ackw6DdeAR1cA6U+U0uj27warA2KtJA==",
+      "path": "microsoft.entityframeworkcore.abstractions/8.0.4",
+      "hashPath": "microsoft.entityframeworkcore.abstractions.8.0.4.nupkg.sha512"
     },
-    "Microsoft.EntityFrameworkCore.Analyzers/8.0.3": {
+    "Microsoft.EntityFrameworkCore.Analyzers/8.0.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-3csRAzz5O5Gn+GQBMyLn26OICtEo2/U2iDDygQhKb3LnC78bAUvutkMqvb0Ek5A6uHrBcZQrKQJfkgfnRT5XZw==",
-      "path": "microsoft.entityframeworkcore.analyzers/8.0.3",
-      "hashPath": "microsoft.entityframeworkcore.analyzers.8.0.3.nupkg.sha512"
+      "sha512": "sha512-P8hfMZECdbgle4Us8HGRUKAjqVwgbtr5JqtCxqEoiVORrNQAmcpu3g1NKwTAoUsO9Z0QRgExtYoAmdggR/DkMQ==",
+      "path": "microsoft.entityframeworkcore.analyzers/8.0.4",
+      "hashPath": "microsoft.entityframeworkcore.analyzers.8.0.4.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore.Relational/8.0.2": {
       "type": "package",

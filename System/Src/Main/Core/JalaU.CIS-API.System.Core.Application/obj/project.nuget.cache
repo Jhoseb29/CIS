@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "tzbUoywXQEzAZoIA+0qIq57uGAh+iGlZzTbj3dc5N6GXuvt8T7hcuXDw+SbT23ff3KgGqiC8H2eS1IEW4UuRbw==",
+  "dgSpecHash": "SAyI8bmgarNHIvkk0XF6jrieA0dZexxUETGVWpsdpvXzbJuDytSbzCp+VjqhQ7FigfCuS2X88lDjhWiDf+V57Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Application\\JalaU.CIS-API.System.Core.Application.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\juanl\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.3\\microsoft.entityframeworkcore.8.0.3.nupkg.sha512",
-    "C:\\Users\\juanl\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.3\\microsoft.entityframeworkcore.abstractions.8.0.3.nupkg.sha512",
-    "C:\\Users\\juanl\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.3\\microsoft.entityframeworkcore.analyzers.8.0.3.nupkg.sha512",
+    "C:\\Users\\juanl\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.4\\microsoft.entityframeworkcore.8.0.4.nupkg.sha512",
+    "C:\\Users\\juanl\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.4\\microsoft.entityframeworkcore.abstractions.8.0.4.nupkg.sha512",
+    "C:\\Users\\juanl\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.4\\microsoft.entityframeworkcore.analyzers.8.0.4.nupkg.sha512",
     "C:\\Users\\juanl\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0\\microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\juanl\\.nuget\\packages\\microsoft.extensions.caching.memory\\8.0.0\\microsoft.extensions.caching.memory.8.0.0.nupkg.sha512",
     "C:\\Users\\juanl\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",

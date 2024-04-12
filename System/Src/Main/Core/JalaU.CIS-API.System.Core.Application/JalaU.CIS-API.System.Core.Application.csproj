@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Data\JalaU.CIS-API.System.Data.Persistance\JalaU.CIS-API.System.Data.Persistance.csproj" />
     <ProjectReference Include="..\JalaU.CIS-API.System.Core.Domain\JalaU.CIS-API.System.Core.Domain.csproj" />
   </ItemGroup>
 

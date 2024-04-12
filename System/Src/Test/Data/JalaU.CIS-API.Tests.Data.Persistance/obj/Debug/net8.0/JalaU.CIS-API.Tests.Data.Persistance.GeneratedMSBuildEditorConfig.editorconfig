@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = JalaU.CIS_API.Tests.Data.Persistance
-build_property.ProjectDir = c:\Users\juanl\Desktop\All\CIS\System\Src\Test\Data\JalaU.CIS-API.Tests.Data.Persistance\
+build_property.ProjectDir = C:\Users\juanl\Desktop\All\CIS\System\Src\Test\Data\JalaU.CIS-API.Tests.Data.Persistance\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

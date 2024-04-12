@@ -14,3 +14,19 @@
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Api/JalaU.CIS-API.System.Api.Restful/obj/Debug/net8.0/JalaU.CIS-API.System.Api.Restful.csproj.AssemblyReference.cache
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Api/JalaU.CIS-API.System.Api.Restful/obj/Debug/net8.0/JalaU.CI.D68FD841.Up2Date
 /home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Api/JalaU.CIS-API.System.Api.Restful/obj/Debug/net8.0/JalaU.CIS-API.System.Api.Restful.sourcelink.json
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\bin\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.deps.json
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\bin\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.dll
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\bin\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.pdb
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\bin\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.dll
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\bin\Debug\net8.0\JalaU.CIS-API.System.Core.Domain.pdb
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.csproj.AssemblyReference.cache
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.AssemblyInfoInputs.cache
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.AssemblyInfo.cs
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.csproj.CoreCompileInputs.cache
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.sourcelink.json
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CI.D68FD841.Up2Date
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.dll
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\refint\JalaU.CIS-API.System.Api.Restful.dll
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\JalaU.CIS-API.System.Api.Restful.pdb
+C:\Users\juanl\Desktop\All\CIS\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\obj\Debug\net8.0\ref\JalaU.CIS-API.System.Api.Restful.dll

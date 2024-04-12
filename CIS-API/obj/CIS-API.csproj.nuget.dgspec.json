@@ -62,7 +62,7 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[8.0.4, )"
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
@@ -154,7 +154,7 @@
           "dependencies": {
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[8.0.4, )"
             },
             "StyleCop.Analyzers": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -218,6 +218,9 @@
             "projectReferences": {
               "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Domain\\JalaU.CIS-API.System.Core.Domain.csproj": {
                 "projectPath": "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Domain\\JalaU.CIS-API.System.Core.Domain.csproj"
+              },
+              "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Data\\JalaU.CIS-API.System.Data.Persistance\\JalaU.CIS-API.System.Data.Persistance.csproj": {
+                "projectPath": "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Data\\JalaU.CIS-API.System.Data.Persistance\\JalaU.CIS-API.System.Data.Persistance.csproj"
               }
             }
           }
@@ -312,7 +315,7 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[8.0.4, )"
             },
             "StyleCop.Analyzers": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",

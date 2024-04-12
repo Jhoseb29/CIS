@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JalaU.CIS-API.System.Core.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71af1e2915682722673fa95efc9c2bdf1025e2e1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+47d6254175d66665c39db882bc6cf1db68c76d94")]
 [assembly: System.Reflection.AssemblyProductAttribute("JalaU.CIS-API.System.Core.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JalaU.CIS-API.System.Core.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
