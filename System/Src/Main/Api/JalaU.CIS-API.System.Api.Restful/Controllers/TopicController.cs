@@ -31,16 +31,22 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     /// </summary>
     /// <returns>An action result containing a dictionary with information about topics.</returns>
     [HttpGet]
-    public ActionResult GetTopics()
+    public ActionResult GetTopics([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         List<Topic> topicRepo = this.service.GetAll();
-        List<Topic> topicList = [.. topicRepo];
 
-        Dictionary<string, object> topicsMap = [];
+        // <Topic> topicRepo = this.GenerateSampleTopics(15);  //Method to inject data without injecting directly on the database, for proofing purposes.
 
-        topicsMap.Add("count", topicList.Count);
+        int startIndex = (pageNumber - 1) * pageSize;
+        int endIndex = Math.Min(startIndex + pageSize, topicRepo.Count);
 
-        topicsMap.Add("topics", topicList);
+        List<Topic> topicList = topicRepo.GetRange(startIndex, endIndex - startIndex);
+
+        Dictionary<string, object> topicsMap = new()
+        {
+            { "count", topicList.Count },
+            { "topics", topicList },
+        };
 
         if (topicList.Count == 0)
         {
@@ -50,5 +56,29 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
         {
             return this.Ok(topicsMap);
         }
+    }
+
+    /// <summary>
+    /// Simulate a list of topics like it were came from a databse.
+    /// </summary>
+    /// <returns>A bunch of topics, depending on how much we specify on the call: <Topic> topicRepo = this.GenerateSampleTopics(15);.</returns>
+    private List<Topic> GenerateSampleTopics(int count)
+    {
+        List<Topic> topics = new List<Topic>();
+
+        for (int i = 0; i < count; i++)
+        {
+            topics.Add(new Topic
+            {
+                Id = Guid.NewGuid(),
+                Title = $"Topic Title {i + 1}",
+                Description = $"Topic Description {i + 1}",
+                Date = DateTime.Now.AddDays(-i),
+                Labels = new List<string> { $"Label {i + 1}" },
+                UserId = Guid.NewGuid(),
+            });
+        }
+
+        return topics;
     }
 }
