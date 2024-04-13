@@ -17,15 +17,15 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     /// <summary>
     /// Gets or sets the database set representing the topics table.
     /// </summary>
-    public DbSet<Topic> Topics { get; set; }
+    public DbSet<Topic?> topics { get; set; }
 
     /// <summary>
     /// Gets or sets the database set representing the ideas table.
     /// </summary>
-    public DbSet<Idea> Ideas { get; set; }
+    public DbSet<Idea> ideas { get; set; }
 
     /// <summary>
     /// Gets or sets the database set representing the votes table.
     /// </summary>
-    public DbSet<Vote> Votes { get; set; }
+    public DbSet<Vote> votes { get; set; }
 }

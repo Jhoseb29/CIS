@@ -22,9 +22,10 @@ public class TopicRepository(AppDbContext appDbContext) : IRepository<Topic>
     }
 
     /// <inheritdoc/>
-    public Topic GetById(Guid id)
+    public Topic? GetById(Guid id)
     {
-        throw new NotImplementedException();
+        Topic? topic = this.appDbContext.topics.FirstOrDefault(t => t.Id == id);
+        return topic;
     }
 
     /// <inheritdoc/>
