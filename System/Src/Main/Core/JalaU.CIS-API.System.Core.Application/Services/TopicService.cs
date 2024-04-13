@@ -16,12 +16,13 @@ using JalaU.CIS_API.System.Core.Domain;
 /// <param name="topicRepository">The repository for topics.</param>
 public class TopicService(IRepository<Topic> topicRepository) : IService<Topic>
 {
-    private readonly IRepository<Topic> topicRepository = topicRepository;
+    private IRepository<Topic> topicRepository = topicRepository;
 
     /// <inheritdoc/>
     public List<Topic> GetAll()
     {
-        throw new NotImplementedException();
+        List<Topic> topicList = this.topicRepository.GetAll().ToList();
+        return topicList;
     }
 
     /// <inheritdoc/>

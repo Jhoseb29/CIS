@@ -9,7 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\JalaU.CIS-API.System.Core.Application\JalaU.CIS-API.System.Core.Application.csproj" />
     <ProjectReference Include="..\..\Core\JalaU.CIS-API.System.Core.Domain\JalaU.CIS-API.System.Core.Domain.csproj" />
+    <ProjectReference Include="..\..\Data\JalaU.CIS-API.System.Data.Persistance\JalaU.CIS-API.System.Data.Persistance.csproj" />
   </ItemGroup>
 
   <ItemGroup>
