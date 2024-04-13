@@ -13,12 +13,13 @@ using JalaU.CIS_API.System.Core.Domain;
 /// <param name="appDbContext">The database context used for database operations.</param>
 public class TopicRepository(AppDbContext appDbContext) : IRepository<Topic>
 {
-    private readonly AppDbContext appDbContext = appDbContext;
+    private AppDbContext appDbContext = appDbContext;
 
     /// <inheritdoc/>
     public IEnumerable<Topic> GetAll()
     {
-        throw new NotImplementedException();
+        List<Topic> topicList = this.appDbContext.topics.ToList();
+        return topicList;
     }
 
     /// <inheritdoc/>

@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace JalaU.CIS_API.System.Data.Persistance;
 
+using global::System.Diagnostics.CodeAnalysis;
 using JalaU.CIS_API.System.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,20 +13,26 @@ using Microsoft.EntityFrameworkCore;
 /// Initializes a new instance of the <see cref="AppDbContext"/> class.
 /// </summary>
 /// <param name="options">The options for configuring the context.</param>
+
+[SuppressMessage(
+    "TableNamesToLowerCase",
+    "SA1300",
+    Justification = "It's in lower case since the tables in the db are also in lowerCase.")]
+
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     /// <summary>
     /// Gets or sets the database set representing the topics table.
     /// </summary>
-    public DbSet<Topic> Topics { get; set; }
+    public DbSet<Topic> topics { get; set; }
 
     /// <summary>
     /// Gets or sets the database set representing the ideas table.
     /// </summary>
-    public DbSet<Idea> Ideas { get; set; }
+    public DbSet<Idea> ideas { get; set; }
 
     /// <summary>
     /// Gets or sets the database set representing the votes table.
     /// </summary>
-    public DbSet<Vote> Votes { get; set; }
+    public DbSet<Vote> votes { get; set; }
 }
