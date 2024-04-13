@@ -1,32 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Test\\Data\\JalaU.CIS-API.Tests.Data.Persistance\\JalaU.CIS-API.Tests.Data.Persistance.csproj": {}
+    "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Test/Data/JalaU.CIS-API.Tests.Data.Persistance/JalaU.CIS-API.Tests.Data.Persistance.csproj": {}
   },
   "projects": {
-    "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Domain\\JalaU.CIS-API.System.Core.Domain.csproj": {
+    "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/JalaU.CIS-API.System.Core.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Domain\\JalaU.CIS-API.System.Core.Domain.csproj",
+        "projectUniqueName": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/JalaU.CIS-API.System.Core.Domain.csproj",
         "projectName": "JalaU.CIS-API.System.Core.Domain",
-        "projectPath": "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Domain\\JalaU.CIS-API.System.Core.Domain.csproj",
-        "packagesPath": "C:\\Users\\juanl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Domain\\obj\\",
+        "projectPath": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/JalaU.CIS-API.System.Core.Domain.csproj",
+        "packagesPath": "/home/university/.nuget/packages/",
+        "outputPath": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\juanl\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/university/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -72,46 +65,49 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.3, 8.0.3]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.3, 8.0.3]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Data\\JalaU.CIS-API.System.Data.Persistance\\JalaU.CIS-API.System.Data.Persistance.csproj": {
+    "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Data/JalaU.CIS-API.System.Data.Persistance/JalaU.CIS-API.System.Data.Persistance.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Data\\JalaU.CIS-API.System.Data.Persistance\\JalaU.CIS-API.System.Data.Persistance.csproj",
+        "projectUniqueName": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Data/JalaU.CIS-API.System.Data.Persistance/JalaU.CIS-API.System.Data.Persistance.csproj",
         "projectName": "JalaU.CIS-API.System.Data.Persistance",
-        "projectPath": "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Data\\JalaU.CIS-API.System.Data.Persistance\\JalaU.CIS-API.System.Data.Persistance.csproj",
-        "packagesPath": "C:\\Users\\juanl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Data\\JalaU.CIS-API.System.Data.Persistance\\obj\\",
+        "projectPath": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Data/JalaU.CIS-API.System.Data.Persistance/JalaU.CIS-API.System.Data.Persistance.csproj",
+        "packagesPath": "/home/university/.nuget/packages/",
+        "outputPath": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Data/JalaU.CIS-API.System.Data.Persistance/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\juanl\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/university/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Domain\\JalaU.CIS-API.System.Core.Domain.csproj": {
-                "projectPath": "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Domain\\JalaU.CIS-API.System.Core.Domain.csproj"
+              "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/JalaU.CIS-API.System.Core.Domain.csproj": {
+                "projectPath": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/JalaU.CIS-API.System.Core.Domain.csproj"
               }
             }
           }
@@ -149,49 +145,52 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.3, 8.0.3]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.3, 8.0.3]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Test\\Data\\JalaU.CIS-API.Tests.Data.Persistance\\JalaU.CIS-API.Tests.Data.Persistance.csproj": {
+    "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Test/Data/JalaU.CIS-API.Tests.Data.Persistance/JalaU.CIS-API.Tests.Data.Persistance.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Test\\Data\\JalaU.CIS-API.Tests.Data.Persistance\\JalaU.CIS-API.Tests.Data.Persistance.csproj",
+        "projectUniqueName": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Test/Data/JalaU.CIS-API.Tests.Data.Persistance/JalaU.CIS-API.Tests.Data.Persistance.csproj",
         "projectName": "JalaU.CIS-API.Tests.Data.Persistance",
-        "projectPath": "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Test\\Data\\JalaU.CIS-API.Tests.Data.Persistance\\JalaU.CIS-API.Tests.Data.Persistance.csproj",
-        "packagesPath": "C:\\Users\\juanl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Test\\Data\\JalaU.CIS-API.Tests.Data.Persistance\\obj\\",
+        "projectPath": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Test/Data/JalaU.CIS-API.Tests.Data.Persistance/JalaU.CIS-API.Tests.Data.Persistance.csproj",
+        "packagesPath": "/home/university/.nuget/packages/",
+        "outputPath": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Test/Data/JalaU.CIS-API.Tests.Data.Persistance/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\juanl\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/university/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Domain\\JalaU.CIS-API.System.Core.Domain.csproj": {
-                "projectPath": "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Core\\JalaU.CIS-API.System.Core.Domain\\JalaU.CIS-API.System.Core.Domain.csproj"
+              "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/JalaU.CIS-API.System.Core.Domain.csproj": {
+                "projectPath": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Core/JalaU.CIS-API.System.Core.Domain/JalaU.CIS-API.System.Core.Domain.csproj"
               },
-              "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Data\\JalaU.CIS-API.System.Data.Persistance\\JalaU.CIS-API.System.Data.Persistance.csproj": {
-                "projectPath": "C:\\Users\\juanl\\Desktop\\All\\CIS\\System\\Src\\Main\\Data\\JalaU.CIS-API.System.Data.Persistance\\JalaU.CIS-API.System.Data.Persistance.csproj"
+              "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Data/JalaU.CIS-API.System.Data.Persistance/JalaU.CIS-API.System.Data.Persistance.csproj": {
+                "projectPath": "/home/university/Documents/C# Projects/crowdsourced-ideation-solution/System/Src/Main/Data/JalaU.CIS-API.System.Data.Persistance/JalaU.CIS-API.System.Data.Persistance.csproj"
               }
             }
           }
@@ -243,12 +242,22 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.3, 8.0.3]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.3, 8.0.3]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
