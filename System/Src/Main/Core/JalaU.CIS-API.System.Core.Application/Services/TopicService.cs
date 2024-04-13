@@ -32,6 +32,13 @@ public class TopicService(IRepository<Topic> topicRepository) : IService<Topic>
     }
 
     /// <inheritdoc/>
+    public Topic GetByTitle(string title)
+    {
+        Topic topic = this.topicRepository.GetByTitle(title);
+        return topic;
+    }
+
+    /// <inheritdoc/>
     public Topic Save(BaseRequestDTO entityToSave)
     {
         throw new NotImplementedException();
