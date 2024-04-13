@@ -26,6 +26,13 @@ public interface IService<T>
     T GetById(Guid guid);
 
     /// <summary>
+    /// Retrieves an entity from the service by its unique identifier.
+    /// </summary>
+    /// <param name="title">The unique identifier of the entity.</param>
+    /// <returns>The entity with the specified identifier.</returns>
+    T GetByTitle(string title);
+
+    /// <summary>
     /// Saves an entity to the service.
     /// </summary>
     /// <param name="entityToSave">The entity to be saved.</param>

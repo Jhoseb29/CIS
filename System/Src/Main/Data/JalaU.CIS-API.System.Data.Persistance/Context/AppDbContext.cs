@@ -24,7 +24,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     /// <summary>
     /// Gets or sets the database set representing the topics table.
     /// </summary>
-    public DbSet<Topic> topics { get; set; }
+    public DbSet<Topic?> topics { get; set; }
 
     /// <summary>
     /// Gets or sets the database set representing the ideas table.
