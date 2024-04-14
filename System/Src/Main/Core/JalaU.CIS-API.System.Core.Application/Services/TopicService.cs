@@ -17,6 +17,7 @@ using JalaU.CIS_API.System.Core.Domain;
 public class TopicService(IRepository<Topic> topicRepository) : IService<Topic>
 {
     private IRepository<Topic> topicRepository = topicRepository;
+    private Filters filters = new Filters(topicRepository);
 
     /// <inheritdoc/>
     public List<Topic> GetAll()
@@ -42,41 +43,14 @@ public class TopicService(IRepository<Topic> topicRepository) : IService<Topic>
     /// <inheritdoc/>
     public List<Topic> FilterByGivenTopics(string filter, string keyword)
     {
-        if (filter.ToLower() != "id" && filter.ToLower() != "title")
-            {
-                throw new Exception("Error 404: Not Found");
-            }
-
-        if (filter.ToLower() == "id")
-            {
-                return FilterById(keyword.ToLower());
-            }
-            else if (filter.ToLower() == "title")
-            {
-                return FilterByTitle(keyword.ToLower());
-            }
-            else
-            {
-                throw new Exception("Error 404: Not Found");
-            }
-    }
-
-    /// <inheritdoc/>
-    public List<Topic> FilterById(string keyword)
-    {
-        List<Topic> filteredTopics = this.topicRepository.GetAll()
-                .Where(topic => topic.Id.ToString().ToLower().Contains(keyword))
-                .ToList();
-        return filteredTopics;
-    }
-
-    /// <inheritdoc/>
-    public List<Topic> FilterByTitle(string keyword)
-    {
-        List<Topic> filteredTopics = this.topicRepository.GetAll()
-                .Where(topic => topic.Title.ToLower().Contains(keyword))
-                .ToList();
-        return filteredTopics;
+        switch (filter.ToLower()){
+            case "id": return filters.FilterById(keyword.ToLower()); break;
+            case "title": return filters.FilterByTitle(keyword.ToLower()); break;
+            case "description": return filters.FilterByDescription(keyword.ToLower()); break;
+            case "labels": return filters.FilterByLabels(keyword.ToLower()); break;
+            case "userid": return filters.FilterByUserId(keyword.ToLower()); break;
+            default: throw new Exception("Error 404: Not Found");
+        }
     }
 
     /// <inheritdoc/>

@@ -33,26 +33,12 @@ public interface IService<T>
     T GetByTitle(string title);
 
     /// <summary>
-    /// Filter the Topics by two filters.
+    /// Filter the Topics by filters.
     /// </summary>
     /// <param name="filter">The type of filter that will be applied.</param>
     /// <param name="keyword">The key word to apply the filter.</param>
     /// <returns>The entity with the characteristics asked.</returns>
     List<T> FilterByGivenTopics(string filter, string keyword);
-
-    /// <summary>
-    /// Filter the Topic by its Id.
-    /// </summary>
-    /// <param name="keyword">The key word of the filter.</param>
-    /// <returns>The entity with the characteristics asked.</returns>
-    List<Topic> FilterById(string keyword);
-
-    /// <summary>
-    /// Filter the Topic by its Title.
-    /// </summary>
-    /// <param name="keyword">The key word of the filter.</param>
-    /// <returns>The entity with the characteristics asked.</returns>
-    List<Topic> FilterByTitle(string keyword);
 
     /// <summary>
     /// Saves an entity to the service.
