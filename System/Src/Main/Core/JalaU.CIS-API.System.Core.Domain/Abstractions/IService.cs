@@ -38,7 +38,7 @@ public interface IService<T>
     /// <param name="filter">The type of filter that will be applied.</param>
     /// <param name="keyword">The key word to apply the filter.</param>
     /// <returns>The entity with the characteristics asked.</returns>
-    List<T> FilterByGivenTopics(string filter, string keyword);
+    List<T> FilterEntities(string filter, string keyword);
 
     /// <summary>
     /// Saves an entity to the service.

@@ -120,7 +120,7 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
         {
             try
             {
-                List<Topic> filteredTopics = this.service.FilterByGivenTopics(filter, keyword);
+                List<Topic> filteredTopics = this.service.FilterEntities(filter, keyword);
 
                 if (filteredTopics.Count == 0)
                 {

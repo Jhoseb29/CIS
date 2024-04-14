@@ -28,7 +28,7 @@ public class TopicService(IRepository<Topic> topicRepository, EntityFilter<Topic
     }
 
     /// <inheritdoc/>
-    public List<Topic> FilterByGivenTopics(string filter, string keyword)
+    public List<Topic> FilterEntities(string filter, string keyword)
     {
         return this.filters.Filter(this.GetAll(), filter, keyword);
     }
