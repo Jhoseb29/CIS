@@ -40,6 +40,46 @@ public class TopicService(IRepository<Topic> topicRepository) : IService<Topic>
     }
 
     /// <inheritdoc/>
+    public List<Topic> FilterByGivenTopics(string filter, string keyword)
+    {
+        if (filter.ToLower() != "id" && filter.ToLower() != "title")
+            {
+                throw new Exception("Error 404: Not Found");
+            }
+
+        if (filter.ToLower() == "id")
+            {
+                return FilterById(keyword.ToLower());
+            }
+            else if (filter.ToLower() == "title")
+            {
+                return FilterByTitle(keyword.ToLower());
+            }
+            else
+            {
+                throw new Exception("Error 404: Not Found");
+            }
+    }
+
+    /// <inheritdoc/>
+    public List<Topic> FilterById(string keyword)
+    {
+        List<Topic> filteredTopics = this.topicRepository.GetAll()
+                .Where(topic => topic.Id.ToString().ToLower().Contains(keyword))
+                .ToList();
+        return filteredTopics;
+    }
+
+    /// <inheritdoc/>
+    public List<Topic> FilterByTitle(string keyword)
+    {
+        List<Topic> filteredTopics = this.topicRepository.GetAll()
+                .Where(topic => topic.Title.ToLower().Contains(keyword))
+                .ToList();
+        return filteredTopics;
+    }
+
+    /// <inheritdoc/>
     public Topic Save(BaseRequestDTO entityToSave)
     {
         throw new NotImplementedException();
@@ -56,4 +96,5 @@ public class TopicService(IRepository<Topic> topicRepository) : IService<Topic>
     {
         throw new NotImplementedException();
     }
+
 }

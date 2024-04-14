@@ -125,4 +125,33 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
             return this.Ok(topic);
         }
     }
+
+    /// <summary>
+    /// Filter the Topics by two filters.
+    /// </summary>
+    /// <param name="filter">The type of filter that will be applied.</param>
+    /// <param name="keyword">The key word to apply the filter.</param>
+    /// <returns>The entity with the characteristics asked.</returns>
+    [HttpGet("filter")]
+    public ActionResult FilterTopics(string filter, string keyword)
+        {
+            try
+            {
+                List<Topic> filteredTopics = this.service.FilterByGivenTopics(filter, keyword);
+
+                if (filteredTopics.Count == 0)
+                {
+                    return this.NotFound();
+                }
+                else
+                {
+                    return this.Ok(filteredTopics);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while filtering topics.");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
 }
