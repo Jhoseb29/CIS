@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------
-// <copyright file="Filters.cs" company="Jala University">
+// <copyright file="TopicFilters.cs" company="Jala University">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -10,9 +10,22 @@ using JalaU.CIS_API.System.Core.Domain;
 /// <summary>
 /// Utility class for calling filters on topics list.
 /// </summary>
-public class Filters(IRepository<Topic> topicRepository)
+public class TopicFilters : EntityFilter<Topic>
 {
-    private IRepository<Topic> topicRepository = topicRepository;
+    /// <inheritdoc/>
+    public override List<Topic> Filter(List<Topic> topics, string filter, string keyword)
+    {
+        this.Entities = topics;
+        return filter.ToLower() switch
+        {
+            "id" => this.FilterById(keyword.ToLower()),
+            "title" => this.FilterByTitle(keyword.ToLower()),
+            "description" => this.FilterByDescription(keyword.ToLower()),
+            "labels" => this.FilterByLabels(keyword.ToLower()),
+            "userid" => this.FilterByUserId(keyword.ToLower()),
+            _ => throw new Exception("Error 404: Filter not Found"),
+        };
+    }
 
     /// <summary>
     /// Filter the Topics by id.
@@ -20,9 +33,9 @@ public class Filters(IRepository<Topic> topicRepository)
     /// <param name="keyword">The key word to apply the filter.</param>
     /// <returns>A list of entities with the characteristics asked.</returns>
     ///
-    public List<Topic> FilterById(string keyword)
+    private List<Topic> FilterById(string keyword)
     {
-        List<Topic> filteredTopics = this.topicRepository.GetAll()
+        List<Topic> filteredTopics = this.Entities
                 .Where(topic => topic.Id.ToString().ToLower().Contains(keyword))
                 .ToList();
         return filteredTopics;
@@ -34,9 +47,9 @@ public class Filters(IRepository<Topic> topicRepository)
     /// <param name="keyword">The key word to apply the filter.</param>
     /// <returns>A list of entities with the characteristics asked.</returns>
     ///
-    public List<Topic> FilterByTitle(string keyword)
+    private List<Topic> FilterByTitle(string keyword)
     {
-        List<Topic> filteredTopics = this.topicRepository.GetAll()
+        List<Topic> filteredTopics = this.Entities
                 .Where(topic => topic.Title.ToLower().Contains(keyword))
                 .ToList();
         return filteredTopics;
@@ -48,9 +61,9 @@ public class Filters(IRepository<Topic> topicRepository)
     /// <param name="keyword">The key word to apply the filter.</param>
     /// <returns>A list of entities with the characteristics asked.</returns>
     ///
-    public List<Topic> FilterByDescription(string keyword)
+    private List<Topic> FilterByDescription(string keyword)
     {
-        List<Topic> filteredTopics = this.topicRepository.GetAll()
+        List<Topic> filteredTopics = this.Entities
                 .Where(topic => topic.Description.ToLower().Contains(keyword))
                 .ToList();
         return filteredTopics;
@@ -62,9 +75,9 @@ public class Filters(IRepository<Topic> topicRepository)
     /// <param name="keyword">The key word to apply the filter.</param>
     /// <returns>A list of entities with the characteristics asked.</returns>
     ///
-    public List<Topic> FilterByLabels(string keyword)
+    private List<Topic> FilterByLabels(string keyword)
     {
-        List<Topic> filteredTopics = this.topicRepository.GetAll()
+        List<Topic> filteredTopics = this.Entities
             .Where(topic => topic.Labels.Any(label => label.ToLower().Contains(keyword.ToLower())))
             .ToList();
         return filteredTopics;
@@ -76,9 +89,9 @@ public class Filters(IRepository<Topic> topicRepository)
     /// <param name="keyword">The key word to apply the filter.</param>
     /// <returns>A list of entities with the characteristics asked.</returns>
     ///
-    public List<Topic> FilterByUserId(string keyword)
+    private List<Topic> FilterByUserId(string keyword)
     {
-        List<Topic> filteredTopics = this.topicRepository.GetAll()
+        List<Topic> filteredTopics = this.Entities
             .Where(topic => topic.UserId.ToString().ToLower().Contains(keyword))
             .ToList();
         return filteredTopics;

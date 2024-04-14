@@ -14,16 +14,23 @@ using JalaU.CIS_API.System.Core.Domain;
 /// Initializes a new instance of the <see cref="TopicService"/> class.
 /// </remarks>
 /// <param name="topicRepository">The repository for topics.</param>
-public class TopicService(IRepository<Topic> topicRepository) : IService<Topic>
+public class TopicService(IRepository<Topic> topicRepository, EntityFilter<Topic> entityFilter)
+    : IService<Topic>
 {
+    private readonly EntityFilter<Topic> filters = entityFilter;
     private IRepository<Topic> topicRepository = topicRepository;
-    private Filters filters = new Filters(topicRepository);
 
     /// <inheritdoc/>
     public List<Topic> GetAll()
     {
         List<Topic> topicList = this.topicRepository.GetAll().ToList();
         return topicList;
+    }
+
+    /// <inheritdoc/>
+    public List<Topic> FilterByGivenTopics(string filter, string keyword)
+    {
+        return this.filters.Filter(this.GetAll(), filter, keyword);
     }
 
     /// <inheritdoc/>
@@ -38,19 +45,6 @@ public class TopicService(IRepository<Topic> topicRepository) : IService<Topic>
     {
         Topic topic = this.topicRepository.GetByTitle(title);
         return topic;
-    }
-
-    /// <inheritdoc/>
-    public List<Topic> FilterByGivenTopics(string filter, string keyword)
-    {
-        switch (filter.ToLower()){
-            case "id": return filters.FilterById(keyword.ToLower()); break;
-            case "title": return filters.FilterByTitle(keyword.ToLower()); break;
-            case "description": return filters.FilterByDescription(keyword.ToLower()); break;
-            case "labels": return filters.FilterByLabels(keyword.ToLower()); break;
-            case "userid": return filters.FilterByUserId(keyword.ToLower()); break;
-            default: throw new Exception("Error 404: Not Found");
-        }
     }
 
     /// <inheritdoc/>
@@ -70,5 +64,4 @@ public class TopicService(IRepository<Topic> topicRepository) : IService<Topic>
     {
         throw new NotImplementedException();
     }
-
 }

@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace JalaU.CIS_API.System.Api.Restful;
 
+using global::System.Net;
 using JalaU.CIS_API.System.Core.Application;
 using JalaU.CIS_API.System.Core.Domain;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -26,14 +27,20 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
 {
     private readonly IService<Topic> service = service;
     private readonly ILogger<TopicController> logger = logger;
+
     /// <summary>
     /// Retrieves a list of topics.
     /// </summary>
+    /// <param name="pageSize">The number of topics per page. If null, all topics are returned.</param>
+    /// <param name="pageNumber">The page number to retrieve. Default is 1.</param>
     /// <returns>An action result containing a dictionary with information about topics.</returns>
     [HttpGet]
     public ActionResult GetTopics([FromQuery] int? pageSize, [FromQuery] int pageNumber = 1)
     {
-        if (pageNumber != 1) { pageNumber = 1; }
+        if (pageNumber != 1)
+        {
+            pageNumber = 1;
+        }
 
         // Method to inject data without injecting directly on the database, for proofing purposes.
         // List<Topic> topicRepo = this.GenerateSampleTopics(15);
@@ -44,7 +51,7 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
 
         List<Topic> topicList = topicRepo.GetRange(startIndex, endIndex - startIndex);
 
-        Dictionary<string, object> topicsMap = new()
+        Dictionary<string, object> topicsMap = new ()
         {
             { "count", topicList.Count },
             { "topics", topicList },
@@ -58,30 +65,6 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
         {
             return this.Ok(topicsMap);
         }
-    }
-
-    /// <summary>
-    /// Simulate a list of topics like it were came from a databse.
-    /// </summary>
-    /// <returns>A bunch of topics, depending on how much we specify on the call: List<Topic> topicRepo = this.GenerateSampleTopics(15);.</returns>
-    private List<Topic> GenerateSampleTopics(int count)
-    {
-        List<Topic> topics = new List<Topic>();
-
-        for (int i = 0; i < count; i++)
-        {
-            topics.Add(new Topic
-            {
-                Id = Guid.NewGuid(),
-                Title = $"Topic Title {i + 1}",
-                Description = $"Topic Description {i + 1}",
-                Date = DateTime.Now.AddDays(-i),
-                Labels = new List<string> { $"Label {i + 1}" },
-                UserId = Guid.NewGuid(),
-            });
-        }
-
-        return topics;
     }
 
     /// <summary>
@@ -150,8 +133,32 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "An error occurred while filtering topics.");
-                return StatusCode(500, "Internal Server Error");
+                this.logger.LogError(ex, "An error occurred while filtering topics.");
+                return this.StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
+
+    /// <summary>
+    /// Simulate a list of topics like it were came from a database.
+    /// </summary>
+    /// <returns>A bunch of topics, depending on how much we specify on the call: List.<Topic> topicRepo = this.GenerateSampleTopics(15);.</returns>
+    private List<Topic> GenerateSampleTopics(int count)
+    {
+        List<Topic> topics = new List<Topic>();
+
+        for (int i = 0; i < count; i++)
+        {
+            topics.Add(new Topic
+            {
+                Id = Guid.NewGuid(),
+                Title = $"Topic Title {i + 1}",
+                Description = $"Topic Description {i + 1}",
+                Date = DateTime.Now.AddDays(-i),
+                Labels = new List<string> { $"Label {i + 1}" },
+                UserId = Guid.NewGuid(),
+            });
+        }
+
+        return topics;
+    }
 }
