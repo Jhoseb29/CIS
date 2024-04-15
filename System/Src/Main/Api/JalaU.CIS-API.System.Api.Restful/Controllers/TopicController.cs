@@ -3,6 +3,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+
 namespace JalaU.CIS_API.System.Api.Restful;
 
 using global::System.Net;
@@ -51,7 +52,7 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
 
         List<Topic> topicList = topicRepo.GetRange(startIndex, endIndex - startIndex);
 
-        Dictionary<string, object> topicsMap = new ()
+        Dictionary<string, object> topicsMap = new()
         {
             { "count", topicList.Count },
             { "topics", topicList },
@@ -117,26 +118,68 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     /// <returns>The entity with the characteristics asked.</returns>
     [HttpGet("filter")]
     public ActionResult FilterTopics(string filter, string keyword)
+    {
+        try
         {
-            try
-            {
-                List<Topic> filteredTopics = this.service.FilterEntities(filter, keyword);
+            List<Topic> filteredTopics = this.service.FilterEntities(filter, keyword);
 
-                if (filteredTopics.Count == 0)
-                {
-                    return this.NotFound();
-                }
-                else
-                {
-                    return this.Ok(filteredTopics);
-                }
-            }
-            catch (Exception ex)
+            if (filteredTopics.Count == 0)
             {
-                this.logger.LogError(ex, "An error occurred while filtering topics.");
-                return this.StatusCode((int)HttpStatusCode.InternalServerError);
+                return this.NotFound();
+            }
+            else
+            {
+                return this.Ok(filteredTopics);
             }
         }
+        catch (Exception ex)
+        {
+            this.logger.LogError(ex, "An error occurred while filtering topics.");
+            return this.StatusCode((int)HttpStatusCode.InternalServerError);
+        }
+    }
+
+    [HttpGet("order-by-title")] // Atributo de ruta diferente
+    public ActionResult GetTopicsOrderedByTitle([FromQuery] string order = "asc")
+    {
+        try
+        {
+            var topics = service.GetAll();
+            var topicSorter = new TopicSorter();
+            var orderedTopics = topicSorter.Sort(topics, "title", order);
+            return Ok(orderedTopics);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "An error occurred while retrieving topics ordered by title.");
+            return StatusCode(500);
+        }
+    }
+
+    [HttpGet("order-by-date")] // Atributo de ruta diferente
+    public ActionResult GetTopicsOrderedByDate([FromQuery] string order = "asc")
+    {
+        try
+        {
+            var topics = service.GetAll();
+            var topicSorter = new TopicSorter();
+            var orderedTopics = topicSorter.Sort(topics, "date", order);
+            return Ok(orderedTopics);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "An error occurred while retrieving topics ordered by date.");
+            return StatusCode(500);
+        }
+    }
 
     /// <summary>
     /// Simulate a list of topics like it were came from a database.
