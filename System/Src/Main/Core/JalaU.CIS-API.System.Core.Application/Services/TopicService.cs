@@ -34,10 +34,9 @@ public class TopicService(IRepository<Topic> topicRepository, EntityFilter<Topic
     }
 
     /// <inheritdoc/>
-    public Topic GetById(Guid guid)
+    public Topic? GetById(Guid id)
     {
-        Topic topic = this.topicRepository.GetById(guid);
-        return topic;
+        return this.topicRepository.GetByCriteria(t => t.Id == id);
     }
 
     /// <inheritdoc/>

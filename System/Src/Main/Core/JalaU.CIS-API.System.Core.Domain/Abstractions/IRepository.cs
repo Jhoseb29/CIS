@@ -19,13 +19,6 @@ public interface IRepository<T>
     IEnumerable<T> GetAll();
 
     /// <summary>
-    /// Retrieves an entity from the repository by its unique identifier.
-    /// </summary>
-    /// <param name="id">The unique identifier of the entity.</param>
-    /// <returns>The entity with the specified identifier.</returns>
-    T GetById(Guid id);
-
-    /// <summary>
     /// Saves an entity to the repository.
     /// </summary>
     /// <param name="entity">The entity to be saved.</param>

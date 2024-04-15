@@ -19,13 +19,6 @@ public interface IService<T>
     List<T> GetAll();
 
     /// <summary>
-    /// Retrieves an entity from the service by its unique identifier.
-    /// </summary>
-    /// <param name="guid">The unique identifier of the entity.</param>
-    /// <returns>The entity with the specified identifier.</returns>
-    T GetById(Guid guid);
-
-    /// <summary>
     /// Filter the entities by criteria.
     /// </summary>
     /// <param name="field">The field to search for.</param>
