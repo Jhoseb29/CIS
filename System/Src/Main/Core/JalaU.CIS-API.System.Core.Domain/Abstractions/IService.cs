@@ -45,7 +45,7 @@ public interface IService<T>
     /// </summary>
     /// <param name="entityToSave">The entity to be saved.</param>
     /// <returns>The saved entity.</returns>
-    T Save(BaseRequestDTO entityToSave);
+    T Save(Topic entityToSave);
 
     /// <summary>
     /// Updates an entity in the service.

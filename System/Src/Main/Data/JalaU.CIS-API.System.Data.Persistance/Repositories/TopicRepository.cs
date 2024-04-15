@@ -40,7 +40,6 @@ public class TopicRepository(AppDbContext appDbContext) : IRepository<Topic>
     public Topic Save(Topic entity)
     {
         this.appDbContext.Add(entity);
-        this.appDbContext.Update(entity);
         this.appDbContext.SaveChanges();
         return entity;
     }

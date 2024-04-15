@@ -161,4 +161,27 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
 
         return topics;
     }
+
+    [HttpPost]
+    public ActionResult SaveTopic(Topic Topic)
+    {
+        try
+        {
+            Topic topic = this.service.Save(Topic);
+
+        if (topic == null)
+        {
+            return this.NotFound();
+        }
+        else
+        {
+            return this.Ok(topic);
+        }
+        }
+        catch (Exception ex)
+        {
+            this.logger.LogError(ex, "An error occurred while Create topic.");
+            return this.StatusCode((int)HttpStatusCode.InternalServerError, "An error occurred while Create topic.");
+        }
+    }
 }

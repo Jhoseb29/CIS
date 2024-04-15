@@ -48,9 +48,18 @@ public class TopicService(IRepository<Topic> topicRepository, EntityFilter<Topic
     }
 
     /// <inheritdoc/>
-    public Topic Save(BaseRequestDTO entityToSave)
+    public Topic? Save(Topic TopicToSave)
     {
-        throw new NotImplementedException();
+        ValidatorCreateTopic validator = new ValidatorCreateTopic();
+        if (validator.AreThereAnyBadWord(TopicToSave) & validator.NullableFields(TopicToSave).Count != 0)
+        {
+            return null;
+        }
+        else
+        {
+            Topic topic = this.topicRepository.Save(TopicToSave);
+            return topic;
+        }
     }
 
     /// <inheritdoc/>
