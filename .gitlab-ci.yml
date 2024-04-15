@@ -18,12 +18,10 @@ test:
     - find . -name '*Tests*.csproj' -exec dotnet test {} 
       --collect:"XPlat Code Coverage"
       --results-directory cobertura \;
+    - cd cobertura
+    - ls -l
   artifacts:
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: cobertura/*/coverage.cobertura.xml
-
-
+    paths:
+       - cobertura/**/*.cobertura.xml
 
 
