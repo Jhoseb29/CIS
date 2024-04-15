@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JalaU.CIS-API.Tests.Data.Persistance")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3848a6a59c80b10e37be1e96c1d2a8289c3c107f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dd716f4aadedf5850538ddc7ea90ec6551928e62")]
 [assembly: System.Reflection.AssemblyProductAttribute("JalaU.CIS-API.Tests.Data.Persistance")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JalaU.CIS-API.Tests.Data.Persistance")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
