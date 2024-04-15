@@ -20,3 +20,4 @@ packages/
 *.vs
 .vscode/
 *.tmp
+/.idea/
