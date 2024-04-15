@@ -26,11 +26,12 @@ public interface IService<T>
     T GetById(Guid guid);
 
     /// <summary>
-    /// Retrieves an entity from the service by its unique identifier.
+    /// Filter the entities by criteria.
     /// </summary>
-    /// <param name="title">The unique identifier of the entity.</param>
-    /// <returns>The entity with the specified identifier.</returns>
-    T GetByTitle(string title);
+    /// <param name="field">The field to search for.</param>
+    /// <param name="valueToSearch">The value to search for.</param>
+    /// <returns>The entity with the specified criteria.</returns>
+    public T? GetByCriteria(string field, string valueToSearch);
 
     /// <summary>
     /// Filter the Topics by filters.
