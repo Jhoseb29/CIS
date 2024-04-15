@@ -14,8 +14,10 @@ using JalaU.CIS_API.System.Core.Domain;
 /// Initializes a new instance of the <see cref="TopicService"/> class.
 /// </remarks>
 /// <param name="topicRepository">The repository for topics.</param>
-public class TopicService(IRepository<Topic> topicRepository) : IService<Topic>
+public class TopicService(IRepository<Topic> topicRepository, EntityFilter<Topic> entityFilter)
+    : IService<Topic>
 {
+    private readonly EntityFilter<Topic> filters = entityFilter;
     private IRepository<Topic> topicRepository = topicRepository;
 
     /// <inheritdoc/>
@@ -23,6 +25,12 @@ public class TopicService(IRepository<Topic> topicRepository) : IService<Topic>
     {
         List<Topic> topicList = this.topicRepository.GetAll().ToList();
         return topicList;
+    }
+
+    /// <inheritdoc/>
+    public List<Topic> FilterEntities(string filter, string keyword)
+    {
+        return this.filters.Filter(this.GetAll(), filter, keyword);
     }
 
     /// <inheritdoc/>
