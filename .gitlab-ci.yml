@@ -15,9 +15,9 @@ build_and_StyleCope:
 test:
   stage: test
   script:
-    - find . -name '*Tests*.csproj' -exec dotnet test {} \;
+    - find . -name '*Tests*.csproj' -exec dotnet test {} 
       --collect:"XPlat Code Coverage"
-      --results-directory cobertura
+      --results-directory cobertura \;
   artifacts:
     reports:
       coverage_report:
