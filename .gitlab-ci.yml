@@ -16,16 +16,14 @@ test:
   stage: test
   script:
     - find . -name '*Tests*.csproj' -exec dotnet test {} \;
-
-coverage:
-  stage: test
-  script:
-    - find . -name '*Tests*.csproj' -exec bash -c 'dotnet test "$1" && coverlet "$(dirname "$1")/bin/Debug/netcoreapp3.1/$(basename "$1" .csproj).dll" --target "dotnet" --targetargs "test $1 --no-build" --format opencover' _ {} \;
+      --collect:"XPlat Code Coverage"
+      --results-directory cobertura
   artifacts:
-    paths:
-      - '**/*.coverage'
-  dependencies:
-    - test
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: cobertura/*/coverage.cobertura.xml
+
 
 
 

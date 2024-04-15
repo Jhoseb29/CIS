@@ -19,8 +19,8 @@ CREATE TABLE topics (
   userId        VARCHAR(36) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (userId) REFERENCES users(id),
-  UNIQUE INDEX id_UNIQUE (id ASC),
-  UNIQUE INDEX title_UNIQUE (title ASC)
+  UNIQUE INDEX `id_UNIQUE` (id ASC),
+  UNIQUE INDEX `title_UNIQUE` (title ASC)
 );
 
 CREATE TABLE ideas
@@ -34,7 +34,8 @@ CREATE TABLE ideas
     PRIMARY KEY (id),
     FOREIGN KEY(userId) REFERENCES users(id),
     FOREIGN KEY(topicId) REFERENCES topics(id),
-    UNIQUE INDEX id_UNIQUE (id ASC)
+    UNIQUE INDEX `id_UNIQUE` (id ASC),
+    UNIQUE INDEX `title_UNIQUE` (title ASC)
 );
 
 CREATE TABLE votes
@@ -46,7 +47,7 @@ CREATE TABLE votes
     PRIMARY KEY (id),
     FOREIGN KEY(userId) REFERENCES users(id),
     FOREIGN KEY(ideaId) REFERENCES ideas(id),
-    UNIQUE INDEX id_UNIQUE (id ASC)
+    UNIQUE INDEX `id_UNIQUE` (id ASC)
 );
 
 INSERT INTO users (id, name, login, password) 

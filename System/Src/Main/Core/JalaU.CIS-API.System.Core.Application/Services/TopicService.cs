@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace JalaU.CIS_API.System.Core.Application;
 
+using AutoMapper;
 using JalaU.CIS_API.System.Core.Domain;
 
 /// <summary>
@@ -13,10 +14,29 @@ using JalaU.CIS_API.System.Core.Domain;
 /// <remarks>
 /// Initializes a new instance of the <see cref="TopicService"/> class.
 /// </remarks>
-/// <param name="topicRepository">The repository for topics.</param>
-public class TopicService(IRepository<Topic> topicRepository) : IService<Topic>
+public class TopicService : IService<Topic>
 {
-    private IRepository<Topic> topicRepository = topicRepository;
+    private readonly Mapper topicMapper;
+    private readonly IRepository<Topic> topicRepository;
+
+    private IValidator<Topic> Validator { get; set; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TopicService"/> class.
+    /// </summary>
+    /// <param name="topicRepository">The repository for Topic entities.</param>
+    /// <param name="validator">The validator for Topic entities.</param>
+    public TopicService(IRepository<Topic> topicRepository, IValidator<Topic> validator)
+    {
+        this.topicRepository = topicRepository;
+        this.Validator = validator;
+        var mapperConfigurationForTopics = new MapperConfiguration(configuration =>
+        {
+            configuration.CreateMap<TopicRequestDTO, Topic>().ReverseMap();
+        });
+
+        this.topicMapper = new Mapper(mapperConfigurationForTopics);
+    }
 
     /// <inheritdoc/>
     public List<Topic> GetAll()
@@ -28,15 +48,15 @@ public class TopicService(IRepository<Topic> topicRepository) : IService<Topic>
     /// <inheritdoc/>
     public Topic GetById(Guid guid)
     {
-        Topic topic = this.topicRepository.GetById(guid);
-        return topic;
+        Topic? topic = this.topicRepository.GetById(guid);
+        return topic!;
     }
 
     /// <inheritdoc/>
     public Topic GetByTitle(string title)
     {
-        Topic topic = this.topicRepository.GetByTitle(title);
-        return topic;
+        Topic? topic = this.topicRepository.GetByTitle(title);
+        return topic!;
     }
 
     /// <inheritdoc/>
@@ -46,9 +66,23 @@ public class TopicService(IRepository<Topic> topicRepository) : IService<Topic>
     }
 
     /// <inheritdoc/>
-    public Topic Update(BaseRequestDTO entityToSave, string id)
+    public Topic Update(BaseRequestDTO entityRequestDTO, Guid id)
     {
-        throw new NotImplementedException();
+        var existingTopicToUpdate = this.GetById(id);
+
+        // Move this validation to the GetByCriteria method.
+        EntityValidatorUtil.ValidateEntityIsNotNull<Topic>(
+            existingTopicToUpdate,
+            $"The Topic with the ID {id} couldn't be found"
+        );
+
+        // Add Duplicates by Title validation when Joann changes his code.
+        Topic updatedTopic = this.Validator.ValidateEntityToUpdate(
+            existingTopicToUpdate,
+            entityRequestDTO
+        );
+
+        return this.topicRepository.Update(updatedTopic);
     }
 
     /// <inheritdoc/>

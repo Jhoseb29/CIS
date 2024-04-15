@@ -23,14 +23,14 @@ public interface IRepository<T>
     /// </summary>
     /// <param name="id">The unique identifier of the entity.</param>
     /// <returns>The entity with the specified identifier.</returns>
-    T GetById(Guid id);
+    T? GetById(Guid id);
 
     /// <summary>
     /// Retrieves an entity from the repository by its unique identifier.
     /// </summary>
     /// <param name="title">The unique identifier of the entity.</param>
     /// <returns>The entity with the specified identifier.</returns>
-    T GetByTitle(string title);
+    T? GetByTitle(string title);
 
     /// <summary>
     /// Saves an entity to the repository.

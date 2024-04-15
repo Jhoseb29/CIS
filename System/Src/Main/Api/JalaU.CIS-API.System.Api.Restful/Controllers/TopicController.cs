@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace JalaU.CIS_API.System.Api.Restful;
 
+using global::System.Net;
 using JalaU.CIS_API.System.Core.Application;
 using JalaU.CIS_API.System.Core.Domain;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -26,17 +27,23 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
 {
     private readonly IService<Topic> service = service;
     private readonly ILogger<TopicController> logger = logger;
+
     /// <summary>
-    /// Retrieves a list of topics.
+    /// Retrieves a paginated list of topics.
     /// </summary>
-    /// <returns>An action result containing a dictionary with information about topics.</returns>
+    /// <param name="pageSize">Optional. The number of topics to include in a page.</param>
+    /// <param name="pageNumber">Optional. The page number to retrieve.</param>
+    /// <returns>
+    /// An action result containing a dictionary with information about topics.
+    /// </returns>
     [HttpGet]
     public ActionResult GetTopics([FromQuery] int? pageSize, [FromQuery] int pageNumber = 1)
     {
-        if (pageNumber != 1) { pageNumber = 1; }
+        if (pageNumber != 1)
+        {
+            pageNumber = 1;
+        }
 
-        // Method to inject data without injecting directly on the database, for proofing purposes.
-        // List<Topic> topicRepo = this.GenerateSampleTopics(15);
         List<Topic> topicRepo = this.service.GetAll();
 
         int startIndex = (pageNumber - 1) * (pageSize ?? topicRepo.Count); // If pageSize is null, show all records.
@@ -44,11 +51,8 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
 
         List<Topic> topicList = topicRepo.GetRange(startIndex, endIndex - startIndex);
 
-        Dictionary<string, object> topicsMap = new()
-        {
-            { "count", topicList.Count },
-            { "topics", topicList },
-        };
+        Dictionary<string, object> topicsMap =
+            new() { { "count", topicList.Count }, { "topics", topicList }, };
 
         if (topicList.Count == 0)
         {
@@ -58,30 +62,6 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
         {
             return this.Ok(topicsMap);
         }
-    }
-
-    /// <summary>
-    /// Simulate a list of topics like it were came from a databse.
-    /// </summary>
-    /// <returns>A bunch of topics, depending on how much we specify on the call: List<Topic> topicRepo = this.GenerateSampleTopics(15);.</returns>
-    private List<Topic> GenerateSampleTopics(int count)
-    {
-        List<Topic> topics = new List<Topic>();
-
-        for (int i = 0; i < count; i++)
-        {
-            topics.Add(new Topic
-            {
-                Id = Guid.NewGuid(),
-                Title = $"Topic Title {i + 1}",
-                Description = $"Topic Description {i + 1}",
-                Date = DateTime.Now.AddDays(-i),
-                Labels = new List<string> { $"Label {i + 1}" },
-                UserId = Guid.NewGuid(),
-            });
-        }
-
-        return topics;
     }
 
     /// <summary>
@@ -124,5 +104,45 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
         {
             return this.Ok(topic);
         }
+    }
+
+    /// <summary>
+    /// Updates a topic by its ID using HTTP PUT method.
+    /// </summary>
+    /// <param name="topicRequestDto">The DTO (Data Transfer Object) containing updated topic information.</param>
+    /// <param name="topicId">The ID of the topic to be updated.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the updated topic in the body.
+    /// An HTTP 400 Bad Request response with all error details.
+    /// </returns>
+    [HttpPut("{topicId}")]
+    public ActionResult UpdateTopicById([FromBody] TopicRequestDTO topicRequestDto, Guid topicId)
+    {
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
+        try
+        {
+            var updatedTopic = this.service.Update(topicRequestDto, topicId);
+            return this.Ok(updatedTopic);
+        }
+        catch (EntityNotFoundException notFoundException)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
+            );
+        }
+        catch (WrongDataException wrongDataException)
+        {
+            errorList.AddRange(wrongDataException.MessageLogs);
+        }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
+        }
+
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
     }
 }

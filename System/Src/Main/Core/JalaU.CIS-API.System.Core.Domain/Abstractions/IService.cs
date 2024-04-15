@@ -45,7 +45,7 @@ public interface IService<T>
     /// <param name="entityToSave">The entity to be updated.</param>
     /// <param name="id">The identifier of the entity to update.</param>
     /// <returns>The updated entity.</returns>
-    T Update(BaseRequestDTO entityToSave, string id);
+    T Update(BaseRequestDTO entityToSave, Guid id);
 
     /// <summary>
     /// Deletes an entity from the service by its unique identifier.
