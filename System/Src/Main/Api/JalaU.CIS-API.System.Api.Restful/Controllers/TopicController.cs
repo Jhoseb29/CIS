@@ -145,13 +145,15 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
         try
         {
             var topics = service.GetAll();
-            var topicSorter = new TopicSorter();
+            var topicSorter = new GenericSorter<Topic>();
+
             var orderedTopics = orderBy.ToLower() switch
             {
-                "title" => topicSorter.Sort(topics, "title", order),
-                "date" => topicSorter.Sort(topics, "date", order),
+                "title" => topicSorter.Sort(topics, t => t.Title, order),
+                "date" => topicSorter.Sort(topics, t => t.Date, order),
                 _ => throw new ArgumentException("Invalid orderBy parameter. Supported values are 'title' and 'date'.")
             };
+
             return Ok(orderedTopics);
         }
         catch (ArgumentException ex)
