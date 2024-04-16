@@ -136,7 +136,7 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
                 this.logger.LogError(ex, "An error occurred while filtering topics.");
                 return this.StatusCode((int)HttpStatusCode.InternalServerError);
             }
-        }
+    }
 
     /// <summary>
     /// Simulate a list of topics like it were came from a database.
@@ -160,5 +160,29 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
         }
 
         return topics;
+    }
+
+    [HttpDelete]
+    public ActionResult DeleteTopic(Guid id)
+    {
+        try
+        {
+            Topic topic = this.service.GetById(id);
+            this.service.DeleteById(id);
+
+            if (topic == null)
+            {
+                return this.NotFound();
+            }
+            else
+            {
+                return this.NoContent();
+            }
+        }
+        catch (Exception ex)
+        {
+            this.logger.LogError(ex, "An error occurred while filtering topics.");
+            return this.StatusCode((int)HttpStatusCode.InternalServerError);
+        }
     }
 }

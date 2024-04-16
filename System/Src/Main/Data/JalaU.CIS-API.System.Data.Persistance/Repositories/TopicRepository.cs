@@ -56,6 +56,8 @@ public class TopicRepository(AppDbContext appDbContext) : IRepository<Topic>
     /// <inheritdoc/>
     public Topic Delete(Topic entity)
     {
-        throw new NotImplementedException();
+        this.appDbContext.Remove(entity);
+        this.appDbContext.SaveChanges();
+        return entity;
     }
 }

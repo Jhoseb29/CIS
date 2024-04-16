@@ -62,6 +62,9 @@ public class TopicService(IRepository<Topic> topicRepository, EntityFilter<Topic
     /// <inheritdoc/>
     public Topic DeleteById(Guid guid)
     {
-        throw new NotImplementedException();
+        Topic? topic = GetById(guid);
+        this.topicRepository.Delete(topic);
+        return topic;
     }
+
 }
