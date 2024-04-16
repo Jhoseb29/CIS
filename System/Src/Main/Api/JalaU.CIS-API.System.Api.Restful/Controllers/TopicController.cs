@@ -139,14 +139,19 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
         }
     }
 
-    [HttpGet("order-by-title")] // Atributo de ruta diferente
-    public ActionResult GetTopicsOrderedByTitle([FromQuery] string order = "asc")
+    [HttpGet("order")]
+    public ActionResult GetTopicsOrdered([FromQuery] string orderBy = "title", [FromQuery] string order = "asc")
     {
         try
         {
             var topics = service.GetAll();
             var topicSorter = new TopicSorter();
-            var orderedTopics = topicSorter.Sort(topics, "title", order);
+            var orderedTopics = orderBy.ToLower() switch
+            {
+                "title" => topicSorter.Sort(topics, "title", order),
+                "date" => topicSorter.Sort(topics, "date", order),
+                _ => throw new ArgumentException("Invalid orderBy parameter. Supported values are 'title' and 'date'.")
+            };
             return Ok(orderedTopics);
         }
         catch (ArgumentException ex)
@@ -155,28 +160,7 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "An error occurred while retrieving topics ordered by title.");
-            return StatusCode(500);
-        }
-    }
-
-    [HttpGet("order-by-date")] // Atributo de ruta diferente
-    public ActionResult GetTopicsOrderedByDate([FromQuery] string order = "asc")
-    {
-        try
-        {
-            var topics = service.GetAll();
-            var topicSorter = new TopicSorter();
-            var orderedTopics = topicSorter.Sort(topics, "date", order);
-            return Ok(orderedTopics);
-        }
-        catch (ArgumentException ex)
-        {
-            return BadRequest(ex.Message);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "An error occurred while retrieving topics ordered by date.");
+            logger.LogError(ex, $"An error occurred while retrieving topics ordered by {orderBy}.");
             return StatusCode(500);
         }
     }
