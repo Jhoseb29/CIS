@@ -34,17 +34,29 @@ public class TopicService(IRepository<Topic> topicRepository, EntityFilter<Topic
     }
 
     /// <inheritdoc/>
-    public Topic GetById(Guid guid)
+    public Topic? GetById(Guid id)
     {
-        Topic topic = this.topicRepository.GetById(guid);
-        return topic;
+        return this.topicRepository.GetByCriteria(t => t.Id == id);
     }
 
     /// <inheritdoc/>
-    public Topic GetByTitle(string title)
+    private Topic? GetByTitle(string title)
     {
-        Topic topic = this.topicRepository.GetByTitle(title);
-        return topic;
+        return this.topicRepository.GetByCriteria(t => t.Title == title);
+    }
+
+    /// <inheritdoc/>
+    public Topic? GetByCriteria(string field, string valueToSearch)
+    {
+        switch (field.ToLower())
+        {
+            case "id":
+                return this.GetById(Guid.Parse(valueToSearch));
+            case "title":
+                return this.GetByTitle(valueToSearch);
+            default:
+                throw new ArgumentException("Invalid field.");
+        }
     }
 
     /// <inheritdoc/>
