@@ -23,20 +23,6 @@ public class TopicRepository(AppDbContext appDbContext) : IRepository<Topic>
     }
 
     /// <inheritdoc/>
-    public Topic? GetById(Guid id)
-    {
-        Topic? topic = this.appDbContext.topics.FirstOrDefault(t => t != null && t.Id == id);
-        return topic;
-    }
-
-    /// <inheritdoc/>
-    public Topic? GetByTitle(string title)
-    {
-        Topic? topic = this.appDbContext.topics.FirstOrDefault(t => t != null && t.Title == title);
-        return topic;
-    }
-
-    /// <inheritdoc/>
     public Topic Save(Topic entity)
     {
         this.appDbContext.Add(entity);
@@ -57,5 +43,12 @@ public class TopicRepository(AppDbContext appDbContext) : IRepository<Topic>
     public Topic Delete(Topic entity)
     {
         throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public Topic? GetByCriteria(Func<Topic, bool> criteria)
+    {
+        Topic? topic = this.appDbContext.topics.FirstOrDefault(criteria);
+        return topic;
     }
 }

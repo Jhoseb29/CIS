@@ -3,12 +3,12 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+
 namespace JalaU.CIS_API.System.Api.Restful;
 
 using global::System.Net;
 using JalaU.CIS_API.System.Core.Application;
 using JalaU.CIS_API.System.Core.Domain;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -33,68 +33,56 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     /// </summary>
     /// <param name="pageSize">Optional. The number of topics to include in a page.</param>
     /// <param name="pageNumber">Optional. The page number to retrieve.</param>
+    /// <param name="orderBy"> orderBy. </param>
+    /// <param name="order"> order.</param>
+    /// <param name="filter"> filter.</param>
+    /// <param name="keyword">keyword.</param>
     /// <returns>
     /// An action result containing a dictionary with information about topics.
     /// </returns>
     [HttpGet]
-    public ActionResult GetTopics([FromQuery] int? pageSize, [FromQuery] int pageNumber = 1)
+    public ActionResult GetTopics(
+        [FromQuery] int? pageSize = 5,
+        [FromQuery] int pageNumber = 1,
+        [FromQuery] string orderBy = "title",
+        [FromQuery] string order = "asc",
+        [FromQuery] string filter = "",
+        [FromQuery] string keyword = ""
+    )
     {
-        if (pageNumber != 1)
+        try
         {
-            pageNumber = 1;
+            var topics = this.GetFilteredAndOrderedTopics(filter, keyword, orderBy, order);
+            var paginatedTopics = this.GetPaginatedTopics(topics, pageSize, pageNumber);
+
+            if (paginatedTopics.Count == 0)
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(new { count = paginatedTopics.Count, topics = paginatedTopics });
         }
-
-        List<Topic> topicRepo = this.service.GetAll();
-
-        int startIndex = (pageNumber - 1) * (pageSize ?? topicRepo.Count); // If pageSize is null, show all records.
-        int endIndex = Math.Min(startIndex + (pageSize ?? topicRepo.Count), topicRepo.Count);
-
-        List<Topic> topicList = topicRepo.GetRange(startIndex, endIndex - startIndex);
-
-        Dictionary<string, object> topicsMap =
-            new() { { "count", topicList.Count }, { "topics", topicList }, };
-
-        if (topicList.Count == 0)
+        catch (ArgumentException ex)
         {
-            return this.NotFound();
+            return this.BadRequest(ex.Message);
         }
-        else
+        catch (Exception ex)
         {
-            return this.Ok(topicsMap);
+            this.logger.LogError(ex, "An error occurred while retrieving topics.");
+            return this.StatusCode((int)HttpStatusCode.InternalServerError);
         }
     }
 
     /// <summary>
-    /// Retrieves a single topic by its ID.
+    /// Retrieves a topic by criteria.
     /// </summary>
-    /// <param name="topicId">The ID of the topic to retrieve.</param>
-    /// <returns>An action result containing the retrieved topic,
-    /// or NotFound if no topic is found with the specified ID.</returns>
-    [HttpGet("{topicId}")]
-    public ActionResult GetTopicById(Guid topicId)
+    /// <param name="field"> field.</param>
+    /// <param name="valueToSearch"> valueToSearch. </param>
+    /// <returns>topic.</returns>
+    [HttpGet("specific")]
+    public ActionResult GetTopicByCriteria(string field, string valueToSearch)
     {
-        Topic topic = this.service.GetById(topicId);
-
-        if (topic == null)
-        {
-            return this.NotFound();
-        }
-        else
-        {
-            return this.Ok(topic);
-        }
-    }
-
-    /// <summary>
-    /// Retrieves a single topic by its ID.
-    /// </summary>
-    /// <param name="title">The title of the topic to retrieve.</param>
-    /// <returns>An action result containing the retrieved topic,
-    /// or NotFound if no topic is found with the specified ID.</returns>
-    [HttpGet("title")]
-    public ActionResult GetTopicByTitle(string title)
-    {
-        Topic topic = this.service.GetByTitle(title);
+        Topic? topic = this.service.GetByCriteria(field, valueToSearch);
 
         if (topic == null)
         {
@@ -144,5 +132,63 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
 
         errorMap.Add("errors", errorList);
         return this.BadRequest(errorMap);
+    }
+
+    private List<Topic> GetFilteredAndOrderedTopics(
+        string filter,
+        string keyword,
+        string orderBy,
+        string order
+    )
+    {
+        var topics =
+            string.IsNullOrEmpty(filter) || string.IsNullOrEmpty(keyword)
+                ? this.service.GetAll()
+                : this.service.FilterEntities(filter, keyword);
+
+        if (!string.IsNullOrEmpty(orderBy))
+        {
+            if (
+                orderBy.Equals("title", StringComparison.CurrentCultureIgnoreCase)
+                || orderBy.Equals("date", StringComparison.CurrentCultureIgnoreCase)
+            )
+            {
+                if (
+                    !order.Equals("asc", StringComparison.CurrentCultureIgnoreCase)
+                    && !order.Equals("desc", StringComparison.CurrentCultureIgnoreCase)
+                )
+                {
+                    throw new ArgumentException(
+                        "Invalid order parameter. Supported values are 'asc' and 'desc'."
+                    );
+                }
+
+                var topicSorter = new GenericSorter<Topic>();
+                topics = topicSorter.Sort(
+                    topics,
+                    t =>
+                        orderBy.Equals("title", StringComparison.CurrentCultureIgnoreCase)
+                            ? t.Title
+                            : t.Date,
+                    order
+                );
+            }
+            else
+            {
+                throw new ArgumentException(
+                    "Invalid orderBy parameter. Supported values are 'title' and 'date'."
+                );
+            }
+        }
+
+        return topics;
+    }
+
+    private List<Topic> GetPaginatedTopics(List<Topic> topics, int? pageSize, int pageNumber)
+    {
+        int startIndex = (pageNumber - 1) * (pageSize ?? topics.Count);
+        int endIndex = Math.Min(startIndex + (pageSize ?? topics.Count), topics.Count);
+
+        return topics.GetRange(startIndex, endIndex - startIndex);
     }
 }

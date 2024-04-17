@@ -19,20 +19,6 @@ public interface IRepository<T>
     IEnumerable<T> GetAll();
 
     /// <summary>
-    /// Retrieves an entity from the repository by its unique identifier.
-    /// </summary>
-    /// <param name="id">The unique identifier of the entity.</param>
-    /// <returns>The entity with the specified identifier.</returns>
-    T? GetById(Guid id);
-
-    /// <summary>
-    /// Retrieves an entity from the repository by its unique identifier.
-    /// </summary>
-    /// <param name="title">The unique identifier of the entity.</param>
-    /// <returns>The entity with the specified identifier.</returns>
-    T? GetByTitle(string title);
-
-    /// <summary>
     /// Saves an entity to the repository.
     /// </summary>
     /// <param name="entity">The entity to be saved.</param>
@@ -52,4 +38,11 @@ public interface IRepository<T>
     /// <param name="entity">The entity to be deleted.</param>
     /// <returns>The deleted entity.</returns>
     T Delete(T entity);
+
+    /// <summary>
+    /// Retrieves an entity from the repository based on the provided criteria.
+    /// </summary>
+    /// <param name="criteria">The criteria used to filter entities.</param>
+    /// <returns>The entity matching the criteria.</returns>
+    T? GetByCriteria(Func<T, bool> criteria);
 }

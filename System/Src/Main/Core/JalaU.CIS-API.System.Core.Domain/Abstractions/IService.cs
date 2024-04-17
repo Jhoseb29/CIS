@@ -19,18 +19,20 @@ public interface IService<T>
     List<T> GetAll();
 
     /// <summary>
-    /// Retrieves an entity from the service by its unique identifier.
+    /// Filter the entities by criteria.
     /// </summary>
-    /// <param name="guid">The unique identifier of the entity.</param>
-    /// <returns>The entity with the specified identifier.</returns>
-    T GetById(Guid guid);
+    /// <param name="field">The field to search for.</param>
+    /// <param name="valueToSearch">The value to search for.</param>
+    /// <returns>The entity with the specified criteria.</returns>
+    public T? GetByCriteria(string field, string valueToSearch);
 
     /// <summary>
-    /// Retrieves an entity from the service by its unique identifier.
+    /// Filter the Topics by filters.
     /// </summary>
-    /// <param name="title">The unique identifier of the entity.</param>
-    /// <returns>The entity with the specified identifier.</returns>
-    T GetByTitle(string title);
+    /// <param name="filter">The type of filter that will be applied.</param>
+    /// <param name="keyword">The key word to apply the filter.</param>
+    /// <returns>The entity with the characteristics asked.</returns>
+    List<T> FilterEntities(string filter, string keyword);
 
     /// <summary>
     /// Saves an entity to the service.
