@@ -59,14 +59,19 @@ public class TopicService : IService<Topic>
     }
 
     /// <inheritdoc/>
-    public Topic? GetByCriteria(string field, string valueToSearch)
+    public Topic GetByCriteria(string field, string valueToSearch)
     {
-        return field.ToLower() switch
-        {
-            "id" => this.GetById(Guid.Parse(valueToSearch)),
-            "title" => this.GetByTitle(valueToSearch),
-            _ => throw new ArgumentException("Invalid field."),
-        };
+        var topic =
+            field.ToLower() switch
+            {
+                "id" => this.GetById(Guid.Parse(valueToSearch)),
+                "title" => this.GetByTitle(valueToSearch),
+                _ => throw new ArgumentException("Invalid field."),
+            }
+            ?? throw new EntityNotFoundException(
+                $"Topic with the field {field} and the value {valueToSearch} was not found."
+            );
+        return topic;
     }
 
     /// <inheritdoc/>
@@ -76,17 +81,9 @@ public class TopicService : IService<Topic>
     }
 
     /// <inheritdoc/>
-    public Topic Update(BaseRequestDTO entityRequestDTO, Guid id)
+    public Topic Update(BaseRequestDTO entityRequestDTO, string id)
     {
-        var existingTopicToUpdate = this.GetById(id);
-
-        // Move this validation to the GetByCriteria method.
-        EntityValidatorUtil.ValidateEntityIsNotNull<Topic>(
-            existingTopicToUpdate,
-            $"The Topic with the ID {id} couldn't be found"
-        );
-
-        // Add Duplicates by Title validation when Joann changes his code.
+        var existingTopicToUpdate = this.GetByCriteria("id", id);
         Topic updatedTopic = this.Validator.ValidateEntityToUpdate(
             existingTopicToUpdate!,
             entityRequestDTO

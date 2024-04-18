@@ -71,7 +71,7 @@ public class TopicValidatorUtil : IValidator<Topic>
             this.MessageLogDTOs.Add(
                 new MessageLogDTO((int)HttpStatusCode.UnprocessableEntity, exception.Message)
             );
-            throw new WrongDataException("erros", this.MessageLogDTOs);
+            throw new WrongDataException("errors", this.MessageLogDTOs);
         }
     }
 }

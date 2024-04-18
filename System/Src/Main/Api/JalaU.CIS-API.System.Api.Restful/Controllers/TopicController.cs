@@ -76,21 +76,19 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     /// <summary>
     /// Retrieves a topic by criteria.
     /// </summary>
-    /// <param name="field"> field.</param>
-    /// <param name="valueToSearch"> valueToSearch. </param>
+    /// <param name="topicId"> value To Search. </param>
     /// <returns>topic.</returns>
-    [HttpGet("specific")]
-    public ActionResult GetTopicByCriteria(string field, string valueToSearch)
+    [HttpGet("{topicId}")]
+    public ActionResult GetTopicByCriteria(string topicId)
     {
-        Topic? topic = this.service.GetByCriteria(field, valueToSearch);
-
-        if (topic == null)
+        try
         {
-            return this.NotFound();
-        }
-        else
-        {
+            Topic? topic = this.service.GetByCriteria("id", topicId);
             return this.Ok(topic);
+        }
+        catch (EntityNotFoundException entityNotFoundException)
+        {
+            return this.NotFound(entityNotFoundException.Message);
         }
     }
 
@@ -104,7 +102,7 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     /// An HTTP 400 Bad Request response with all error details.
     /// </returns>
     [HttpPut("{topicId}")]
-    public ActionResult UpdateTopicById([FromBody] TopicRequestDTO topicRequestDto, Guid topicId)
+    public ActionResult UpdateTopicById([FromBody] TopicRequestDTO topicRequestDto, string topicId)
     {
         List<object> errorList = [];
         Dictionary<string, object> errorMap = [];
@@ -117,6 +115,12 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
         {
             errorList.Add(
                 new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
+            );
+        }
+        catch (DuplicateEntryException duplicateEntryException)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.Conflict, duplicateEntryException.Message)
             );
         }
         catch (WrongDataException wrongDataException)

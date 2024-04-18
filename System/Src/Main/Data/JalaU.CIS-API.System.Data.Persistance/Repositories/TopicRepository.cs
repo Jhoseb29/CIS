@@ -6,6 +6,7 @@
 namespace JalaU.CIS_API.System.Data.Persistance;
 
 using JalaU.CIS_API.System.Core.Domain;
+using Microsoft.EntityFrameworkCore;
 
 /// <summary>
 /// Initializes a new instance of the <see cref="TopicRepository"/> class.
@@ -34,9 +35,16 @@ public class TopicRepository(AppDbContext appDbContext) : IRepository<Topic>
     /// <inheritdoc/>
     public Topic Update(Topic topic)
     {
-        this.appDbContext.Update(topic);
-        this.appDbContext.SaveChanges();
-        return topic;
+        try
+        {
+            this.appDbContext.Update(topic);
+            this.appDbContext.SaveChanges();
+            return topic;
+        }
+        catch (DbUpdateException)
+        {
+            throw new DuplicateEntryException("The Topic's title already exists in the System.");
+        }
     }
 
     /// <inheritdoc/>

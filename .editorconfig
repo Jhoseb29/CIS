@@ -26,3 +26,6 @@ dotnet_diagnostic.SA1502.severity = none
 
 # SA1201: Elements should appear in the correct order
 dotnet_diagnostic.SA1201.severity = none
+
+# SA1513: Closing brace should be followed by blank line
+dotnet_diagnostic.SA1513.severity = none

@@ -24,7 +24,7 @@ public interface IService<T>
     /// <param name="field">The field to search for.</param>
     /// <param name="valueToSearch">The value to search for.</param>
     /// <returns>The entity with the specified criteria.</returns>
-    public T? GetByCriteria(string field, string valueToSearch);
+    public T GetByCriteria(string field, string valueToSearch);
 
     /// <summary>
     /// Filter the Topics by filters.
@@ -47,7 +47,7 @@ public interface IService<T>
     /// <param name="entityToSave">The entity to be updated.</param>
     /// <param name="id">The identifier of the entity to update.</param>
     /// <returns>The updated entity.</returns>
-    T Update(BaseRequestDTO entityToSave, Guid id);
+    T Update(BaseRequestDTO entityToSave, string id);
 
     /// <summary>
     /// Deletes an entity from the service by its unique identifier.
