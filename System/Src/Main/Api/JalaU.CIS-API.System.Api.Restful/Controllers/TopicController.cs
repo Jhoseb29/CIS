@@ -195,4 +195,28 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
 
         return topics.GetRange(startIndex, endIndex - startIndex);
     }
+
+    [HttpDelete]
+    public ActionResult DeleteTopic(Guid id)
+    {
+        try
+        {
+            Topic topic = this.service.GetById(id);
+            this.service.DeleteById(id);
+
+            if (topic == null)
+            {
+                return this.NotFound();
+            }
+            else
+            {
+                return this.NoContent();
+            }
+        }
+        catch (Exception ex)
+        {
+            this.logger.LogError(ex, "An error occurred while filtering topics.");
+            return this.StatusCode((int)HttpStatusCode.InternalServerError);
+        }
+    }
 }

@@ -95,7 +95,9 @@ public class TopicService : IService<Topic>
     /// <inheritdoc/>
     public Topic DeleteById(Guid guid)
     {
-        throw new NotImplementedException();
+        Topic? topic = GetById(guid);
+        this.topicRepository.Delete(topic);
+        return topic;
     }
 
     private Topic? GetByTitle(string title)
