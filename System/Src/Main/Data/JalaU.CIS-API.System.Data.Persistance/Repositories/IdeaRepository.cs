@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="TopicRepository.cs" company="Jala University">
+// <copyright file="IdeaRepository.cs" company="Jala University">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -9,22 +9,22 @@ using JalaU.CIS_API.System.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 
 /// <summary>
-/// Initializes a new instance of the <see cref="TopicRepository"/> class.
+/// Initializes a new instance of the <see cref="IdeaRepository"/> class.
 /// </summary>
 /// <param name="appDbContext">The database context used for database operations.</param>
-public class TopicRepository(AppDbContext appDbContext) : IRepository<Topic>
+public class IdeaRepository(AppDbContext appDbContext) : IRepository<Idea>
 {
     private readonly AppDbContext appDbContext = appDbContext;
 
     /// <inheritdoc/>
-    public IEnumerable<Topic> GetAll()
+    public IEnumerable<Idea> GetAll()
     {
-        List<Topic> topicList = [.. this.appDbContext.topics];
-        return topicList;
+        List<Idea> ideaList = [.. this.appDbContext.ideas];
+        return ideaList;
     }
 
     /// <inheritdoc/>
-    public Topic Save(Topic entity)
+    public Idea Save(Idea entity)
     {
         this.appDbContext.Add(entity);
         this.appDbContext.Update(entity);
@@ -33,7 +33,7 @@ public class TopicRepository(AppDbContext appDbContext) : IRepository<Topic>
     }
 
     /// <inheritdoc/>
-    public Topic Update(Topic entity)
+    public Idea Update(Idea entity)
     {
         try
         {
@@ -43,14 +43,14 @@ public class TopicRepository(AppDbContext appDbContext) : IRepository<Topic>
         }
         catch (DbUpdateException)
         {
-            throw new DuplicateEntryException("The Topic's title already exists in the System.");
+            throw new DuplicateEntryException("The Idea's title already exists in the System.");
         }
     }
 
     /// <inheritdoc/>
-    public Topic Delete(Topic entity)
+    public Idea Delete(Idea entity)
     {
-        this.appDbContext.topics.Remove(entity);
+        this.appDbContext.ideas.Remove(entity);
 
         this.appDbContext.SaveChanges();
 
@@ -58,9 +58,9 @@ public class TopicRepository(AppDbContext appDbContext) : IRepository<Topic>
     }
 
     /// <inheritdoc/>
-    public Topic? GetByCriteria(Func<Topic, bool> criteria)
+    public Idea? GetByCriteria(Func<Idea, bool> criteria)
     {
-        Topic? topic = this.appDbContext.topics.FirstOrDefault(criteria);
-        return topic;
+        Idea? idea = this.appDbContext.ideas.FirstOrDefault(criteria);
+        return idea;
     }
 }

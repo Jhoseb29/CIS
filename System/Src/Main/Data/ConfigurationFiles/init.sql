@@ -50,3 +50,18 @@ CREATE TABLE votes
     UNIQUE INDEX id_UNIQUE (id ASC),
     UNIQUE INDEX unique_user_idea_vote (userId, ideaId) 
 );
+
+-- TRIGGER PARA BORRAR TOPICOS BORRANDO PRIMERO VOTOS E IDEAS RELACIONADAS AUTOMATICAMENTE
+DELIMITER $$
+CREATE TRIGGER before_topic_delete
+BEFORE DELETE ON topics
+FOR EACH ROW
+BEGIN
+    -- Borra los votos relacionados con las ideas que se están eliminando
+    DELETE FROM votes WHERE ideaId IN (SELECT id FROM ideas WHERE topicId = OLD.id);
+
+    -- Borra las ideas relacionadas con el tema que se está eliminando
+    DELETE FROM ideas WHERE topicId = OLD.id;
+
+END$$
+DELIMITER ;

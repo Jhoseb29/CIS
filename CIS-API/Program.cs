@@ -30,6 +30,11 @@ builder.Services.AddScoped<IRepository<Topic>, TopicRepository>();
 builder.Services.AddScoped<IValidator<Topic>, TopicValidatorUtil>();
 builder.Services.AddSingleton<EntityFilter<Topic>, TopicFilters>();
 
+builder.Services.AddScoped<IService<Idea>, IdeaService>();
+builder.Services.AddScoped<IRepository<Idea>, IdeaRepository>();
+builder.Services.AddScoped<IValidator<Idea>, IdeaValidatorUtil>();
+builder.Services.AddSingleton<EntityFilter<Idea>, IdeaFilters>();
+
 builder.Services.AddScoped<EnforceJsonResponseFilter>();
 
 builder.Services.AddEndpointsApiExplorer();

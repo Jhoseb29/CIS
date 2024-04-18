@@ -54,5 +54,5 @@ public interface IService<T>
     /// </summary>
     /// <param name="guid">The unique identifier of the entity to delete.</param>
     /// <returns>The deleted entity.</returns>
-    T DeleteById(Guid guid);
+    T DeleteById(string guid);
 }

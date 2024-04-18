@@ -93,9 +93,9 @@ public class TopicService : IService<Topic>
     }
 
     /// <inheritdoc/>
-    public Topic DeleteById(Guid guid)
+    public Topic DeleteById(string guid)
     {
-        Topic? topic = GetById(guid);
+        Topic? topic = this.GetByCriteria("id", guid);
         this.topicRepository.Delete(topic);
         return topic;
     }

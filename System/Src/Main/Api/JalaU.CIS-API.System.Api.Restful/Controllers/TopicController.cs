@@ -138,6 +138,29 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
         return this.BadRequest(errorMap);
     }
 
+    /// <summary>
+    /// Deletes a topic by its ID using HTTP DELETE method.
+    /// </summary>
+    /// <param name="topicId">The ID of the topic to be deleted.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the updated topic in the body.
+    /// An HTTP 400 Bad Request response with all error details.
+    /// </returns>
+    [HttpDelete("{topicId}")]
+    public ActionResult DeleteTopic(string topicId)
+    {
+        try
+        {
+            var topic = this.service.DeleteById(topicId);
+            return this.Ok(topic);
+        }
+        catch (Exception ex)
+        {
+            this.logger.LogError(ex, "An error occurred while filtering topics.");
+            return this.StatusCode((int)HttpStatusCode.InternalServerError);
+        }
+    }
+
     private List<Topic> GetFilteredAndOrderedTopics(
         string filter,
         string keyword,
@@ -194,29 +217,5 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
         int endIndex = Math.Min(startIndex + (pageSize ?? topics.Count), topics.Count);
 
         return topics.GetRange(startIndex, endIndex - startIndex);
-    }
-
-    [HttpDelete]
-    public ActionResult DeleteTopic(Guid id)
-    {
-        try
-        {
-            Topic topic = this.service.GetById(id);
-            this.service.DeleteById(id);
-
-            if (topic == null)
-            {
-                return this.NotFound();
-            }
-            else
-            {
-                return this.NoContent();
-            }
-        }
-        catch (Exception ex)
-        {
-            this.logger.LogError(ex, "An error occurred while filtering topics.");
-            return this.StatusCode((int)HttpStatusCode.InternalServerError);
-        }
     }
 }
