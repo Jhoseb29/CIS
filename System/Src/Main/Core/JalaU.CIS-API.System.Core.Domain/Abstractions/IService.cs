@@ -24,7 +24,7 @@ public interface IService<T>
     /// <param name="field">The field to search for.</param>
     /// <param name="valueToSearch">The value to search for.</param>
     /// <returns>The entity with the specified criteria.</returns>
-    public T? GetByCriteria(string field, string valueToSearch);
+    public T GetByCriteria(string field, string valueToSearch);
 
     /// <summary>
     /// Filter the Topics by filters.

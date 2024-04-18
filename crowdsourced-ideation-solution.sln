@@ -28,6 +28,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ConfigurationFiles", "ConfigurationFiles", "{2396D0A0-D7CA-4560-9326-99BC4AF36695}"
 	ProjectSection(SolutionItems) = preProject
 		System\Src\Main\Data\ConfigurationFiles\init.sql = System\Src\Main\Data\ConfigurationFiles\init.sql
+		dataStarter.sql = dataStarter.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JalaU.CIS-API.System.Data.Persistance", "System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\JalaU.CIS-API.System.Data.Persistance.csproj", "{145872F4-3020-4595-80AE-26E9B60D7E16}"

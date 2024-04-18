@@ -35,9 +35,11 @@ public class TopicFilters : EntityFilter<Topic>
     ///
     private List<Topic> FilterById(string keyword)
     {
-        List<Topic> filteredTopics = this.Entities
-                .Where(topic => topic.Id.ToString().ToLower().Contains(keyword))
-                .ToList();
+        List<Topic> filteredTopics = this.Entities.Where(
+            topic =>
+                topic.Id.ToString().Contains(keyword, StringComparison.CurrentCultureIgnoreCase)
+        )
+            .ToList();
         return filteredTopics;
     }
 
@@ -49,9 +51,10 @@ public class TopicFilters : EntityFilter<Topic>
     ///
     private List<Topic> FilterByTitle(string keyword)
     {
-        List<Topic> filteredTopics = this.Entities
-                .Where(topic => topic.Title.ToLower().Contains(keyword))
-                .ToList();
+        List<Topic> filteredTopics = this.Entities.Where(
+            topic => topic.Title.ToLower().Contains(keyword)
+        )
+            .ToList();
         return filteredTopics;
     }
 
@@ -63,9 +66,10 @@ public class TopicFilters : EntityFilter<Topic>
     ///
     private List<Topic> FilterByDescription(string keyword)
     {
-        List<Topic> filteredTopics = this.Entities
-                .Where(topic => topic.Description.ToLower().Contains(keyword))
-                .ToList();
+        List<Topic> filteredTopics = this.Entities.Where(
+            topic => topic.Description.ToLower().Contains(keyword)
+        )
+            .ToList();
         return filteredTopics;
     }
 
@@ -77,8 +81,9 @@ public class TopicFilters : EntityFilter<Topic>
     ///
     private List<Topic> FilterByLabels(string keyword)
     {
-        List<Topic> filteredTopics = this.Entities
-            .Where(topic => topic.Labels.Any(label => label.ToLower().Contains(keyword.ToLower())))
+        List<Topic> filteredTopics = this.Entities.Where(
+            topic => topic.Labels.Any(label => label.ToLower().Contains(keyword.ToLower()))
+        )
             .ToList();
         return filteredTopics;
     }
@@ -91,8 +96,9 @@ public class TopicFilters : EntityFilter<Topic>
     ///
     private List<Topic> FilterByUserId(string keyword)
     {
-        List<Topic> filteredTopics = this.Entities
-            .Where(topic => topic.UserId.ToString().ToLower().Contains(keyword))
+        List<Topic> filteredTopics = this.Entities.Where(
+            topic => topic.UserId.ToString().ToLower().Contains(keyword)
+        )
             .ToList();
         return filteredTopics;
     }

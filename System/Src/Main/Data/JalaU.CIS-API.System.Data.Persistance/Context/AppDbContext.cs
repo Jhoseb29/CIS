@@ -13,18 +13,17 @@ using Microsoft.EntityFrameworkCore;
 /// Initializes a new instance of the <see cref="AppDbContext"/> class.
 /// </summary>
 /// <param name="options">The options for configuring the context.</param>
-
 [SuppressMessage(
     "TableNamesToLowerCase",
     "SA1300",
-    Justification = "It's in lower case since the tables in the db are also in lowerCase.")]
-
+    Justification = "It's in lower case since the tables in the db are also in lowerCase."
+)]
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     /// <summary>
     /// Gets or sets the database set representing the topics table.
     /// </summary>
-    public DbSet<Topic?> topics { get; set; }
+    public DbSet<Topic> topics { get; set; }
 
     /// <summary>
     /// Gets or sets the database set representing the ideas table.

@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace JalaU.CIS_API.System.Core.Application;
 
+using AutoMapper;
 using JalaU.CIS_API.System.Core.Domain;
 
 /// <summary>
@@ -13,12 +14,36 @@ using JalaU.CIS_API.System.Core.Domain;
 /// <remarks>
 /// Initializes a new instance of the <see cref="TopicService"/> class.
 /// </remarks>
-/// <param name="topicRepository">The repository for topics.</param>
-public class TopicService(IRepository<Topic> topicRepository, EntityFilter<Topic> entityFilter)
-    : IService<Topic>
+public class TopicService : IService<Topic>
 {
-    private readonly EntityFilter<Topic> filters = entityFilter;
-    private IRepository<Topic> topicRepository = topicRepository;
+    private readonly Mapper topicMapper;
+    private readonly IRepository<Topic> topicRepository;
+    private readonly EntityFilter<Topic> filters;
+
+    private IValidator<Topic> Validator { get; set; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TopicService"/> class.
+    /// </summary>
+    /// <param name="topicRepository">The repository for Topic entities.</param>
+    /// <param name="validator">The validator for Topic entities.</param>
+    /// <param name="entityFilter">The entityFilter for Topic entities.</param>
+    public TopicService(
+        IRepository<Topic> topicRepository,
+        IValidator<Topic> validator,
+        EntityFilter<Topic> entityFilter
+    )
+    {
+        this.topicRepository = topicRepository;
+        this.Validator = validator;
+        this.filters = entityFilter;
+        var mapperConfigurationForTopics = new MapperConfiguration(configuration =>
+        {
+            configuration.CreateMap<TopicRequestDTO, Topic>().ReverseMap();
+        });
+
+        this.topicMapper = new Mapper(mapperConfigurationForTopics);
+    }
 
     /// <inheritdoc/>
     public List<Topic> GetAll()
@@ -34,29 +59,19 @@ public class TopicService(IRepository<Topic> topicRepository, EntityFilter<Topic
     }
 
     /// <inheritdoc/>
-    public Topic? GetById(Guid id)
+    public Topic GetByCriteria(string field, string valueToSearch)
     {
-        return this.topicRepository.GetByCriteria(t => t.Id == id);
-    }
-
-    /// <inheritdoc/>
-    private Topic? GetByTitle(string title)
-    {
-        return this.topicRepository.GetByCriteria(t => t.Title == title);
-    }
-
-    /// <inheritdoc/>
-    public Topic? GetByCriteria(string field, string valueToSearch)
-    {
-        switch (field.ToLower())
-        {
-            case "id":
-                return this.GetById(Guid.Parse(valueToSearch));
-            case "title":
-                return this.GetByTitle(valueToSearch);
-            default:
-                throw new ArgumentException("Invalid field.");
-        }
+        var topic =
+            field.ToLower() switch
+            {
+                "id" => this.GetById(Guid.Parse(valueToSearch)),
+                "title" => this.GetByTitle(valueToSearch),
+                _ => throw new ArgumentException("Invalid field."),
+            }
+            ?? throw new EntityNotFoundException(
+                $"Topic with the field {field} and the value {valueToSearch} was not found."
+            );
+        return topic;
     }
 
     /// <inheritdoc/>
@@ -66,14 +81,30 @@ public class TopicService(IRepository<Topic> topicRepository, EntityFilter<Topic
     }
 
     /// <inheritdoc/>
-    public Topic Update(BaseRequestDTO entityToSave, string id)
+    public Topic Update(BaseRequestDTO entityRequestDTO, string id)
     {
-        throw new NotImplementedException();
+        var existingTopicToUpdate = this.GetByCriteria("id", id);
+        Topic updatedTopic = this.Validator.ValidateEntityToUpdate(
+            existingTopicToUpdate!,
+            entityRequestDTO
+        );
+
+        return this.topicRepository.Update(updatedTopic);
     }
 
     /// <inheritdoc/>
     public Topic DeleteById(Guid guid)
     {
         throw new NotImplementedException();
+    }
+
+    private Topic? GetByTitle(string title)
+    {
+        return this.topicRepository.GetByCriteria(t => t.Title == title);
+    }
+
+    private Topic? GetById(Guid id)
+    {
+        return this.topicRepository.GetByCriteria(t => t.Id == id);
     }
 }

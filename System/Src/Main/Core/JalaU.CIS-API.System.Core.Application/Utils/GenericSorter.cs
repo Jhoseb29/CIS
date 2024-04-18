@@ -1,4 +1,9 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="GenericSorter.cs" company="Jala University">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JalaU.CIS_API.System.Core.Domain;
@@ -6,8 +11,9 @@ using JalaU.CIS_API.System.Core.Domain;
 namespace JalaU.CIS_API.System.Core.Application
 {
     /// <summary>
-    /// Utility class for sorting lists of objects.
+    /// This class implements a generic sorter that can sort an array of elements of any type using the merge sort algorithm.
     /// </summary>
+    /// <typeparam name="T">The type of elements in the array to be sorted.</typeparam>
     public class GenericSorter<T>
     {
         /// <summary>
@@ -19,17 +25,19 @@ namespace JalaU.CIS_API.System.Core.Application
         /// <returns>The sorted list of objects.</returns>
         public List<T> Sort(List<T> items, Func<T, IComparable> orderBy, string order)
         {
-            if (order.ToLower() == "desc")
+            if (order.Equals("desc", StringComparison.CurrentCultureIgnoreCase))
             {
                 return items.OrderByDescending(orderBy).ToList();
             }
-            else if (order.ToLower() == "asc")
+            else if (order.Equals("asc", StringComparison.CurrentCultureIgnoreCase))
             {
-                return items.OrderBy(orderBy).ToList();
+                return [.. items.OrderBy(orderBy)];
             }
             else
             {
-                throw new ArgumentException("Invalid order parameter. Supported values are 'asc' and 'desc'.");
+                throw new ArgumentException(
+                    "Invalid order parameter. Supported values are 'asc' and 'desc'."
+                );
             }
         }
     }
