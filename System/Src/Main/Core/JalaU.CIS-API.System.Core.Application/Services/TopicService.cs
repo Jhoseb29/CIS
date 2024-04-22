@@ -10,67 +10,108 @@ using JalaU.CIS_API.System.Core.Domain;
 /// <summary>
 /// Represents a service for managing topics.
 /// </summary>
-/// <remarks>
-/// Initializes a new instance of the <see cref="TopicService"/> class.
-/// </remarks>
-/// <param name="topicRepository">The repository for topics.</param>
-public class TopicService(IRepository<Topic> topicRepository, EntityFilter<Topic> entityFilter)
-    : IService<Topic>
+/// <param name="topicRepository">The repository for Topic entities.</param>
+/// <param name="validator">The validator for Topic entities.</param>
+/// <param name="entityFilter">The entityFilter for Topic entities.</param>
+public class TopicService(
+    IRepository<Topic> topicRepository,
+    AbstractValidator<Topic> validator,
+    EntityFilter<Topic> entityFilter
+) : IService<Topic>
 {
-    private readonly EntityFilter<Topic> filters = entityFilter;
-    private IRepository<Topic> topicRepository = topicRepository;
+    private readonly IRepository<Topic> topicRepository = topicRepository;
+    private readonly EntityFilter<Topic> topicFilter = entityFilter;
+
+    private AbstractValidator<Topic> Validator { get; set; } = validator;
 
     /// <inheritdoc/>
-    public List<Topic> GetAll()
+    public List<Topic> GetAll(GetAllEntitiesRequestDTO getAllEntitiesRequestDTO)
     {
         List<Topic> topicList = this.topicRepository.GetAll().ToList();
-        return topicList;
+        List<string> fieldsAllowedToOrderBy = ["title", "date"];
+
+        EntitiesListParameterizerUtil<Topic> entitiesListParameterizerUtil =
+            new(topicList, fieldsAllowedToOrderBy);
+        var finalTopicsListToReturn = entitiesListParameterizerUtil.ApplyGetAllParameters(
+            this.topicFilter,
+            getAllEntitiesRequestDTO
+        );
+
+        if (finalTopicsListToReturn.Count == 0)
+        {
+            throw new EntityNotFoundException("Any Topics were found.");
+        }
+        return finalTopicsListToReturn;
     }
 
     /// <inheritdoc/>
-    public List<Topic> FilterEntities(string filter, string keyword)
+    public Topic GetByCriteria(string field, string valueToSearch)
     {
-        return this.filters.Filter(this.GetAll(), filter, keyword);
-    }
-
-    /// <inheritdoc/>
-    public Topic GetById(Guid guid)
-    {
-        Topic topic = this.topicRepository.GetById(guid);
+        var topic =
+            field.ToLower() switch
+            {
+                "id" => this.GetById(valueToSearch),
+                "title" => this.GetByTitle(valueToSearch),
+                _ => throw new ArgumentException("Invalid field."),
+            }
+            ?? throw new EntityNotFoundException(
+                $"Topic with the field {field} and the value {valueToSearch} was not found."
+            );
         return topic;
     }
 
     /// <inheritdoc/>
-    public Topic GetByTitle(string title)
+    public Topic Save(BaseRequestDTO topicToSave)
     {
-        Topic topic = this.topicRepository.GetByTitle(title);
+        Topic topicValidated = this.Validator.ValidateEntityToSave(topicToSave);
+        this.Validator.CheckDuplicateEntity(
+            this.GetByCriteria("title", topicValidated.Title),
+            "The Topic's title is already registered in the System."
+        );
+        this.Validator.AreThereErrors();
+
+        // Más adelante obtener el ID del usuario mediante el JWT y ponerlo aquí:
+        topicValidated.UserId = GuidValidatorUtil.ValidateGuid(
+            "550e8400-e29b-41d4-a716-446655440000"
+        );
+
+        Topic topic = this.topicRepository.Save(topicValidated);
         return topic;
     }
 
     /// <inheritdoc/>
-    public Topic? Save(Topic TopicToSave)
+    public Topic Update(BaseRequestDTO entityRequestDTO, string id)
     {
-        ValidatorCreateTopic validator = new ValidatorCreateTopic();
-        if (validator.AreThereAnyBadWord(TopicToSave) & validator.NullableFields(TopicToSave).Count != 0)
-        {
-            return null;
-        }
-        else
-        {
-            Topic topic = this.topicRepository.Save(TopicToSave);
-            return topic;
-        }
+        var existingTopicToUpdate = this.GetByCriteria("id", id);
+        Topic updatedTopic = this.Validator.ValidateEntityToUpdate(
+            existingTopicToUpdate!,
+            entityRequestDTO
+        );
+        this.Validator.CheckDuplicateEntity(
+            this.GetByCriteria("title", updatedTopic.Title),
+            "The Topic's title is already registered in the System."
+        );
+        this.Validator.AreThereErrors();
+
+        return this.topicRepository.Update(updatedTopic);
     }
 
     /// <inheritdoc/>
-    public Topic Update(BaseRequestDTO entityToSave, string id)
+    public Topic DeleteById(string guid)
     {
-        throw new NotImplementedException();
+        Topic? topic = this.GetByCriteria("id", guid);
+        this.topicRepository.Delete(topic);
+        return topic;
     }
 
-    /// <inheritdoc/>
-    public Topic DeleteById(Guid guid)
+    private Topic? GetByTitle(string title)
     {
-        throw new NotImplementedException();
+        return this.topicRepository.GetByCriteria(t => t.Title == title);
+    }
+
+    private Topic? GetById(string id)
+    {
+        Guid validGuid = GuidValidatorUtil.ValidateGuid(id);
+        return this.topicRepository.GetByCriteria(t => t.Id == validGuid);
     }
 }
