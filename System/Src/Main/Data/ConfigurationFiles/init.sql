@@ -65,3 +65,15 @@ BEGIN
 
 END$$
 DELIMITER ;
+
+-- TRIGGER PARA BORRAR UNA IDEA Y LOS VOTOS RELACIONADOS A ESTA AUTOMATICAMENTE
+DELIMITER $$
+CREATE TRIGGER before_idea_delete
+    BEFORE DELETE ON ideas
+    FOR EACH ROW
+BEGIN
+    -- Borra los votos relacionados con la idea que se está eliminando
+    DELETE FROM votes WHERE ideaId = OLD.id;
+END$$
+DELIMITER ;
+
