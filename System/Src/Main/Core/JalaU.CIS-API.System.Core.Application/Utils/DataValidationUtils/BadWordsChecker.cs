@@ -16,7 +16,7 @@ public class BadWordsChecker
     /// <summary>
     /// The list of default profane words.
     /// </summary>
-    private readonly string[] badList =
+    private static string[] badList =
     [
         "8===D",
         "8==D",
@@ -1875,17 +1875,9 @@ public class BadWordsChecker
     /// <summary>
     /// Gets the list of profane words.
     /// </summary>
-    public List<string> Profanities { get; }
+    public static List<string> Profanities { get; } = new List<string>(badList);
 
     private static readonly char[] Separator = [' ', ',', '.', ':', ';'];
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="BadWordsChecker"/> class.
-    /// </summary>
-    public BadWordsChecker()
-    {
-        this.Profanities = new List<string>(this.badList);
-    }
 
     /// <summary>
     /// Checks if the specified field of the provided instance contains any value.
@@ -1904,7 +1896,7 @@ public class BadWordsChecker
             var fieldValue = propertyInfo.GetValue(instance)?.ToString();
             if (fieldValue != null)
             {
-                return true;
+                BadWordsInText(fieldValue);
             }
         }
         return false;
@@ -1914,14 +1906,14 @@ public class BadWordsChecker
     /// Adds a profanity to the collection.
     /// </summary>
     /// <param name="profanity">The profanity to add.</param>
-    public void AddProfanity(string profanity)
+    public static void AddProfanity(string profanity)
     {
         if (string.IsNullOrEmpty(profanity))
         {
             throw new ArgumentNullException(nameof(profanity));
         }
 
-        this.Profanities.Add(profanity);
+        Profanities.Add(profanity);
     }
 
     /// <summary>
@@ -1929,14 +1921,14 @@ public class BadWordsChecker
     /// </summary>
     /// <param name="profanity">The profanity to remove.</param>
     /// <returns><c>true</c> if the profanity is successfully removed; otherwise, <c>false</c>.</returns>
-    public bool RemoveProfanity(string profanity)
+    public static bool RemoveProfanity(string profanity)
     {
         if (string.IsNullOrEmpty(profanity))
         {
             throw new ArgumentNullException(nameof(profanity));
         }
 
-        return this.Profanities.Remove(profanity.ToLower(CultureInfo.InvariantCulture));
+        return Profanities.Remove(profanity.ToLower(CultureInfo.InvariantCulture));
     }
 
     /// <summary>
@@ -1944,7 +1936,7 @@ public class BadWordsChecker
     /// </summary>
     /// <param name="text">The text to check for profanity.</param>
     /// <returns><c>true</c> if profanity is found in the text; otherwise, <c>false</c>.</returns>
-    public bool BadWordsInText(string text)
+    public static bool BadWordsInText(string text)
     {
         if (string.IsNullOrEmpty(text))
         {
@@ -1953,6 +1945,6 @@ public class BadWordsChecker
 
         string[] wordsplit = text.Split(Separator, StringSplitOptions.RemoveEmptyEntries);
 
-        return wordsplit.Any(word => this.Profanities.Contains(word.ToLower()));
+        return wordsplit.Any(word => Profanities.Contains(word.ToLower()));
     }
 }

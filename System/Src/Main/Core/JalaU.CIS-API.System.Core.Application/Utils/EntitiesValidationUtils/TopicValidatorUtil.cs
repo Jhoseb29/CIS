@@ -39,7 +39,10 @@ public class TopicValidatorUtil : AbstractValidator<Topic>
         this.MessageLogDTOs.AddRange(
             EntityValidatorUtil.ValidateBlankOrNullEntityFields(topicRequestDTO)
         );
-        return this.topicMapper.Map<Topic>(topicRequestDTO);
+        Topic? topic = this.topicMapper.Map<Topic>(topicRequestDTO);
+        this.CheckBadWords("title", topic.Title);
+        this.CheckBadWords("description", topic.Description);
+        return topic;
     }
 
     /// <inheritdoc/>
@@ -57,6 +60,8 @@ public class TopicValidatorUtil : AbstractValidator<Topic>
         );
 
         EntityValidatorUtil.ValidateBlankOrNullEntityFields(updatedTopic);
+        this.CheckBadWords("title", updatedTopic.Title);
+        this.CheckBadWords("description", updatedTopic.Description);
 
         return updatedTopic;
     }

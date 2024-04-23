@@ -80,10 +80,29 @@ public class IdeaService : IService<Idea>
         throw new NotImplementedException();
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Retrieves an idea based on the specified field and value using HTTP GET method.
+    /// </summary>
+    /// <param name="field">The field to search by (e.g., "id" or "title").</param>
+    /// <param name="valueToSearch">The value to search for in the specified field.</param>
+    /// <returns>
+    /// An instance of the Idea class if an idea with the specified field and value is found.
+    /// Throws EntityNotFoundException if no idea is found with the specified field and value.
+    /// Throws ArgumentException if the specified field is invalid.
+    /// </returns>
     public Idea GetByCriteria(string field, string valueToSearch)
     {
-        throw new NotImplementedException();
+        var idea =
+            field.ToLower() switch
+            {
+                "id" => this.GetById(valueToSearch),
+                "title" => this.GetByTitle(valueToSearch),
+                _ => throw new ArgumentException("Invalid field."),
+            }
+            ?? throw new EntityNotFoundException(
+                $"Idea with the field {field} and the value {valueToSearch} was not found."
+            );
+        return idea;
     }
 
     /// <inheritdoc/>
@@ -98,6 +117,17 @@ public class IdeaService : IService<Idea>
         Idea? idea = this.GetByCriteria("id", guid);
         this.ideaRepository.Delete(idea);
         return idea;
+    }
+
+    private Idea? GetByTitle(string title)
+    {
+        return this.ideaRepository.GetByCriteria(idea => idea.Title == title);
+    }
+
+    private Idea? GetById(string id)
+    {
+        Guid validGuid = GuidValidatorUtil.ValidateGuid(id);
+        return this.ideaRepository.GetByCriteria(idea => idea.Id == validGuid);
     }
 
     private Idea? GetByTitleWithinATopic(string title, string idTopic)
