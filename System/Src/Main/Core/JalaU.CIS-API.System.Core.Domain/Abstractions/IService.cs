@@ -21,6 +21,7 @@ public interface IService<T>
 
     /// <summary>
     /// Filter the entities by criteria.
+    /// Filter the entities by criteria.
     /// </summary>
     /// <param name="field">The field to search for.</param>
     /// <param name="valueToSearch">The value to search for.</param>

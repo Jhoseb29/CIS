@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace JalaU.CIS_API.System.Core.Application;
 
+using AutoMapper;
 using JalaU.CIS_API.System.Core.Domain;
 
 /// <summary>
