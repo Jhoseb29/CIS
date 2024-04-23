@@ -66,7 +66,7 @@ public class TopicService(
     {
         Topic topicValidated = this.Validator.ValidateEntityToSave(topicToSave);
         this.Validator.CheckDuplicateEntity(
-            this.GetByCriteria("title", topicValidated.Title),
+            this.GetByTitle(topicValidated.Title)!,
             "The Topic's title is already registered in the System."
         );
         this.Validator.AreThereErrors();
@@ -89,7 +89,7 @@ public class TopicService(
             entityRequestDTO
         );
         this.Validator.CheckDuplicateEntity(
-            this.GetByCriteria("title", updatedTopic.Title),
+            this.GetByTitle(updatedTopic.Title)!,
             "The Topic's title is already registered in the System."
         );
         this.Validator.AreThereErrors();

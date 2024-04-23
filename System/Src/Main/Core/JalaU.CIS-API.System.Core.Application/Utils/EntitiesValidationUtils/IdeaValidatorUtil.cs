@@ -4,6 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System.Net;
+using AutoMapper;
 using JalaU.CIS_API.System.Core.Domain;
 
 namespace JalaU.CIS_API.System.Core.Application;
@@ -13,29 +14,70 @@ namespace JalaU.CIS_API.System.Core.Application;
 /// </summary>
 public class IdeaValidatorUtil : AbstractValidator<Idea>
 {
+    private readonly Mapper topicMapper;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="IdeaValidatorUtil"/> class.
+    /// </summary>
+    public IdeaValidatorUtil()
+    {
+        var mapperConfigurationForTopics = new MapperConfiguration(configuration =>
+        {
+            configuration.CreateMap<IdeaRequestDTO, Idea>().ReverseMap();
+        });
+
+        this.topicMapper = new Mapper(mapperConfigurationForTopics);
+    }
+
     /// <inheritdoc/>
     public override Idea ValidateEntityToSave(BaseRequestDTO baseRequestDTO)
     {
-        return null!;
+        this.MessageLogDTOs = [];
+        IdeaRequestDTO ideaRequestDTO = this.ValidateIdeaRequestDTO(baseRequestDTO);
+
+        this.MessageLogDTOs.AddRange(
+            EntityValidatorUtil.ValidateBlankOrNullEntityFields(ideaRequestDTO)
+        );
+        return this.topicMapper.Map<Idea>(ideaRequestDTO);
     }
 
     /// <inheritdoc/>
     public override Idea ValidateEntityToUpdate(
-        Idea existingTopicToUpdate,
+        Idea existingIdeaToUpdate,
         BaseRequestDTO baseRequestDTO
     )
     {
-        return null!;
+        this.MessageLogDTOs = [];
+
+        IdeaRequestDTO ideaRequestDTO = this.ValidateIdeaRequestDTO(baseRequestDTO);
+        Idea updatedIdea = UpdatableEntityUtil<Idea>.UpdateEntities(
+            existingIdeaToUpdate,
+            ideaRequestDTO
+        );
+
+        EntityValidatorUtil.ValidateBlankOrNullEntityFields(updatedIdea);
+
+        return updatedIdea;
     }
 
     /// <summary>
-    /// Validates and casts a BaseRequestDTO to a TopicRequestDTO.
+    /// Validates and casts a BaseRequestDTO to an IdeaRequestDTO.
     /// </summary>
     /// <param name="baseRequestDTO">The BaseRequestDTO to validate and cast.</param>
-    /// <returns>The validated TopicRequestDTO.</returns>
+    /// <returns>The validated IdeaRequestDTO.</returns>
     /// <exception cref="WrongDataException">Thrown when the validation fails.</exception>
-    private TopicRequestDTO ValidateIdeaDTO(BaseRequestDTO baseRequestDTO)
+    private IdeaRequestDTO ValidateIdeaRequestDTO(BaseRequestDTO baseRequestDTO)
     {
-        return null!;
+        try
+        {
+            return (IdeaRequestDTO)baseRequestDTO;
+        }
+        catch (Exception exception)
+        {
+            this.MessageLogDTOs.Add(
+                new MessageLogDTO((int)HttpStatusCode.UnprocessableEntity, exception.Message)
+            );
+            throw new WrongDataException("errors", this.MessageLogDTOs);
+        }
     }
 }

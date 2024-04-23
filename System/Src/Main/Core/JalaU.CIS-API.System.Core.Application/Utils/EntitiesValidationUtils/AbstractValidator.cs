@@ -61,14 +61,20 @@ public abstract class AbstractValidator<T>
         }
     }
 
-    private void CheckBadWords(string field, Topic instance)
+    /// <summary>
+    /// Checks for the presence of bad words in a specified field of the provided instance.
+    /// If any bad words are found, logs a message indicating the presence of the bad word.
+    /// </summary>
+    /// <param name="fieldName">The name of the field for which we check for bad words.</param>
+    /// <param name="fieldToAnalyze">The field in which to check for bad words.</param>
+    protected void CheckBadWords(string fieldName, string fieldToAnalyze)
     {
-        if (BadWordsChecker.AreThereAnyBadWords(field, instance))
+        if (BadWordsChecker.BadWordsInText(fieldToAnalyze))
         {
             this.MessageLogDTOs.Add(
                 new MessageLogDTO(
                     (int)HttpStatusCode.UnprocessableContent,
-                    $"There's a bad word is a badword and can't be in the Entity's {field}"
+                    $"There's a bad word is a badword and can't be in the Entity's {fieldName}."
                 )
             );
         }
