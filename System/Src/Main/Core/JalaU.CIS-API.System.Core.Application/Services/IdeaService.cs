@@ -11,43 +11,22 @@ using JalaU.CIS_API.System.Core.Domain;
 /// <summary>
 /// Represents a service for managing ideas.
 /// </summary>
-/// <remarks>
-/// Initializes a new instance of the <see cref="IdeaService"/> class.
-/// </remarks>
-public class IdeaService : IService<Idea>
+/// <param name="ideaRepository">The repository for Idea entities.</param>
+/// <param name="topicService">The service for Topic entities.</param>
+/// <param name="validator">The validator for Idea entities.</param>
+/// <param name="entityFilter">The entityFilter for Idea entities.</param>
+public class IdeaService(
+    IRepository<Idea> ideaRepository,
+    IService<Topic> topicService,
+    AbstractValidator<Idea> validator,
+    EntityFilter<Idea> entityFilter
+) : IService<Idea>
 {
-    private readonly Mapper ideaMapper;
-    private readonly IRepository<Idea> ideaRepository;
-    private readonly IService<Topic> topicService;
-    private readonly EntityFilter<Idea> filters;
+    private readonly IRepository<Idea> ideaRepository = ideaRepository;
+    private readonly IService<Topic> topicService = topicService;
+    private readonly EntityFilter<Idea> filters = entityFilter;
 
-    private AbstractValidator<Idea> Validator { get; set; }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="IdeaService"/> class.
-    /// </summary>
-    /// <param name="ideaRepository">The repository for Idea entities.</param>
-    /// <param name="topicService">The service for Topic entities.</param>
-    /// <param name="validator">The validator for Idea entities.</param>
-    /// <param name="entityFilter">The entityFilter for Idea entities.</param>
-    public IdeaService(
-        IRepository<Idea> ideaRepository,
-        IService<Topic> topicService,
-        AbstractValidator<Idea> validator,
-        EntityFilter<Idea> entityFilter
-    )
-    {
-        this.ideaRepository = ideaRepository;
-        this.topicService = topicService;
-        this.Validator = validator;
-        this.filters = entityFilter;
-        var mapperConfigurationForTopics = new MapperConfiguration(configuration =>
-        {
-            configuration.CreateMap<IdeaRequestDTO, Idea>().ReverseMap();
-        });
-
-        this.ideaMapper = new Mapper(mapperConfigurationForTopics);
-    }
+    private AbstractValidator<Idea> Validator { get; set; } = validator;
 
     /// <inheritdoc/>
     public Idea Save(BaseRequestDTO ideaToSave)

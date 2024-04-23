@@ -34,16 +34,9 @@ public class TopicRepository(AppDbContext appDbContext) : IRepository<Topic>
     /// <inheritdoc/>
     public Topic Update(Topic entity)
     {
-        try
-        {
-            this.appDbContext.Update(entity);
-            this.appDbContext.SaveChanges();
-            return entity;
-        }
-        catch (DbUpdateException)
-        {
-            throw new DuplicateEntryException("The Topic's title already exists in the System.");
-        }
+        this.appDbContext.Update(entity);
+        this.appDbContext.SaveChanges();
+        return entity;
     }
 
     /// <inheritdoc/>

@@ -189,6 +189,12 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
             var topic = this.service.DeleteById(topicId);
             return this.Ok(topic);
         }
+        catch (EntityNotFoundException notFoundException)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
+            );
+        }
         catch (WrongDataException wrongDataException)
         {
             errorList.AddRange(wrongDataException.MessageLogs);
