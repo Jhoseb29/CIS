@@ -20,7 +20,7 @@ public class IdeaService : IService<Idea>
     private readonly IRepository<Idea> ideaRepository;
     private readonly EntityFilter<Idea> filters;
 
-    private IValidator<Idea> Validator { get; set; }
+    private AbstractValidator<Idea> Validator { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="IdeaService"/> class.
@@ -29,9 +29,10 @@ public class IdeaService : IService<Idea>
     /// <param name="validator">The validator for Idea entities.</param>
     /// <param name="entityFilter">The entityFilter for Idea entities.</param>
     public IdeaService(
-    IRepository<Idea> ideaRepository,
-    IValidator<Idea> validator,
-    EntityFilter<Idea> entityFilter)
+        IRepository<Idea> ideaRepository,
+        AbstractValidator<Idea> validator,
+        EntityFilter<Idea> entityFilter
+    )
     {
         this.ideaRepository = ideaRepository;
         this.Validator = validator;
@@ -45,7 +46,7 @@ public class IdeaService : IService<Idea>
     }
 
     /// <inheritdoc/>
-    public List<Idea> GetAll()
+    public List<Idea> GetAll(GetAllEntitiesRequestDTO getAllEntitiesRequestDTO)
     {
         throw new NotImplementedException();
     }
@@ -72,12 +73,6 @@ public class IdeaService : IService<Idea>
             ?? throw new EntityNotFoundException(
                 $"Idea with the field {field} and the value {valueToSearch} was not found.");
         return idea;
-    }
-
-    /// <inheritdoc/>
-    public List<Idea> FilterEntities(string filter, string keyword)
-    {
-        throw new NotImplementedException();
     }
 
     /// <inheritdoc/>

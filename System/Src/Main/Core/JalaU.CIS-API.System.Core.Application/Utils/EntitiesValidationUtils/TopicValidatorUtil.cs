@@ -4,6 +4,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System.Net;
+using System.Reflection;
+using AutoMapper;
 using JalaU.CIS_API.System.Core.Domain;
 
 namespace JalaU.CIS_API.System.Core.Application;
@@ -11,30 +13,40 @@ namespace JalaU.CIS_API.System.Core.Application;
 /// <summary>
 /// Provides utility methods for validating Topic entities.
 /// </summary>
-public class TopicValidatorUtil : IValidator<Topic>
+public class TopicValidatorUtil : AbstractValidator<Topic>
 {
+    private readonly Mapper topicMapper;
+
     /// <summary>
-    /// Gets or sets list of message logs generated during entity validation.
+    /// Initializes a new instance of the <see cref="TopicValidatorUtil"/> class.
     /// </summary>
-    public List<MessageLogDTO> MessageLogDTOs { get; set; } = [];
+    public TopicValidatorUtil()
+    {
+        var mapperConfigurationForTopics = new MapperConfiguration(configuration =>
+        {
+            configuration.CreateMap<TopicRequestDTO, Topic>().ReverseMap();
+        });
+
+        this.topicMapper = new Mapper(mapperConfigurationForTopics);
+    }
 
     /// <inheritdoc/>
-    public void ValidateEntityToSave(BaseRequestDTO baseRequestDTO)
+    public override Topic ValidateEntityToSave(BaseRequestDTO baseRequestDTO)
     {
         this.MessageLogDTOs = [];
         TopicRequestDTO topicRequestDTO = this.ValidateTopicDTO(baseRequestDTO);
 
         this.MessageLogDTOs.AddRange(
-            EntityValidatorUtil.ValidateBlankOrNullEntityFields(baseRequestDTO)
+            EntityValidatorUtil.ValidateBlankOrNullEntityFields(topicRequestDTO)
         );
-        if (this.MessageLogDTOs.Count > 0)
-        {
-            throw new WrongDataException("errors", this.MessageLogDTOs);
-        }
+        return this.topicMapper.Map<Topic>(topicRequestDTO);
     }
 
     /// <inheritdoc/>
-    public Topic ValidateEntityToUpdate(Topic existingTopicToUpdate, BaseRequestDTO baseRequestDTO)
+    public override Topic ValidateEntityToUpdate(
+        Topic existingTopicToUpdate,
+        BaseRequestDTO baseRequestDTO
+    )
     {
         this.MessageLogDTOs = [];
 
@@ -45,11 +57,6 @@ public class TopicValidatorUtil : IValidator<Topic>
         );
 
         EntityValidatorUtil.ValidateBlankOrNullEntityFields(updatedTopic);
-
-        if (this.MessageLogDTOs.Count > 0)
-        {
-            throw new WrongDataException("errors", this.MessageLogDTOs);
-        }
 
         return updatedTopic;
     }

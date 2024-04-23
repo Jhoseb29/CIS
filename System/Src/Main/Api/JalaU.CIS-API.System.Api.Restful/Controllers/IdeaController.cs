@@ -38,16 +38,26 @@ public class IdeaController(ILogger<IdeaController> logger, IService<Idea> servi
     [HttpDelete("{ideaId}")]
     public ActionResult DeleteIdea(string ideaId)
     {
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
         try
         {
             var idea = this.service.DeleteById(ideaId);
             return this.Ok(idea);
         }
-        catch (Exception ex)
+        catch (WrongDataException wrongDataException)
         {
-            this.logger.LogError(ex, "Error deleting idea.");
-            return this.StatusCode((int)HttpStatusCode.InternalServerError);
+            errorList.AddRange(wrongDataException.MessageLogs);
         }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
+        }
+
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
     }
 
     /// <summary>

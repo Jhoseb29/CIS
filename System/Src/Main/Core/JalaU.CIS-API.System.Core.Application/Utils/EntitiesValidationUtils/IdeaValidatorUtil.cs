@@ -11,18 +11,19 @@ namespace JalaU.CIS_API.System.Core.Application;
 /// <summary>
 /// Provides utility methods for validating Topic entities.
 /// </summary>
-public class IdeaValidatorUtil : IValidator<Idea>
+public class IdeaValidatorUtil : AbstractValidator<Idea>
 {
-    /// <summary>
-    /// Gets or sets list of message logs generated during entity validation.
-    /// </summary>
-    public List<MessageLogDTO> MessageLogDTOs { get; set; } = [];
+    /// <inheritdoc/>
+    public override Idea ValidateEntityToSave(BaseRequestDTO baseRequestDTO)
+    {
+        return null!;
+    }
 
     /// <inheritdoc/>
-    public void ValidateEntityToSave(BaseRequestDTO baseRequestDTO) { }
-
-    /// <inheritdoc/>
-    public Idea ValidateEntityToUpdate(Idea existingTopicToUpdate, BaseRequestDTO baseRequestDTO)
+    public override Idea ValidateEntityToUpdate(
+        Idea existingTopicToUpdate,
+        BaseRequestDTO baseRequestDTO
+    )
     {
         return null!;
     }
