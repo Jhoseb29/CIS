@@ -26,4 +26,27 @@ public class IdeaController(ILogger<IdeaController> logger, IService<Idea> servi
 {
     private readonly IService<Idea> service = service;
     private readonly ILogger<IdeaController> logger = logger;
+
+    /// <summary>
+    /// Deletes an idea by its ID using HTTP DELETE method.
+    /// </summary>
+    /// <param name="ideaId">The ID of the idea to be deleted.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the updated idea in the body.
+    /// An HTTP 400 Bad Request response with all error details.
+    /// </returns>
+    [HttpDelete("{ideaId}")]
+    public ActionResult DeleteIdea(string ideaId)
+    {
+        try
+        {
+            var idea = this.service.DeleteById(ideaId);
+            return this.Ok(idea);
+        }
+        catch (Exception ex)
+        {
+            this.logger.LogError(ex, "Error deleting idea.");
+            return this.StatusCode((int)HttpStatusCode.InternalServerError);
+        }
+    }
 }

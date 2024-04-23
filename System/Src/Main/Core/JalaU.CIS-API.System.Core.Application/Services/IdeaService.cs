@@ -78,6 +78,8 @@ public class IdeaService : IService<Idea>
     /// <inheritdoc/>
     public Idea DeleteById(string guid)
     {
-        throw new NotImplementedException();
+        Idea? idea = this.GetByCriteria("id", guid);
+        this.ideaRepository.Delete(idea);
+        return idea;
     }
 }
