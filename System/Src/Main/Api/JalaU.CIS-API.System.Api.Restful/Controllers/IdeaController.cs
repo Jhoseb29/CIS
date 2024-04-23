@@ -28,6 +28,46 @@ public class IdeaController(ILogger<IdeaController> logger, IService<Idea> servi
     private readonly ILogger<IdeaController> logger = logger;
 
     /// <summary>
+    /// Saves a topic by its ID using HTTP DELETE method.
+    /// </summary>
+    /// <param name="topic">The ID of the topic to be deleted.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the updated topic in the body.
+    /// An HTTP 400 Bad Request response with all error details.
+    /// </returns>
+    [HttpPost]
+    public ActionResult SaveTopic(IdeaRequestDTO topic)
+    {
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
+        try
+        {
+            Topic savedTopic = this.service.Save(topic);
+
+            return this.StatusCode((int)HttpStatusCode.Created, savedTopic);
+        }
+        catch (DuplicateEntryException duplicateEntryException)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.Conflict, duplicateEntryException.Message)
+            );
+        }
+        catch (WrongDataException wrongDataException)
+        {
+            errorList.AddRange(wrongDataException.MessageLogs);
+        }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
+        }
+
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
+    }
+
+    /// <summary>
     /// Deletes an idea by its ID using HTTP DELETE method.
     /// </summary>
     /// <param name="ideaId">The ID of the idea to be deleted.</param>
