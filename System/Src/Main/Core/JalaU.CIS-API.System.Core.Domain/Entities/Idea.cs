@@ -40,7 +40,7 @@ public class Idea
     /// Gets or sets the date when the idea was created.
     /// </summary>
     [Column("date")]
-    public required DateTime Date { get; set; }
+    public required DateTime Date { get; set; } = DateTime.Now;
 
     /// <summary>
     /// Gets or sets the unique identifier of the user who created the idea.

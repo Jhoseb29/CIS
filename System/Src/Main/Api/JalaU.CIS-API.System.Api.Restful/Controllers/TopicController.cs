@@ -135,7 +135,7 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     /// An HTTP 400 Bad Request response with all error details.
     /// </returns>
     [HttpPut("{topicId}")]
-    public ActionResult UpdateTopicById([FromBody] TopicRequestDTO topicRequestDto, string topicId)
+    public ActionResult UpdateTopicById([FromBody] IdeaRequestDTO topicRequestDto, string topicId)
     {
         List<object> errorList = [];
         Dictionary<string, object> errorMap = [];
@@ -213,7 +213,7 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     /// An HTTP 400 Bad Request response with all error details.
     /// </returns>
     [HttpPost]
-    public ActionResult SaveTopic(TopicRequestDTO topic)
+    public ActionResult SaveTopic(IdeaRequestDTO topic)
     {
         List<object> errorList = [];
         Dictionary<string, object> errorMap = [];

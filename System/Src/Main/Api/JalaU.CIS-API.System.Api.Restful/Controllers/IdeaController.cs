@@ -30,21 +30,21 @@ public class IdeaController(ILogger<IdeaController> logger, IService<Idea> servi
     /// <summary>
     /// Saves a topic by its ID using HTTP DELETE method.
     /// </summary>
-    /// <param name="topic">The ID of the topic to be deleted.</param>
+    /// <param name="ideaRequestDTO">The ID of the topic to be deleted.</param>
     /// <returns>
     /// An HTTP 200 OK response with the updated topic in the body.
     /// An HTTP 400 Bad Request response with all error details.
     /// </returns>
     [HttpPost]
-    public ActionResult SaveTopic(IdeaRequestDTO topic)
+    public ActionResult SaveIdea(IdeaRequestDTO ideaRequestDTO)
     {
         List<object> errorList = [];
         Dictionary<string, object> errorMap = [];
         try
         {
-            Topic savedTopic = this.service.Save(topic);
+            Idea savedIdea = this.service.Save(ideaRequestDTO);
 
-            return this.StatusCode((int)HttpStatusCode.Created, savedTopic);
+            return this.StatusCode((int)HttpStatusCode.Created, savedIdea);
         }
         catch (DuplicateEntryException duplicateEntryException)
         {

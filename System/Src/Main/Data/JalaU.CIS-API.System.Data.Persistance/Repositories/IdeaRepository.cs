@@ -27,7 +27,6 @@ public class IdeaRepository(AppDbContext appDbContext) : IRepository<Idea>
     public Idea Save(Idea entity)
     {
         this.appDbContext.Add(entity);
-        this.appDbContext.Update(entity);
         this.appDbContext.SaveChanges();
         return entity;
     }
@@ -51,9 +50,7 @@ public class IdeaRepository(AppDbContext appDbContext) : IRepository<Idea>
     public Idea Delete(Idea entity)
     {
         this.appDbContext.ideas.Remove(entity);
-
         this.appDbContext.SaveChanges();
-
         return entity;
     }
 
