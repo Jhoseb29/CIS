@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="IdeaRepository.cs" company="Jala University">
+// <copyright file="VoteRepository.cs" company="Jala University">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -9,22 +9,22 @@ using JalaU.CIS_API.System.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 
 /// <summary>
-/// Initializes a new instance of the <see cref="IdeaRepository"/> class.
+/// Initializes a new instance of the <see cref="VoteRepository"/> class.
 /// </summary>
 /// <param name="appDbContext">The database context used for database operations.</param>
-public class IdeaRepository(AppDbContext appDbContext) : IRepository<Idea>
+public class VoteRepository(AppDbContext appDbContext) : IRepository<Vote>
 {
     private readonly AppDbContext appDbContext = appDbContext;
 
     /// <inheritdoc/>
-    public IEnumerable<Idea> GetAll()
+    public IEnumerable<Vote> GetAll()
     {
-        List<Idea> ideaList = [.. this.appDbContext.ideas];
-        return ideaList;
+        List<Vote> votesList = [.. this.appDbContext.votes];
+        return votesList;
     }
 
     /// <inheritdoc/>
-    public Idea Save(Idea entity)
+    public Vote Save(Vote entity)
     {
         this.appDbContext.Add(entity);
         this.appDbContext.SaveChanges();
@@ -32,7 +32,7 @@ public class IdeaRepository(AppDbContext appDbContext) : IRepository<Idea>
     }
 
     /// <inheritdoc/>
-    public Idea Update(Idea entity)
+    public Vote Update(Vote entity)
     {
         this.appDbContext.Update(entity);
         this.appDbContext.SaveChanges();
@@ -40,17 +40,19 @@ public class IdeaRepository(AppDbContext appDbContext) : IRepository<Idea>
     }
 
     /// <inheritdoc/>
-    public Idea Delete(Idea entity)
+    public Vote Delete(Vote entity)
     {
-        this.appDbContext.ideas.Remove(entity);
+        this.appDbContext.votes.Remove(entity);
+
         this.appDbContext.SaveChanges();
+
         return entity;
     }
 
     /// <inheritdoc/>
-    public Idea? GetByCriteria(Func<Idea, bool> criteria)
+    public Vote? GetByCriteria(Func<Vote, bool> criteria)
     {
-        Idea? idea = this.appDbContext.ideas.FirstOrDefault(criteria);
-        return idea;
+        Vote? vote = this.appDbContext.votes.FirstOrDefault(criteria);
+        return vote;
     }
 }

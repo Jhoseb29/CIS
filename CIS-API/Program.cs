@@ -35,6 +35,11 @@ builder.Services.AddScoped<IRepository<Idea>, IdeaRepository>();
 builder.Services.AddScoped<AbstractValidator<Idea>, IdeaValidatorUtil>();
 builder.Services.AddSingleton<EntityFilter<Idea>, IdeaFilters>();
 
+builder.Services.AddScoped<IService<Vote>, VoteService>();
+builder.Services.AddScoped<IRepository<Vote>, VoteRepository>();
+builder.Services.AddScoped<AbstractValidator<Vote>, VoteValidatorUtil>();
+builder.Services.AddSingleton<EntityFilter<Vote>, VoteFilters>();
+
 builder.Services.AddScoped<EnforceJsonResponseFilter>();
 
 builder.Services.AddEndpointsApiExplorer();
