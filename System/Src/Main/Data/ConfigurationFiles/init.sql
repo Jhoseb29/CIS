@@ -7,7 +7,7 @@ CREATE TABLE users
   login     VARCHAR(20) NOT NULL,
   password  VARCHAR(100) NOT NULL,
   PRIMARY KEY (id),
-  UNIQUE INDEX `id_UNIQUE` (id ASC) 
+  UNIQUE INDEX id_UNIQUE (id ASC) 
 );
 
 CREATE TABLE topics (
@@ -34,7 +34,8 @@ CREATE TABLE ideas
     PRIMARY KEY (id),
     FOREIGN KEY(userId) REFERENCES users(id),
     FOREIGN KEY(topicId) REFERENCES topics(id),
-    UNIQUE INDEX id_UNIQUE (id ASC)
+    UNIQUE INDEX id_UNIQUE (id ASC),
+    UNIQUE INDEX unique_title_per_topic (title, topicId) 
 );
 
 CREATE TABLE votes
@@ -46,17 +47,21 @@ CREATE TABLE votes
     PRIMARY KEY (id),
     FOREIGN KEY(userId) REFERENCES users(id),
     FOREIGN KEY(ideaId) REFERENCES ideas(id),
-    UNIQUE INDEX id_UNIQUE (id ASC)
+    UNIQUE INDEX id_UNIQUE (id ASC),
+    UNIQUE INDEX unique_user_idea_vote (userId, ideaId) 
 );
 
-INSERT INTO users (id, name, login, password) 
-VALUES ('550e8400-e29b-41d4-a716-446655440000', 'John Doe', 'john_doe', 'password123');
+-- TRIGGER PARA BORRAR TOPICOS BORRANDO PRIMERO VOTOS E IDEAS RELACIONADAS AUTOMATICAMENTE
+DELIMITER $$
+CREATE TRIGGER before_topic_delete
+BEFORE DELETE ON topics
+FOR EACH ROW
+BEGIN
+    -- Borra los votos relacionados con las ideas que se están eliminando
+    DELETE FROM votes WHERE ideaId IN (SELECT id FROM ideas WHERE topicId = OLD.id);
 
-INSERT INTO topics (id, title, description, date, labels, userId) 
-VALUES ('550e8400-e29b-41d4-a716-446655440001', 'Study Habits', 'Effective study habits for better learning', '2024-04-08', '["#sleep", "#learning"]', '550e8400-e29b-41d4-a716-446655440000');
+    -- Borra las ideas relacionadas con el tema que se está eliminando
+    DELETE FROM ideas WHERE topicId = OLD.id;
 
-INSERT INTO ideas (id, title, description, date, userId, topicId) 
-VALUES ('550e8400-e29b-41d4-a716-446655440002', 'Pomodoro Technique', 'Use Pomodoro Technique for focused study sessions', '2024-04-08', '550e8400-e29b-41d4-a716-446655440000', '550e8400-e29b-41d4-a716-446655440001');
-
-INSERT INTO votes (id, positive, userId, ideaId) 
-VALUES ('550e8400-e29b-41d4-a716-446655440003', TRUE, '550e8400-e29b-41d4-a716-446655440000', '550e8400-e29b-41d4-a716-446655440002');
+END$$
+DELIMITER ;

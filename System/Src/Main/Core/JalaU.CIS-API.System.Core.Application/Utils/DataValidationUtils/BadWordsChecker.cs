@@ -1,16 +1,17 @@
 //-----------------------------------------------------------------------
-// <copyright file="BadWords.cs" company="Jala University">
+// <copyright file="BadWordsChecker.cs" company="Jala University">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
 using System.Globalization;
+using System.Reflection;
 
 namespace JalaU.CIS_API.System.Core.Application;
 
 /// <summary>
 /// Class ValidatorCreateTopic responsible for validating topic creation.
 /// </summary>
-public class BadWords
+public class BadWordsChecker
 {
     /// <summary>
     /// The list of default profane words.
@@ -1872,45 +1873,42 @@ public class BadWords
     ];
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BadWords"/> class.
+    /// Gets the list of profane words.
     /// </summary>
-    public BadWords()
+    public List<string> Profanities { get; }
+
+    private static readonly char[] Separator = [' ', ',', '.', ':', ';'];
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BadWordsChecker"/> class.
+    /// </summary>
+    public BadWordsChecker()
     {
         this.Profanities = new List<string>(this.badList);
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BadWords"/> class with the specified list of profanity.
+    /// Checks if the specified field of the provided instance contains any value.
     /// </summary>
-    /// <param name="profanityList">The list of profanity to initialize the <see cref="BadWords"/> with.</param>
-    protected BadWords(string[] profanityList)
+    /// <typeparam name="T">The type of the instance.</typeparam>
+    /// <param name="field">The name of the field to check.</param>
+    /// <param name="instance">The instance to check.</param>
+    /// <returns>
+    /// <c>true</c> if the specified field of the provided instance contains a non-null value; otherwise, <c>false</c>.
+    /// </returns>
+    public static bool AreThereAnyBadWords<T>(string field, T instance)
     {
-        if (profanityList == null)
+        PropertyInfo propertyInfo = typeof(T).GetProperty(field)!;
+        if (propertyInfo != null)
         {
-            throw new ArgumentNullException(nameof(profanityList));
+            var fieldValue = propertyInfo.GetValue(instance)?.ToString();
+            if (fieldValue != null)
+            {
+                return true;
+            }
         }
-
-        this.Profanities = new List<string>(profanityList);
+        return false;
     }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="BadWords"/> class with the specified list of profanity.
-    /// </summary>
-    /// <param name="profanityList">The list of profanity to initialize the <see cref="BadWords"/> with.</param>
-    protected BadWords(List<string> profanityList)
-    {
-        if (profanityList == null)
-        {
-            throw new ArgumentNullException(nameof(profanityList));
-        }
-
-        this.Profanities = profanityList;
-    }
-
-    /// <summary>
-    /// Gets the list of profane words.
-    /// </summary>
-    public List<string> Profanities { get; }
 
     /// <summary>
     /// Adds a profanity to the collection.
@@ -1924,34 +1922,6 @@ public class BadWords
         }
 
         this.Profanities.Add(profanity);
-    }
-
-    /// <summary>
-    /// Adds an array of profanity to the collection.
-    /// </summary>
-    /// <param name="profanityList">The array of profanity to add.</param>
-    public void AddProfanity(string[] profanityList)
-    {
-        if (profanityList == null)
-        {
-            throw new ArgumentNullException(nameof(profanityList));
-        }
-
-        this.Profanities.AddRange(profanityList);
-    }
-
-    /// <summary>
-    /// Adds a list of profanity to the collection.
-    /// </summary>
-    /// <param name="profanityList">The list of profanity to add.</param>
-    public void AddProfanity(List<string> profanityList)
-    {
-        if (profanityList == null)
-        {
-            throw new ArgumentNullException(nameof(profanityList));
-        }
-
-        this.Profanities.AddRange(profanityList);
     }
 
     /// <summary>
@@ -1970,60 +1940,6 @@ public class BadWords
     }
 
     /// <summary>
-    /// Removes a list of profanity from the collection.
-    /// </summary>
-    /// <param name="profanities">The list of profanity to remove.</param>
-    /// <returns><c>true</c> if all profanities are successfully removed; otherwise, <c>false</c>.</returns>
-    public bool RemoveProfanity(List<string> profanities)
-    {
-        if (profanities == null)
-        {
-            throw new ArgumentNullException(nameof(profanities));
-        }
-
-        foreach (string profanity in profanities)
-        {
-            if (!this.RemoveProfanity(profanity))
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /// <summary>
-    /// Removes an array of profanity from the collection.
-    /// </summary>
-    /// <param name="profanities">The array of profanity to remove.</param>
-    /// <returns><c>true</c> if all profanities are successfully removed; otherwise, <c>false</c>.</returns>
-    public bool RemoveProfanity(string[] profanities)
-    {
-        if (profanities == null)
-        {
-            throw new ArgumentNullException(nameof(profanities));
-        }
-
-        foreach (string profanity in profanities)
-        {
-            if (!this.RemoveProfanity(profanity))
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /// <summary>
-    /// Clears all profanity from the collection.
-    /// </summary>
-    public void Clear()
-    {
-        this.Profanities.Clear();
-    }
-
-    /// <summary>
     /// Checks if profanity exists in the given text.
     /// </summary>
     /// <param name="text">The text to check for profanity.</param>
@@ -2035,8 +1951,8 @@ public class BadWords
             return false;
         }
 
-        string[] wordsplit = text.Split(new[] { ' ', ',', '.', ':', ';' }, StringSplitOptions.RemoveEmptyEntries);
+        string[] wordsplit = text.Split(Separator, StringSplitOptions.RemoveEmptyEntries);
 
-        return wordsplit.Any(p => this.Profanities.Contains(p.ToLower()));
+        return wordsplit.Any(word => this.Profanities.Contains(word.ToLower()));
     }
 }

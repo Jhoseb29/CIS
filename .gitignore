@@ -19,4 +19,11 @@ packages/
 *.log
 *.vs
 .vscode/
+.idea
 *.tmp
+
+# Ignore files within the TestResults directory
+**/TestResults/*
+
+# Ignore coverage.json files
+**/coverage.json

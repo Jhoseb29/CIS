@@ -3,12 +3,12 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+
 namespace JalaU.CIS_API.System.Api.Restful;
 
 using global::System.Net;
 using JalaU.CIS_API.System.Core.Application;
 using JalaU.CIS_API.System.Core.Domain;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -29,159 +29,218 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     private readonly ILogger<TopicController> logger = logger;
 
     /// <summary>
-    /// Retrieves a list of topics.
+    /// Retrieves a paginated list of topics.
     /// </summary>
-    /// <param name="pageSize">The number of topics per page. If null, all topics are returned.</param>
-    /// <param name="pageNumber">The page number to retrieve. Default is 1.</param>
-    /// <returns>An action result containing a dictionary with information about topics.</returns>
+    /// <param name="pageSize">Optional. The number of topics to include in a page.</param>
+    /// <param name="pageNumber">Optional. The page number to retrieve.</param>
+    /// <param name="orderBy"> orderBy. </param>
+    /// <param name="order"> order.</param>
+    /// <param name="filter"> filter.</param>
+    /// <param name="keyword">keyword.</param>
+    /// <returns>
+    /// An action result containing a dictionary with information about topics.
+    /// </returns>
     [HttpGet]
-    public ActionResult GetTopics([FromQuery] int? pageSize, [FromQuery] int pageNumber = 1)
+    public ActionResult GetTopics(
+        [FromQuery] int pageSize = 5,
+        [FromQuery] int pageNumber = 1,
+        [FromQuery] string orderBy = "title",
+        [FromQuery] string order = "asc",
+        [FromQuery] string filter = "",
+        [FromQuery] string keyword = ""
+    )
     {
-        if (pageNumber != 1)
-        {
-            pageNumber = 1;
-        }
-
-        // Method to inject data without injecting directly on the database, for proofing purposes.
-        // List<Topic> topicRepo = this.GenerateSampleTopics(15);
-        List<Topic> topicRepo = this.service.GetAll();
-
-        int startIndex = (pageNumber - 1) * (pageSize ?? topicRepo.Count); // If pageSize is null, show all records.
-        int endIndex = Math.Min(startIndex + (pageSize ?? topicRepo.Count), topicRepo.Count);
-
-        List<Topic> topicList = topicRepo.GetRange(startIndex, endIndex - startIndex);
-
-        Dictionary<string, object> topicsMap = new ()
-        {
-            { "count", topicList.Count },
-            { "topics", topicList },
-        };
-
-        if (topicList.Count == 0)
-        {
-            return this.NotFound();
-        }
-        else
-        {
-            return this.Ok(topicsMap);
-        }
-    }
-
-    /// <summary>
-    /// Retrieves a single topic by its ID.
-    /// </summary>
-    /// <param name="topicId">The ID of the topic to retrieve.</param>
-    /// <returns>An action result containing the retrieved topic,
-    /// or NotFound if no topic is found with the specified ID.</returns>
-    [HttpGet("{topicId}")]
-    public ActionResult GetTopicById(Guid topicId)
-    {
-        Topic topic = this.service.GetById(topicId);
-
-        if (topic == null)
-        {
-            return this.NotFound();
-        }
-        else
-        {
-            return this.Ok(topic);
-        }
-    }
-
-    /// <summary>
-    /// Retrieves a single topic by its ID.
-    /// </summary>
-    /// <param name="title">The title of the topic to retrieve.</param>
-    /// <returns>An action result containing the retrieved topic,
-    /// or NotFound if no topic is found with the specified ID.</returns>
-    [HttpGet("title")]
-    public ActionResult GetTopicByTitle(string title)
-    {
-        Topic topic = this.service.GetByTitle(title);
-
-        if (topic == null)
-        {
-            return this.NotFound();
-        }
-        else
-        {
-            return this.Ok(topic);
-        }
-    }
-
-    /// <summary>
-    /// Filter the Topics by two filters.
-    /// </summary>
-    /// <param name="filter">The type of filter that will be applied.</param>
-    /// <param name="keyword">The key word to apply the filter.</param>
-    /// <returns>The entity with the characteristics asked.</returns>
-    [HttpGet("filter")]
-    public ActionResult FilterTopics(string filter, string keyword)
-        {
-            try
-            {
-                List<Topic> filteredTopics = this.service.FilterEntities(filter, keyword);
-
-                if (filteredTopics.Count == 0)
-                {
-                    return this.NotFound();
-                }
-                else
-                {
-                    return this.Ok(filteredTopics);
-                }
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogError(ex, "An error occurred while filtering topics.");
-                return this.StatusCode((int)HttpStatusCode.InternalServerError);
-            }
-        }
-
-    /// <summary>
-    /// Simulate a list of topics like it were came from a database.
-    /// </summary>
-    /// <returns>A bunch of topics, depending on how much we specify on the call: List.<Topic> topicRepo = this.GenerateSampleTopics(15);.</returns>
-    private List<Topic> GenerateSampleTopics(int count)
-    {
-        List<Topic> topics = new List<Topic>();
-
-        for (int i = 0; i < count; i++)
-        {
-            topics.Add(new Topic
-            {
-                Id = Guid.NewGuid(),
-                Title = $"Topic Title {i + 1}",
-                Description = $"Topic Description {i + 1}",
-                Date = DateTime.Now.AddDays(-i),
-                Labels = new List<string> { $"Label {i + 1}" },
-                UserId = Guid.NewGuid(),
-            });
-        }
-
-        return topics;
-    }
-
-    [HttpPost]
-    public ActionResult SaveTopic(Topic Topic)
-    {
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
         try
         {
-            Topic topic = this.service.Save(Topic);
+            var getAllEntitiesDTO = new GetAllEntitiesRequestDTO
+            {
+                PageSize = pageSize,
+                PageNumber = pageNumber,
+                OrderBy = orderBy,
+                Order = order,
+                Filter = filter,
+                Keyword = keyword,
+            };
 
-        if (topic == null)
-        {
-            return this.NotFound();
+            var topics = this.service.GetAll(getAllEntitiesDTO);
+
+            return this.Ok(new { count = topics.Count, topics });
         }
-        else
+        catch (EntityNotFoundException notFoundException)
         {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
+            );
+        }
+        catch (WrongDataException wrongDataException)
+        {
+            errorList.AddRange(wrongDataException.MessageLogs);
+        }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
+        }
+
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
+    }
+
+    /// <summary>
+    /// Retrieves a topic by criteria.
+    /// </summary>
+    /// <param name="topicId"> value To Search. </param>
+    /// <returns>topic.</returns>
+    [HttpGet("{topicId}")]
+    public ActionResult GetTopicById(string topicId)
+    {
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
+        try
+        {
+            Topic? topic = this.service.GetByCriteria("id", topicId);
             return this.Ok(topic);
         }
-        }
-        catch (Exception ex)
+        catch (EntityNotFoundException notFoundException)
         {
-            this.logger.LogError(ex, "An error occurred while Create topic.");
-            return this.StatusCode((int)HttpStatusCode.InternalServerError, "An error occurred while Create topic.");
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
+            );
         }
+        catch (WrongDataException wrongDataException)
+        {
+            errorList.AddRange(wrongDataException.MessageLogs);
+        }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
+        }
+
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
+    }
+
+    /// <summary>
+    /// Updates a topic by its ID using HTTP PUT method.
+    /// </summary>
+    /// <param name="topicRequestDto">The DTO (Data Transfer Object) containing updated topic information.</param>
+    /// <param name="topicId">The ID of the topic to be updated.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the updated topic in the body.
+    /// An HTTP 400 Bad Request response with all error details.
+    /// </returns>
+    [HttpPut("{topicId}")]
+    public ActionResult UpdateTopicById([FromBody] TopicRequestDTO topicRequestDto, string topicId)
+    {
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
+        try
+        {
+            var updatedTopic = this.service.Update(topicRequestDto, topicId);
+            return this.Ok(updatedTopic);
+        }
+        catch (EntityNotFoundException notFoundException)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
+            );
+        }
+        catch (DuplicateEntryException duplicateEntryException)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.Conflict, duplicateEntryException.Message)
+            );
+        }
+        catch (WrongDataException wrongDataException)
+        {
+            errorList.AddRange(wrongDataException.MessageLogs);
+        }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
+        }
+
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
+    }
+
+    /// <summary>
+    /// Deletes a topic by its ID using HTTP DELETE method.
+    /// </summary>
+    /// <param name="topicId">The ID of the topic to be deleted.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the updated topic in the body.
+    /// An HTTP 400 Bad Request response with all error details.
+    /// </returns>
+    [HttpDelete("{topicId}")]
+    public ActionResult DeleteTopic(string topicId)
+    {
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
+        try
+        {
+            var topic = this.service.DeleteById(topicId);
+            return this.Ok(topic);
+        }
+        catch (WrongDataException wrongDataException)
+        {
+            errorList.AddRange(wrongDataException.MessageLogs);
+        }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
+        }
+
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
+    }
+
+    /// <summary>
+    /// Saves a topic by its ID using HTTP DELETE method.
+    /// </summary>
+    /// <param name="topic">The ID of the topic to be deleted.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the updated topic in the body.
+    /// An HTTP 400 Bad Request response with all error details.
+    /// </returns>
+    [HttpPost]
+    public ActionResult SaveTopic(TopicRequestDTO topic)
+    {
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
+        try
+        {
+            Topic savedTopic = this.service.Save(topic);
+
+            return this.StatusCode((int)HttpStatusCode.Created, savedTopic);
+        }
+        catch (DuplicateEntryException duplicateEntryException)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.Conflict, duplicateEntryException.Message)
+            );
+        }
+        catch (WrongDataException wrongDataException)
+        {
+            errorList.AddRange(wrongDataException.MessageLogs);
+        }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
+        }
+
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
     }
 }
