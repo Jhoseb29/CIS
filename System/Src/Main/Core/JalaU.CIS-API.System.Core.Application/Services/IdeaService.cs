@@ -29,10 +29,9 @@ public class IdeaService : IService<Idea>
     /// <param name="validator">The validator for Idea entities.</param>
     /// <param name="entityFilter">The entityFilter for Idea entities.</param>
     public IdeaService(
-        IRepository<Idea> ideaRepository,
-        IValidator<Idea> validator,
-        EntityFilter<Idea> entityFilter
-    )
+    IRepository<Idea> ideaRepository,
+    IValidator<Idea> validator,
+    EntityFilter<Idea> entityFilter)
     {
         this.ideaRepository = ideaRepository;
         this.Validator = validator;
@@ -67,12 +66,11 @@ public class IdeaService : IService<Idea>
             field.ToLower() switch
             {
                 "id" => this.GetById(Guid.Parse(valueToSearch)),
-                "title" => this.GetByTitle(valueToSearch),
                 _ => throw new ArgumentException("Invalid field."),
             }
+
             ?? throw new EntityNotFoundException(
-                $"Idea with the field {field} and the value {valueToSearch} was not found."
-            );
+                $"Idea with the field {field} and the value {valueToSearch} was not found.");
         return idea;
     }
 
@@ -109,6 +107,7 @@ public class IdeaService : IService<Idea>
 
     private Idea? GetById(Guid id)
     {
+        Guid validGuid = GuidValidatorUtil.ValidateGuid(id);
         return this.ideaRepository.GetByCriteria(idea => idea.Id == id);
     }
 }

@@ -19,4 +19,9 @@ public class GuidValidatorUtil
     {
         return Guid.NewGuid();
     }
+
+    internal static Guid ValidateGuid(Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }

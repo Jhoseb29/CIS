@@ -51,37 +51,27 @@ public class IdeaController(ILogger<IdeaController> logger, IService<Idea> servi
     }
 
     /// <summary>
-    /// Retrieves an idea by its ID or title using HTTP GET method.
+    /// Retrieves an idea by its ID using HTTP GET method.
     /// </summary>
-    /// <param name="ideaIdOrTitle">The ID or title of the idea to retrieve.</param>
+    /// <param name="ideaId">The ID of the idea to retrieve.</param>
     /// <returns>
     /// An HTTP 200 OK response with the retrieved idea in the body if found.
     /// An HTTP 404 Not Found response if the idea is not found.
     /// </returns>
-    [HttpGet("{ideaIdOrTitle}")]
-    public IActionResult GetIdeaByCriteria(string ideaIdOrTitle)
+    [HttpGet("{ideaId}")]
+    public ActionResult GetIdeaByCriteria(string ideaId)
     {
         try
         {
-            if (Guid.TryParse(ideaIdOrTitle, out Guid _))
+            Idea? ideaById = this.service.GetByCriteria("id", ideaId);
+            if (ideaById != null)
             {
-                Idea? ideaById = this.service.GetByCriteria("id", ideaIdOrTitle);
-                if (ideaById != null)
-                {
-                    return this.Ok(ideaById);
-                }
+                return this.Ok(ideaById);
             }
-
-            Idea? ideaByTitle = this.service.GetByCriteria("title", ideaIdOrTitle);
-            if (ideaByTitle != null)
+            else
             {
-                return this.Ok(ideaByTitle);
+                return this.NotFound("Idea not found.");
             }
-            return this.NotFound("Idea not found.");
-        }
-        catch (EntityNotFoundException ex)
-        {
-            return this.NotFound(ex.Message);
         }
         catch (Exception)
         {
