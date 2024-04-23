@@ -49,4 +49,43 @@ public class IdeaController(ILogger<IdeaController> logger, IService<Idea> servi
             return this.StatusCode((int)HttpStatusCode.InternalServerError);
         }
     }
+
+    /// <summary>
+    /// Retrieves an idea by its ID or title using HTTP GET method.
+    /// </summary>
+    /// <param name="ideaIdOrTitle">The ID or title of the idea to retrieve.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the retrieved idea in the body if found.
+    /// An HTTP 404 Not Found response if the idea is not found.
+    /// </returns>
+    [HttpGet("{ideaIdOrTitle}")]
+    public IActionResult GetIdeaByCriteria(string ideaIdOrTitle)
+    {
+        try
+        {
+            if (Guid.TryParse(ideaIdOrTitle, out Guid _))
+            {
+                Idea? ideaById = this.service.GetByCriteria("id", ideaIdOrTitle);
+                if (ideaById != null)
+                {
+                    return this.Ok(ideaById);
+                }
+            }
+
+            Idea? ideaByTitle = this.service.GetByCriteria("title", ideaIdOrTitle);
+            if (ideaByTitle != null)
+            {
+                return this.Ok(ideaByTitle);
+            }
+            return this.NotFound("Idea not found.");
+        }
+        catch (EntityNotFoundException ex)
+        {
+            return this.NotFound(ex.Message);
+        }
+        catch (Exception)
+        {
+            return this.BadRequest("Invalid idea identifier.");
+        }
+    }
 }

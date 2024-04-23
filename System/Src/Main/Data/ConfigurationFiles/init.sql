@@ -1,4 +1,4 @@
-USE sd3;
+helpUSE sd3;
 
 CREATE TABLE users 
 (
