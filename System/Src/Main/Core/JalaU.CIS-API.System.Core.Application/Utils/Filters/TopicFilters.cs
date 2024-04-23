@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace JalaU.CIS_API.System.Core.Application;
 
+using global::System.Net;
 using JalaU.CIS_API.System.Core.Domain;
 
 /// <summary>
@@ -23,7 +24,16 @@ public class TopicFilters : EntityFilter<Topic>
             "description" => this.FilterByDescription(keyword.ToLower()),
             "labels" => this.FilterByLabels(keyword.ToLower()),
             "userid" => this.FilterByUserId(keyword.ToLower()),
-            _ => throw new Exception("Error 404: Filter not Found"),
+            _
+                => throw new WrongDataException(
+                    "errors",
+                    [
+                        new(
+                            (int)HttpStatusCode.UnprocessableContent,
+                            $"The filter {filter} can't be used."
+                        )
+                    ]
+                ),
         };
     }
 

@@ -20,7 +20,7 @@ public class IdeaService : IService<Idea>
     private readonly IRepository<Idea> ideaRepository;
     private readonly EntityFilter<Idea> filters;
 
-    private IValidator<Idea> Validator { get; set; }
+    private AbstractValidator<Idea> Validator { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="IdeaService"/> class.
@@ -30,7 +30,7 @@ public class IdeaService : IService<Idea>
     /// <param name="entityFilter">The entityFilter for Idea entities.</param>
     public IdeaService(
         IRepository<Idea> ideaRepository,
-        IValidator<Idea> validator,
+        AbstractValidator<Idea> validator,
         EntityFilter<Idea> entityFilter
     )
     {
@@ -46,19 +46,13 @@ public class IdeaService : IService<Idea>
     }
 
     /// <inheritdoc/>
-    public List<Idea> GetAll()
+    public List<Idea> GetAll(GetAllEntitiesRequestDTO getAllEntitiesRequestDTO)
     {
         throw new NotImplementedException();
     }
 
     /// <inheritdoc/>
     public Idea GetByCriteria(string field, string valueToSearch)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <inheritdoc/>
-    public List<Idea> FilterEntities(string filter, string keyword)
     {
         throw new NotImplementedException();
     }
