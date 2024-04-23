@@ -85,7 +85,7 @@ public class IdeaController(ILogger<IdeaController> logger, IService<Idea> servi
         }
         catch (Exception)
         {
-            return this.BadRequest("Invalid idea identifier.");
+            return this.UnprocessableEntity("Invalid idea identifier.");
         }
     }
 }
