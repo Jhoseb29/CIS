@@ -35,4 +35,9 @@ public class GuidValidatorUtil
 
         throw new WrongDataException("errors", messages);
     }
+
+    internal static Guid ValidateGuid(Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }

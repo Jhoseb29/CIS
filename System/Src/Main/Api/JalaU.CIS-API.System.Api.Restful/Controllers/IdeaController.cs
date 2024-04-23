@@ -59,4 +59,33 @@ public class IdeaController(ILogger<IdeaController> logger, IService<Idea> servi
         errorMap.Add("errors", errorList);
         return this.BadRequest(errorMap);
     }
+
+    /// <summary>
+    /// Retrieves an idea by its ID using HTTP GET method.
+    /// </summary>
+    /// <param name="ideaId">The ID of the idea to retrieve.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the retrieved idea in the body if found.
+    /// An HTTP 404 Not Found response if the idea is not found.
+    /// </returns>
+    [HttpGet("{ideaId}")]
+    public ActionResult GetIdeaByCriteria(string ideaId)
+    {
+        try
+        {
+            Idea? ideaById = this.service.GetByCriteria("id", ideaId);
+            if (ideaById != null)
+            {
+                return this.Ok(ideaById);
+            }
+            else
+            {
+                return this.NotFound("Idea not found.");
+            }
+        }
+        catch (Exception)
+        {
+            return this.UnprocessableEntity("Invalid idea identifier.");
+        }
+    }
 }
