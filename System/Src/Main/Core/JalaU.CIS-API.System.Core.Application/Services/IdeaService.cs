@@ -70,9 +70,15 @@ public class IdeaService : IService<Idea>
     }
 
     /// <inheritdoc/>
-    public Idea Update(BaseRequestDTO entityToSave, string id)
+    public Idea Update(BaseRequestDTO entityRequestDTO, string id)
     {
-        throw new NotImplementedException();
+        var existingIdeaToUpdate = this.GetByCriteria("id", id);
+        Idea updatedIdea = this.Validator.ValidateEntityToUpdate(
+            existingIdeaToUpdate!,
+            entityRequestDTO
+        );
+
+        return this.ideaRepository.Update(updatedIdea);
     }
 
     /// <inheritdoc/>

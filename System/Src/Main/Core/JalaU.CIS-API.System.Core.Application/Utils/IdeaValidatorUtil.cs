@@ -19,22 +19,59 @@ public class IdeaValidatorUtil : IValidator<Idea>
     public List<MessageLogDTO> MessageLogDTOs { get; set; } = [];
 
     /// <inheritdoc/>
-    public void ValidateEntityToSave(BaseRequestDTO baseRequestDTO) { }
+    public void ValidateEntityToSave(BaseRequestDTO baseRequestDTO)
+    {
+        this.MessageLogDTOs = [];
+        IdeaRequestDTO ideaRequestDTO = this.ValidateIdeaDTO(baseRequestDTO);
+
+        this.MessageLogDTOs.AddRange(
+            EntityValidatorUtil.ValidateBlankOrNullEntityFields(baseRequestDTO)
+        );
+        if (this.MessageLogDTOs.Count > 0)
+        {
+            throw new WrongDataException("errors", this.MessageLogDTOs);
+        }
+     }
 
     /// <inheritdoc/>
-    public Idea ValidateEntityToUpdate(Idea existingTopicToUpdate, BaseRequestDTO baseRequestDTO)
+    public Idea ValidateEntityToUpdate(Idea existingIdeaToUpdate, BaseRequestDTO baseRequestDTO)
     {
-        return null!;
+        this.MessageLogDTOs = [];
+
+        IdeaRequestDTO ideaRequestDTO = this.ValidateIdeaDTO(baseRequestDTO);
+        Idea updatedIdea = UpdatableEntityUtil<Idea>.UpdateEntities(
+            existingIdeaToUpdate,
+            ideaRequestDTO
+        );
+
+        EntityValidatorUtil.ValidateBlankOrNullEntityFields(updatedIdea);
+
+        if (this.MessageLogDTOs.Count > 0)
+        {
+            throw new WrongDataException("errors", this.MessageLogDTOs);
+        }
+
+        return updatedIdea;
     }
 
     /// <summary>
-    /// Validates and casts a BaseRequestDTO to a TopicRequestDTO.
+    /// Validates and casts a BaseRequestDTO to a IdeaRequestDTO.
     /// </summary>
     /// <param name="baseRequestDTO">The BaseRequestDTO to validate and cast.</param>
-    /// <returns>The validated TopicRequestDTO.</returns>
+    /// <returns>The validated IdeaRequestDTO.</returns>
     /// <exception cref="WrongDataException">Thrown when the validation fails.</exception>
-    private TopicRequestDTO ValidateIdeaDTO(BaseRequestDTO baseRequestDTO)
+    private IdeaRequestDTO ValidateIdeaDTO(BaseRequestDTO baseRequestDTO)
     {
-        return null!;
+        try
+        {
+            return (IdeaRequestDTO)baseRequestDTO;
+        }
+        catch (Exception exception)
+        {
+            this.MessageLogDTOs.Add(
+                new MessageLogDTO((int)HttpStatusCode.UnprocessableEntity, exception.Message)
+            );
+            throw new WrongDataException("errors", this.MessageLogDTOs);
+        }
     }
 }
