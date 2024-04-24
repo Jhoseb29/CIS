@@ -53,7 +53,6 @@ public class VoteValidatorUtil : AbstractValidator<Vote>
 
         UpdateVoteRequestDTO updateRequestDTO = (UpdateVoteRequestDTO)baseRequestDTO;
 
-        // Actualizar el valor de Positive
         existingVoteToUpdate.Positive = updateRequestDTO.Positive;
 
         EntityValidatorUtil.ValidateBlankOrNullEntityFields(existingVoteToUpdate);
