@@ -64,4 +64,44 @@ public class VoteController(ILogger<VoteController> logger, IService<Vote> servi
         errorMap.Add("errors", errorList);
         return this.BadRequest(errorMap);
     }
+
+    /// <summary>
+    /// Updates a vote by its ID using HTTP PUT method.
+    /// </summary>
+    /// <param name="voteRequestDto">The DTO (Data Transfer Object) containing updated vote information.</param>
+    /// <param name="voteId">The ID of the vote to be updated.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the updated vote in the body.
+    /// An HTTP 400 Bad Request response with all error details.
+    /// </returns>
+    [HttpPut("{voteId}")]
+    public ActionResult UpdateVote([FromBody] UpdateVoteRequestDTO voteRequestDto, string voteId)
+    {
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
+        try
+        {
+            var updatedVote = this.service.Update(voteRequestDto, voteId);
+            return this.Ok(updatedVote);
+        }
+        catch (EntityNotFoundException notFoundException)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
+            );
+        }
+        catch (WrongDataException wrongDataException)
+        {
+            errorList.AddRange(wrongDataException.MessageLogs);
+        }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
+        }
+
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
+    }
 }
