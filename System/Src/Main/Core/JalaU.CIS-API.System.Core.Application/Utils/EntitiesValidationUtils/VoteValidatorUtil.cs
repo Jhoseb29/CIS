@@ -3,6 +3,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+
 using System.Net;
 using AutoMapper;
 using JalaU.CIS_API.System.Core.Domain;
@@ -48,17 +49,16 @@ public class VoteValidatorUtil : AbstractValidator<Vote>
         BaseRequestDTO baseRequestDTO
     )
     {
-        this.MessageLogDTOs = [];
+        this.MessageLogDTOs = new List<MessageLogDTO>();
 
-        VoteRequestDTO voteRequestDTO = this.ValidateVoteDTO(baseRequestDTO);
-        Vote updatedVote = UpdatableEntityUtil<Vote>.UpdateEntities(
-            existingVoteToUpdate,
-            voteRequestDTO
-        );
+        UpdateVoteRequestDTO updateRequestDTO = (UpdateVoteRequestDTO)baseRequestDTO;
 
-        EntityValidatorUtil.ValidateBlankOrNullEntityFields(updatedVote);
+        // Actualizar el valor de Positive
+        existingVoteToUpdate.Positive = updateRequestDTO.Positive;
 
-        return updatedVote;
+        EntityValidatorUtil.ValidateBlankOrNullEntityFields(existingVoteToUpdate);
+
+        return existingVoteToUpdate;
     }
 
     /// <summary>
