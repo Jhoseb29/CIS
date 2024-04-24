@@ -85,9 +85,22 @@ public class IdeaService(
     }
 
     /// <inheritdoc/>
-    public Idea Update(BaseRequestDTO entityToSave, string id)
+    public Idea Update(BaseRequestDTO ideaToUpdate, string id)
     {
-        throw new NotImplementedException();
+        Idea ideaValidated = this.Validator.ValidateEntityToSave(ideaToUpdate);
+        this.Validator.CheckDuplicateEntity(
+            this.GetByTitleWithinATopic(ideaValidated.Title, ideaValidated.TopicId.ToString())!,
+            "The Idea's title is already registered within the Topic associated."
+        );
+        this.Validator.AreThereErrors();
+
+        var existingIdeaToUpdate = this.GetByCriteria("id", id);
+        Idea updatedIdea = this.Validator.ValidateEntityToUpdate(
+            existingIdeaToUpdate!,
+            ideaToUpdate
+        );
+
+        return this.ideaRepository.Update(updatedIdea);
     }
 
     /// <inheritdoc/>
