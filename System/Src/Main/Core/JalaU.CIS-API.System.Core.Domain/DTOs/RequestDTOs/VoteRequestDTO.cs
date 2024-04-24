@@ -18,5 +18,5 @@ public class VoteRequestDTO : BaseRequestDTO
     /// <summary>
     /// Gets or sets the unique identifier of the topic associated with the idea.
     /// </summary>
-    public required Guid TopicId { get; set; }
+    public required Guid IdeaId { get; set; }
 }
