@@ -26,4 +26,122 @@ public class IdeaController(ILogger<IdeaController> logger, IService<Idea> servi
 {
     private readonly IService<Idea> service = service;
     private readonly ILogger<IdeaController> logger = logger;
+
+    /// <summary>
+    /// Saves a topic by its ID using HTTP DELETE method.
+    /// </summary>
+    /// <param name="ideaRequestDTO">The ID of the topic to be deleted.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the updated topic in the body.
+    /// An HTTP 400 Bad Request response with all error details.
+    /// </returns>
+    [HttpPost]
+    public ActionResult SaveIdea(IdeaRequestDTO ideaRequestDTO)
+    {
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
+        try
+        {
+            Idea savedIdea = this.service.Save(ideaRequestDTO);
+
+            return this.StatusCode((int)HttpStatusCode.Created, savedIdea);
+        }
+        catch (DuplicateEntryException duplicateEntryException)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.Conflict, duplicateEntryException.Message)
+            );
+        }
+        catch (WrongDataException wrongDataException)
+        {
+            errorList.AddRange(wrongDataException.MessageLogs);
+        }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
+        }
+
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
+    }
+
+    /// <summary>
+    /// Deletes an idea by its ID using HTTP DELETE method.
+    /// </summary>
+    /// <param name="ideaId">The ID of the idea to be deleted.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the updated idea in the body.
+    /// An HTTP 400 Bad Request response with all error details.
+    /// </returns>
+    [HttpDelete("{ideaId}")]
+    public ActionResult DeleteIdea(string ideaId)
+    {
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
+        try
+        {
+            var idea = this.service.DeleteById(ideaId);
+            return this.Ok(idea);
+        }
+        catch (EntityNotFoundException notFoundException)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
+            );
+        }
+        catch (WrongDataException wrongDataException)
+        {
+            errorList.AddRange(wrongDataException.MessageLogs);
+        }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
+        }
+
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
+    }
+
+    /// <summary>
+    /// Retrieves an idea by its ID using HTTP GET method.
+    /// </summary>
+    /// <param name="ideaId">The ID of the idea to retrieve.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the retrieved idea in the body if found.
+    /// An HTTP 404 Not Found response if the idea is not found.
+    /// </returns>
+    [HttpGet("{ideaId}")]
+    public ActionResult GetIdeaByCriteria(string ideaId)
+    {
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
+        try
+        {
+            var idea = this.service.GetByCriteria("id", ideaId);
+            return this.Ok(idea);
+        }
+        catch (EntityNotFoundException notFoundException)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
+            );
+        }
+        catch (WrongDataException wrongDataException)
+        {
+            errorList.AddRange(wrongDataException.MessageLogs);
+        }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
+        }
+
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
+    }
 }

@@ -4,6 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System.Net;
+using AutoMapper;
 using JalaU.CIS_API.System.Core.Domain;
 
 namespace JalaU.CIS_API.System.Core.Application;
@@ -11,34 +12,44 @@ namespace JalaU.CIS_API.System.Core.Application;
 /// <summary>
 /// Provides utility methods for validating Topic entities.
 /// </summary>
-public class IdeaValidatorUtil : IValidator<Idea>
+public class IdeaValidatorUtil : AbstractValidator<Idea>
 {
+    private readonly Mapper topicMapper;
+
     /// <summary>
-    /// Gets or sets list of message logs generated during entity validation.
+    /// Initializes a new instance of the <see cref="IdeaValidatorUtil"/> class.
     /// </summary>
-    public List<MessageLogDTO> MessageLogDTOs { get; set; } = [];
+    public IdeaValidatorUtil()
+    {
+        var mapperConfigurationForTopics = new MapperConfiguration(configuration =>
+        {
+            configuration.CreateMap<IdeaRequestDTO, Idea>().ReverseMap();
+        });
+
+        this.topicMapper = new Mapper(mapperConfigurationForTopics);
+    }
 
     /// <inheritdoc/>
-    public void ValidateEntityToSave(BaseRequestDTO baseRequestDTO)
+    public override Idea ValidateEntityToSave(BaseRequestDTO baseRequestDTO)
     {
         this.MessageLogDTOs = [];
-        IdeaRequestDTO ideaRequestDTO = this.ValidateIdeaDTO(baseRequestDTO);
+        IdeaRequestDTO ideaRequestDTO = this.ValidateIdeaRequestDTO(baseRequestDTO);
 
         this.MessageLogDTOs.AddRange(
-            EntityValidatorUtil.ValidateBlankOrNullEntityFields(baseRequestDTO)
+            EntityValidatorUtil.ValidateBlankOrNullEntityFields(ideaRequestDTO)
         );
-        if (this.MessageLogDTOs.Count > 0)
-        {
-            throw new WrongDataException("errors", this.MessageLogDTOs);
-        }
-     }
+        return this.topicMapper.Map<Idea>(ideaRequestDTO);
+    }
 
     /// <inheritdoc/>
-    public Idea ValidateEntityToUpdate(Idea existingIdeaToUpdate, BaseRequestDTO baseRequestDTO)
+    public override Idea ValidateEntityToUpdate(
+        Idea existingIdeaToUpdate,
+        BaseRequestDTO baseRequestDTO
+    )
     {
         this.MessageLogDTOs = [];
 
-        IdeaRequestDTO ideaRequestDTO = this.ValidateIdeaDTO(baseRequestDTO);
+        IdeaRequestDTO ideaRequestDTO = this.ValidateIdeaRequestDTO(baseRequestDTO);
         Idea updatedIdea = UpdatableEntityUtil<Idea>.UpdateEntities(
             existingIdeaToUpdate,
             ideaRequestDTO
@@ -46,21 +57,16 @@ public class IdeaValidatorUtil : IValidator<Idea>
 
         EntityValidatorUtil.ValidateBlankOrNullEntityFields(updatedIdea);
 
-        if (this.MessageLogDTOs.Count > 0)
-        {
-            throw new WrongDataException("errors", this.MessageLogDTOs);
-        }
-
         return updatedIdea;
     }
 
     /// <summary>
-    /// Validates and casts a BaseRequestDTO to a IdeaRequestDTO.
+    /// Validates and casts a BaseRequestDTO to an IdeaRequestDTO.
     /// </summary>
     /// <param name="baseRequestDTO">The BaseRequestDTO to validate and cast.</param>
     /// <returns>The validated IdeaRequestDTO.</returns>
     /// <exception cref="WrongDataException">Thrown when the validation fails.</exception>
-    private IdeaRequestDTO ValidateIdeaDTO(BaseRequestDTO baseRequestDTO)
+    private IdeaRequestDTO ValidateIdeaRequestDTO(BaseRequestDTO baseRequestDTO)
     {
         try
         {

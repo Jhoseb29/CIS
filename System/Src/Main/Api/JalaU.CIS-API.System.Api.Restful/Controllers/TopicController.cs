@@ -42,7 +42,7 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     /// </returns>
     [HttpGet]
     public ActionResult GetTopics(
-        [FromQuery] int? pageSize = 5,
+        [FromQuery] int pageSize = 5,
         [FromQuery] int pageNumber = 1,
         [FromQuery] string orderBy = "title",
         [FromQuery] string order = "asc",
@@ -50,27 +50,43 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
         [FromQuery] string keyword = ""
     )
     {
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
         try
         {
-            var topics = this.GetFilteredAndOrderedTopics(filter, keyword, orderBy, order);
-            var paginatedTopics = this.GetPaginatedTopics(topics, pageSize, pageNumber);
-
-            if (paginatedTopics.Count == 0)
+            var getAllEntitiesDTO = new GetAllEntitiesRequestDTO
             {
-                return this.NotFound();
-            }
+                PageSize = pageSize,
+                PageNumber = pageNumber,
+                OrderBy = orderBy,
+                Order = order,
+                Filter = filter,
+                Keyword = keyword,
+            };
 
-            return this.Ok(new { count = paginatedTopics.Count, topics = paginatedTopics });
+            var topics = this.service.GetAll(getAllEntitiesDTO);
+
+            return this.Ok(new { count = topics.Count, topics });
         }
-        catch (ArgumentException ex)
+        catch (EntityNotFoundException notFoundException)
         {
-            return this.BadRequest(ex.Message);
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
+            );
         }
-        catch (Exception ex)
+        catch (WrongDataException wrongDataException)
         {
-            this.logger.LogError(ex, "An error occurred while retrieving topics.");
-            return this.StatusCode((int)HttpStatusCode.InternalServerError);
+            errorList.AddRange(wrongDataException.MessageLogs);
         }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
+        }
+
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
     }
 
     /// <summary>
@@ -79,17 +95,34 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     /// <param name="topicId"> value To Search. </param>
     /// <returns>topic.</returns>
     [HttpGet("{topicId}")]
-    public ActionResult GetTopicByCriteria(string topicId)
+    public ActionResult GetTopicById(string topicId)
     {
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
         try
         {
             Topic? topic = this.service.GetByCriteria("id", topicId);
             return this.Ok(topic);
         }
-        catch (EntityNotFoundException entityNotFoundException)
+        catch (EntityNotFoundException notFoundException)
         {
-            return this.NotFound(entityNotFoundException.Message);
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
+            );
         }
+        catch (WrongDataException wrongDataException)
+        {
+            errorList.AddRange(wrongDataException.MessageLogs);
+        }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
+        }
+
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
     }
 
     /// <summary>
@@ -149,73 +182,71 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     [HttpDelete("{topicId}")]
     public ActionResult DeleteTopic(string topicId)
     {
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
         try
         {
             var topic = this.service.DeleteById(topicId);
             return this.Ok(topic);
         }
-        catch (Exception ex)
+        catch (EntityNotFoundException notFoundException)
         {
-            this.logger.LogError(ex, "An error occurred while filtering topics.");
-            return this.StatusCode((int)HttpStatusCode.InternalServerError);
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
+            );
         }
-    }
-
-    private List<Topic> GetFilteredAndOrderedTopics(
-        string filter,
-        string keyword,
-        string orderBy,
-        string order
-    )
-    {
-        var topics =
-            string.IsNullOrEmpty(filter) || string.IsNullOrEmpty(keyword)
-                ? this.service.GetAll()
-                : this.service.FilterEntities(filter, keyword);
-
-        if (!string.IsNullOrEmpty(orderBy))
+        catch (WrongDataException wrongDataException)
         {
-            if (
-                orderBy.Equals("title", StringComparison.CurrentCultureIgnoreCase)
-                || orderBy.Equals("date", StringComparison.CurrentCultureIgnoreCase)
-            )
-            {
-                if (
-                    !order.Equals("asc", StringComparison.CurrentCultureIgnoreCase)
-                    && !order.Equals("desc", StringComparison.CurrentCultureIgnoreCase)
-                )
-                {
-                    throw new ArgumentException(
-                        "Invalid order parameter. Supported values are 'asc' and 'desc'."
-                    );
-                }
-
-                var topicSorter = new GenericSorter<Topic>();
-                topics = topicSorter.Sort(
-                    topics,
-                    t =>
-                        orderBy.Equals("title", StringComparison.CurrentCultureIgnoreCase)
-                            ? t.Title
-                            : t.Date,
-                    order
-                );
-            }
-            else
-            {
-                throw new ArgumentException(
-                    "Invalid orderBy parameter. Supported values are 'title' and 'date'."
-                );
-            }
+            errorList.AddRange(wrongDataException.MessageLogs);
+        }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
         }
 
-        return topics;
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
     }
 
-    private List<Topic> GetPaginatedTopics(List<Topic> topics, int? pageSize, int pageNumber)
+    /// <summary>
+    /// Saves a topic by its ID using HTTP DELETE method.
+    /// </summary>
+    /// <param name="topic">The ID of the topic to be deleted.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the updated topic in the body.
+    /// An HTTP 400 Bad Request response with all error details.
+    /// </returns>
+    [HttpPost]
+    public ActionResult SaveTopic(TopicRequestDTO topic)
     {
-        int startIndex = (pageNumber - 1) * (pageSize ?? topics.Count);
-        int endIndex = Math.Min(startIndex + (pageSize ?? topics.Count), topics.Count);
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
+        try
+        {
+            Topic savedTopic = this.service.Save(topic);
 
-        return topics.GetRange(startIndex, endIndex - startIndex);
+            return this.StatusCode((int)HttpStatusCode.Created, savedTopic);
+        }
+        catch (DuplicateEntryException duplicateEntryException)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.Conflict, duplicateEntryException.Message)
+            );
+        }
+        catch (WrongDataException wrongDataException)
+        {
+            errorList.AddRange(wrongDataException.MessageLogs);
+        }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
+        }
+
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
     }
 }

@@ -11,62 +11,77 @@ using JalaU.CIS_API.System.Core.Domain;
 /// <summary>
 /// Represents a service for managing ideas.
 /// </summary>
-/// <remarks>
-/// Initializes a new instance of the <see cref="IdeaService"/> class.
-/// </remarks>
-public class IdeaService : IService<Idea>
+/// <param name="ideaRepository">The repository for Idea entities.</param>
+/// <param name="topicService">The service for Topic entities.</param>
+/// <param name="validator">The validator for Idea entities.</param>
+/// <param name="entityFilter">The entityFilter for Idea entities.</param>
+public class IdeaService(
+    IRepository<Idea> ideaRepository,
+    IService<Topic> topicService,
+    AbstractValidator<Idea> validator,
+    EntityFilter<Idea> entityFilter
+) : IService<Idea>
 {
-    private readonly Mapper ideaMapper;
-    private readonly IRepository<Idea> ideaRepository;
-    private readonly EntityFilter<Idea> filters;
+    private readonly IRepository<Idea> ideaRepository = ideaRepository;
+    private readonly IService<Topic> topicService = topicService;
+    private readonly EntityFilter<Idea> filters = entityFilter;
 
-    private IValidator<Idea> Validator { get; set; }
+    private AbstractValidator<Idea> Validator { get; set; } = validator;
+
+    /// <inheritdoc/>
+    public Idea Save(BaseRequestDTO ideaToSave)
+    {
+        Idea ideaValidated = this.Validator.ValidateEntityToSave(ideaToSave);
+        this.Validator.CheckDuplicateEntity(
+            this.GetByTitleWithinATopic(ideaValidated.Title, ideaValidated.TopicId.ToString())!,
+            "The Idea's title is already registered within the Topic associated."
+        );
+        this.Validator.AreThereErrors();
+
+        Topic topic =
+            this.topicService.GetByCriteria("id", ideaValidated.TopicId.ToString())
+            ?? throw new EntityNotFoundException(
+                "The associated Topic doesn't exist in the System."
+            );
+
+        // Más adelante obtener el ID del usuario mediante el JWT y ponerlo aquí:
+        ideaValidated.UserId = GuidValidatorUtil.ValidateGuid(
+            "550e8400-e29b-41d4-a716-446655440000"
+        );
+
+        var idea = this.ideaRepository.Save(ideaValidated);
+        return idea;
+    }
+
+    /// <inheritdoc/>
+    public List<Idea> GetAll(GetAllEntitiesRequestDTO getAllEntitiesRequestDTO)
+    {
+        throw new NotImplementedException();
+    }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="IdeaService"/> class.
+    /// Retrieves an idea based on the specified field and value using HTTP GET method.
     /// </summary>
-    /// <param name="ideaRepository">The repository for Idea entities.</param>
-    /// <param name="validator">The validator for Idea entities.</param>
-    /// <param name="entityFilter">The entityFilter for Idea entities.</param>
-    public IdeaService(
-        IRepository<Idea> ideaRepository,
-        IValidator<Idea> validator,
-        EntityFilter<Idea> entityFilter
-    )
-    {
-        this.ideaRepository = ideaRepository;
-        this.Validator = validator;
-        this.filters = entityFilter;
-        var mapperConfigurationForTopics = new MapperConfiguration(configuration =>
-        {
-            configuration.CreateMap<IdeaRequestDTO, Idea>().ReverseMap();
-        });
-
-        this.ideaMapper = new Mapper(mapperConfigurationForTopics);
-    }
-
-    /// <inheritdoc/>
-    public List<Idea> GetAll()
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <inheritdoc/>
+    /// <param name="field">The field to search by (e.g., "id" or "title").</param>
+    /// <param name="valueToSearch">The value to search for in the specified field.</param>
+    /// <returns>
+    /// An instance of the Idea class if an idea with the specified field and value is found.
+    /// Throws EntityNotFoundException if no idea is found with the specified field and value.
+    /// Throws ArgumentException if the specified field is invalid.
+    /// </returns>
     public Idea GetByCriteria(string field, string valueToSearch)
     {
-        throw new NotImplementedException();
-    }
-
-    /// <inheritdoc/>
-    public List<Idea> FilterEntities(string filter, string keyword)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <inheritdoc/>
-    public Idea Save(BaseRequestDTO entityToSave)
-    {
-        throw new NotImplementedException();
+        var idea =
+            field.ToLower() switch
+            {
+                "id" => this.GetById(valueToSearch),
+                "title" => this.GetByTitle(valueToSearch),
+                _ => throw new ArgumentException("Invalid field."),
+            }
+            ?? throw new EntityNotFoundException(
+                $"Idea with the field {field} and the value {valueToSearch} was not found."
+            );
+        return idea;
     }
 
     /// <inheritdoc/>
@@ -84,6 +99,27 @@ public class IdeaService : IService<Idea>
     /// <inheritdoc/>
     public Idea DeleteById(string guid)
     {
-        throw new NotImplementedException();
+        Idea? idea = this.GetByCriteria("id", guid);
+        this.ideaRepository.Delete(idea);
+        return idea;
+    }
+
+    private Idea? GetByTitle(string title)
+    {
+        return this.ideaRepository.GetByCriteria(idea => idea.Title == title);
+    }
+
+    private Idea? GetById(string id)
+    {
+        Guid validGuid = GuidValidatorUtil.ValidateGuid(id);
+        return this.ideaRepository.GetByCriteria(idea => idea.Id == validGuid);
+    }
+
+    private Idea? GetByTitleWithinATopic(string title, string idTopic)
+    {
+        Guid validGuid = GuidValidatorUtil.ValidateGuid(idTopic);
+        return this.ideaRepository.GetByCriteria(
+            idea => idea.Title == title && idea.TopicId == validGuid
+        );
     }
 }
