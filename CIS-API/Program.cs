@@ -26,20 +26,7 @@ builder
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
-builder.Services.AddScoped<IService<Topic>, TopicService>();
-builder.Services.AddScoped<IRepository<Topic>, TopicRepository>();
-builder.Services.AddScoped<AbstractValidator<Topic>, TopicValidatorUtil>();
-builder.Services.AddSingleton<EntityFilter<Topic>, TopicFilters>();
-
-builder.Services.AddScoped<IService<Idea>, IdeaService>();
-builder.Services.AddScoped<IRepository<Idea>, IdeaRepository>();
-builder.Services.AddScoped<AbstractValidator<Idea>, IdeaValidatorUtil>();
-builder.Services.AddSingleton<EntityFilter<Idea>, IdeaFilters>();
-
-builder.Services.AddScoped<IService<Vote>, VoteService>();
-builder.Services.AddScoped<IRepository<Vote>, VoteRepository>();
-builder.Services.AddScoped<AbstractValidator<Vote>, VoteValidatorUtil>();
-builder.Services.AddSingleton<EntityFilter<Vote>, VoteFilters>();
+builder.Services.AddApplication().AddMySQLPersistance();
 
 builder.Services.AddExceptionHandler<ExceptionHandler>();
 builder.Services.AddScoped<EnforceJsonResponseFilter>();
