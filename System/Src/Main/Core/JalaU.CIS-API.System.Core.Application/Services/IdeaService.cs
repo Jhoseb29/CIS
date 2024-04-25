@@ -56,7 +56,21 @@ public class IdeaService(
     /// <inheritdoc/>
     public List<Idea> GetAll(GetAllEntitiesRequestDTO getAllEntitiesRequestDTO)
     {
-        throw new NotImplementedException();
+        List<Idea> ideaList = this.ideaRepository.GetAll().ToList();
+        List<string> fieldsAllowedToOrderBy = ["title", "date"];
+
+        EntitiesListParameterizerUtil<Idea> entitiesListParameterizerUtil =
+            new(ideaList, fieldsAllowedToOrderBy);
+        var finalIdeasListToReturn = entitiesListParameterizerUtil.ApplyGetAllParameters(
+            this.filters,
+            getAllEntitiesRequestDTO
+        );
+
+        if (finalIdeasListToReturn.Count == 0)
+        {
+            throw new EntityNotFoundException("Any Idea were found.");
+        }
+        return finalIdeasListToReturn;
     }
 
     /// <summary>

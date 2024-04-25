@@ -144,4 +144,65 @@ public class IdeaController(ILogger<IdeaController> logger, IService<Idea> servi
         errorMap.Add("errors", errorList);
         return this.BadRequest(errorMap);
     }
+
+    /// <summary>
+    /// Retrieves a paginated list of Ideas.
+    /// </summary>
+    /// <param name="pageSize">Optional. The number of Idea to include in a page.</param>
+    /// <param name="pageNumber">Optional. The page number to retrieve.</param>
+    /// <param name="orderBy"> orderBy. </param>
+    /// <param name="order"> order.</param>
+    /// <param name="filter"> filter.</param>
+    /// <param name="keyword">keyword.</param>
+    /// <returns>
+    /// An action result containing a dictionary with information about Idea.
+    /// </returns>
+    [HttpGet]
+    public ActionResult GetAll(
+        [FromQuery] int pageSize = 5,
+        [FromQuery] int pageNumber = 1,
+        [FromQuery] string orderBy = "title",
+        [FromQuery] string order = "asc",
+        [FromQuery] string filter = "",
+        [FromQuery] string keyword = ""
+    )
+    {
+        List<object> errorList = [];
+        Dictionary<string, object> errorMap = [];
+        try
+        {
+            var getAllEntitiesDTO = new GetAllEntitiesRequestDTO
+            {
+                PageSize = pageSize,
+                PageNumber = pageNumber,
+                OrderBy = orderBy,
+                Order = order,
+                Filter = filter,
+                Keyword = keyword,
+            };
+
+            var ideas = this.service.GetAll(getAllEntitiesDTO);
+
+            return this.Ok(new { count = ideas.Count, ideas });
+        }
+        catch (EntityNotFoundException notFoundException)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
+            );
+        }
+        catch (WrongDataException wrongDataException)
+        {
+            errorList.AddRange(wrongDataException.MessageLogs);
+        }
+        catch (Exception exception)
+        {
+            errorList.Add(
+                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
+            );
+        }
+
+        errorMap.Add("errors", errorList);
+        return this.BadRequest(errorMap);
+    }
 }
