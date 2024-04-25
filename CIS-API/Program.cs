@@ -4,6 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System.Text.Json.Serialization;
+using CIS_API;
 using JalaU.CIS_API.System.Api.Restful;
 using JalaU.CIS_API.System.Core.Application;
 using JalaU.CIS_API.System.Core.Domain;
@@ -40,12 +41,14 @@ builder.Services.AddScoped<IRepository<Vote>, VoteRepository>();
 builder.Services.AddScoped<AbstractValidator<Vote>, VoteValidatorUtil>();
 builder.Services.AddSingleton<EntityFilter<Vote>, VoteFilters>();
 
+builder.Services.AddExceptionHandler<ExceptionHandler>();
 builder.Services.AddScoped<EnforceJsonResponseFilter>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseExceptionHandler("/error");
 app.MapControllers();
 
 if (app.Environment.IsDevelopment())
