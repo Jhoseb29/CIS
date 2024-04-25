@@ -3,6 +3,8 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+using System.Net;
+
 namespace JalaU.CIS_API.System.Core.Domain;
 
 /// <summary>
@@ -11,8 +13,12 @@ namespace JalaU.CIS_API.System.Core.Domain;
 /// <param name="message">The error message that explains the reason for the exception.</param>
 /// <param name="messageLogDTOs">The list of message log DTOs associated with the exception.</param>
 public class WrongDataException(string message, List<MessageLogDTO> messageLogDTOs)
-    : ApplicationException(message)
+    : ApplicationException(message),
+        IAbstractApiException
 {
+    /// <inheritdoc/>
+    public HttpStatusCode StatusCode() => HttpStatusCode.NotFound;
+
     /// <summary>
     /// Gets or sets the list of message log DTOs associated with the exception.
     /// </summary>

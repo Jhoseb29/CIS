@@ -74,7 +74,7 @@ public abstract class AbstractValidator<T>
             this.MessageLogDTOs.Add(
                 new MessageLogDTO(
                     (int)HttpStatusCode.UnprocessableContent,
-                    $"There's a bad word is a badword and can't be in the Entity's {fieldName}."
+                    $"There's a bad word and can't be used in the Entity's {fieldName}."
                 )
             );
         }

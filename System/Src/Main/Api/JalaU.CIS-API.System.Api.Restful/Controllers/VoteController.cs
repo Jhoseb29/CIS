@@ -17,14 +17,12 @@ namespace JalaU.CIS_API.System.Api.Restful;
 /// <remarks>
 /// Initializes a new instance of the <see cref="VoteController"/> class.
 /// </remarks>
-/// <param name="logger">The logger instance for logging.</param>
 /// <param name="service">The service instance for managing votes.</param>
 [ApiController]
 [Route("cis-api/v1/votes")]
-public class VoteController(ILogger<VoteController> logger, IService<Vote> service) : ControllerBase
+public class VoteController(IService<Vote> service) : ControllerBase
 {
     private readonly IService<Vote> service = service;
-    private readonly ILogger<VoteController> logger = logger;
 
     /// <summary>
     /// Deletes a topic by its ID using HTTP DELETE method.
@@ -37,32 +35,9 @@ public class VoteController(ILogger<VoteController> logger, IService<Vote> servi
     [HttpDelete("{voteId}")]
     public ActionResult DeleteTopic(string voteId)
     {
-        List<object> errorList = [];
-        Dictionary<string, object> errorMap = [];
-        try
-        {
-            var topic = this.service.DeleteById(voteId);
-            return this.Ok(topic);
-        }
-        catch (EntityNotFoundException notFoundException)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
-            );
-        }
-        catch (WrongDataException wrongDataException)
-        {
-            errorList.AddRange(wrongDataException.MessageLogs);
-        }
-        catch (Exception exception)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
-            );
-        }
+        var topic = this.service.DeleteById(voteId);
 
-        errorMap.Add("errors", errorList);
-        return this.BadRequest(errorMap);
+        return this.Ok(topic);
     }
 
     /// <summary>
@@ -77,31 +52,8 @@ public class VoteController(ILogger<VoteController> logger, IService<Vote> servi
     [HttpPut("{voteId}")]
     public ActionResult UpdateVote([FromBody] UpdateVoteRequestDTO voteRequestDto, string voteId)
     {
-        List<object> errorList = [];
-        Dictionary<string, object> errorMap = [];
-        try
-        {
-            var updatedVote = this.service.Update(voteRequestDto, voteId);
-            return this.Ok(updatedVote);
-        }
-        catch (EntityNotFoundException notFoundException)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
-            );
-        }
-        catch (WrongDataException wrongDataException)
-        {
-            errorList.AddRange(wrongDataException.MessageLogs);
-        }
-        catch (Exception exception)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
-            );
-        }
+        var updatedVote = this.service.Update(voteRequestDto, voteId);
 
-        errorMap.Add("errors", errorList);
-        return this.BadRequest(errorMap);
+        return this.Ok(updatedVote);
     }
 }

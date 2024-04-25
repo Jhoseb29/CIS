@@ -4,6 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System.Text.Json.Serialization;
+using CIS_API;
 using JalaU.CIS_API.System.Api.Restful;
 using JalaU.CIS_API.System.Core.Application;
 using JalaU.CIS_API.System.Core.Domain;
@@ -25,27 +26,16 @@ builder
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
-builder.Services.AddScoped<IService<Topic>, TopicService>();
-builder.Services.AddScoped<IRepository<Topic>, TopicRepository>();
-builder.Services.AddScoped<AbstractValidator<Topic>, TopicValidatorUtil>();
-builder.Services.AddSingleton<EntityFilter<Topic>, TopicFilters>();
+builder.Services.AddApplication().AddMySQLPersistance();
 
-builder.Services.AddScoped<IService<Idea>, IdeaService>();
-builder.Services.AddScoped<IRepository<Idea>, IdeaRepository>();
-builder.Services.AddScoped<AbstractValidator<Idea>, IdeaValidatorUtil>();
-builder.Services.AddSingleton<EntityFilter<Idea>, IdeaFilters>();
-
-builder.Services.AddScoped<IService<Vote>, VoteService>();
-builder.Services.AddScoped<IRepository<Vote>, VoteRepository>();
-builder.Services.AddScoped<AbstractValidator<Vote>, VoteValidatorUtil>();
-builder.Services.AddSingleton<EntityFilter<Vote>, VoteFilters>();
-
+builder.Services.AddExceptionHandler<ExceptionHandler>();
 builder.Services.AddScoped<EnforceJsonResponseFilter>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseExceptionHandler("/error");
 app.MapControllers();
 
 if (app.Environment.IsDevelopment())

@@ -18,15 +18,28 @@ using Microsoft.Extensions.Logging;
 /// <remarks>
 /// Initializes a new instance of the <see cref="TopicController"/> class.
 /// </remarks>
-/// <param name="logger">The logger instance for logging.</param>
 /// <param name="service">The service instance for managing topics.</param>
 [ApiController]
 [Route("cis-api/v1/topics")]
-public class TopicController(ILogger<TopicController> logger, IService<Topic> service)
-    : ControllerBase
+public class TopicController(IService<Topic> service) : ControllerBase
 {
     private readonly IService<Topic> service = service;
-    private readonly ILogger<TopicController> logger = logger;
+
+    /// <summary>
+    /// Saves a topic by its ID using HTTP DELETE method.
+    /// </summary>
+    /// <param name="topic">The ID of the topic to be deleted.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the updated topic in the body.
+    /// An HTTP 400 Bad Request response with all error details.
+    /// </returns>
+    [HttpPost]
+    public ActionResult SaveTopic(TopicRequestDTO topic)
+    {
+        Topic savedTopic = this.service.Save(topic);
+
+        return this.StatusCode((int)HttpStatusCode.Created, savedTopic);
+    }
 
     /// <summary>
     /// Retrieves a paginated list of topics.
@@ -50,43 +63,19 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
         [FromQuery] string keyword = ""
     )
     {
-        List<object> errorList = [];
-        Dictionary<string, object> errorMap = [];
-        try
+        var getAllEntitiesDTO = new GetAllEntitiesRequestDTO
         {
-            var getAllEntitiesDTO = new GetAllEntitiesRequestDTO
-            {
-                PageSize = pageSize,
-                PageNumber = pageNumber,
-                OrderBy = orderBy,
-                Order = order,
-                Filter = filter,
-                Keyword = keyword,
-            };
+            PageSize = pageSize,
+            PageNumber = pageNumber,
+            OrderBy = orderBy,
+            Order = order,
+            Filter = filter,
+            Keyword = keyword,
+        };
 
-            var topics = this.service.GetAll(getAllEntitiesDTO);
+        var topics = this.service.GetAll(getAllEntitiesDTO);
 
-            return this.Ok(new { count = topics.Count, topics });
-        }
-        catch (EntityNotFoundException notFoundException)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
-            );
-        }
-        catch (WrongDataException wrongDataException)
-        {
-            errorList.AddRange(wrongDataException.MessageLogs);
-        }
-        catch (Exception exception)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
-            );
-        }
-
-        errorMap.Add("errors", errorList);
-        return this.BadRequest(errorMap);
+        return this.Ok(new { count = topics.Count, topics });
     }
 
     /// <summary>
@@ -97,32 +86,9 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     [HttpGet("{topicId}")]
     public ActionResult GetTopicById(string topicId)
     {
-        List<object> errorList = [];
-        Dictionary<string, object> errorMap = [];
-        try
-        {
-            Topic? topic = this.service.GetByCriteria("id", topicId);
-            return this.Ok(topic);
-        }
-        catch (EntityNotFoundException notFoundException)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
-            );
-        }
-        catch (WrongDataException wrongDataException)
-        {
-            errorList.AddRange(wrongDataException.MessageLogs);
-        }
-        catch (Exception exception)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
-            );
-        }
+        Topic? topic = this.service.GetByCriteria("id", topicId);
 
-        errorMap.Add("errors", errorList);
-        return this.BadRequest(errorMap);
+        return this.Ok(topic);
     }
 
     /// <summary>
@@ -137,38 +103,9 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     [HttpPut("{topicId}")]
     public ActionResult UpdateTopicById([FromBody] TopicRequestDTO topicRequestDto, string topicId)
     {
-        List<object> errorList = [];
-        Dictionary<string, object> errorMap = [];
-        try
-        {
-            var updatedTopic = this.service.Update(topicRequestDto, topicId);
-            return this.Ok(updatedTopic);
-        }
-        catch (EntityNotFoundException notFoundException)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
-            );
-        }
-        catch (DuplicateEntryException duplicateEntryException)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.Conflict, duplicateEntryException.Message)
-            );
-        }
-        catch (WrongDataException wrongDataException)
-        {
-            errorList.AddRange(wrongDataException.MessageLogs);
-        }
-        catch (Exception exception)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
-            );
-        }
+        var updatedTopic = this.service.Update(topicRequestDto, topicId);
 
-        errorMap.Add("errors", errorList);
-        return this.BadRequest(errorMap);
+        return this.Ok(updatedTopic);
     }
 
     /// <summary>
@@ -182,71 +119,8 @@ public class TopicController(ILogger<TopicController> logger, IService<Topic> se
     [HttpDelete("{topicId}")]
     public ActionResult DeleteTopic(string topicId)
     {
-        List<object> errorList = [];
-        Dictionary<string, object> errorMap = [];
-        try
-        {
-            var topic = this.service.DeleteById(topicId);
-            return this.Ok(topic);
-        }
-        catch (EntityNotFoundException notFoundException)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
-            );
-        }
-        catch (WrongDataException wrongDataException)
-        {
-            errorList.AddRange(wrongDataException.MessageLogs);
-        }
-        catch (Exception exception)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
-            );
-        }
+        var topic = this.service.DeleteById(topicId);
 
-        errorMap.Add("errors", errorList);
-        return this.BadRequest(errorMap);
-    }
-
-    /// <summary>
-    /// Saves a topic by its ID using HTTP DELETE method.
-    /// </summary>
-    /// <param name="topic">The ID of the topic to be deleted.</param>
-    /// <returns>
-    /// An HTTP 200 OK response with the updated topic in the body.
-    /// An HTTP 400 Bad Request response with all error details.
-    /// </returns>
-    [HttpPost]
-    public ActionResult SaveTopic(TopicRequestDTO topic)
-    {
-        List<object> errorList = [];
-        Dictionary<string, object> errorMap = [];
-        try
-        {
-            Topic savedTopic = this.service.Save(topic);
-
-            return this.StatusCode((int)HttpStatusCode.Created, savedTopic);
-        }
-        catch (DuplicateEntryException duplicateEntryException)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.Conflict, duplicateEntryException.Message)
-            );
-        }
-        catch (WrongDataException wrongDataException)
-        {
-            errorList.AddRange(wrongDataException.MessageLogs);
-        }
-        catch (Exception exception)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
-            );
-        }
-
-        errorMap.Add("errors", errorList);
-        return this.BadRequest(errorMap);
+        return this.Ok(topic);
     }
 }
