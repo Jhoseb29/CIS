@@ -44,10 +44,7 @@ public class IdeaService(
                 "The associated Topic doesn't exist in the System."
             );
 
-        // Más adelante obtener el ID del usuario mediante el JWT y ponerlo aquí:
-        ideaValidated.UserId = GuidValidatorUtil.ValidateGuid(
-            "550e8400-e29b-41d4-a716-446655440000"
-        );
+        ideaValidated.UserId = GuidValidatorUtil.ValidateGuid(GlobalVariables.UserId!);
 
         var idea = this.ideaRepository.Save(ideaValidated);
         return idea;

@@ -71,10 +71,7 @@ public class TopicService(
         );
         this.Validator.AreThereErrors();
 
-        // Más adelante obtener el ID del usuario mediante el JWT y ponerlo aquí:
-        topicValidated.UserId = GuidValidatorUtil.ValidateGuid(
-            "550e8400-e29b-41d4-a716-446655440000"
-        );
+        topicValidated.UserId = GuidValidatorUtil.ValidateGuid(GlobalVariables.UserId!);
 
         Topic topic = this.topicRepository.Save(topicValidated);
         return topic;

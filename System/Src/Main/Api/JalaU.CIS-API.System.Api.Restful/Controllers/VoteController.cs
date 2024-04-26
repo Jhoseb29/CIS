@@ -6,6 +6,7 @@
 using global::System.Net;
 using JalaU.CIS_API.System.Core.Application;
 using JalaU.CIS_API.System.Core.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -18,6 +19,7 @@ namespace JalaU.CIS_API.System.Api.Restful;
 /// Initializes a new instance of the <see cref="VoteController"/> class.
 /// </remarks>
 /// <param name="service">The service instance for managing votes.</param>
+[Authorize]
 [ApiController]
 [Route("cis-api/v1/votes")]
 public class VoteController(IService<Vote> service) : ControllerBase
