@@ -56,4 +56,21 @@ public class VoteController(IService<Vote> service) : ControllerBase
 
         return this.Ok(updatedVote);
     }
+
+    /// <summary>
+    /// Gets a vote by its ID using HTTP GET method.
+    /// </summary>
+    /// <param name="voteId">The ID of the vote to retrieve.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the retrieved vote in the body.
+    /// An HTTP 400 Bad Request response with all error detail.
+    /// An HTTP 422 Unprocessable Entity response if the ID is invalid.
+    /// </returns>
+    [HttpGet("{voteId}")]
+    public ActionResult GetVoteById(string voteId)
+    {
+        var vote = this.service.GetByCriteria("id", voteId);
+
+        return this.Ok(vote);
+    }
 }
