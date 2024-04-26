@@ -9,6 +9,7 @@ namespace JalaU.CIS_API.System.Api.Restful;
 using global::System.Net;
 using JalaU.CIS_API.System.Core.Application;
 using JalaU.CIS_API.System.Core.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -19,6 +20,7 @@ using Microsoft.Extensions.Logging;
 /// Initializes a new instance of the <see cref="IdeaController"/> class.
 /// </remarks>
 /// <param name="service">The service instance for managing ideas.</param>
+[Authorize]
 [ApiController]
 [Route("cis-api/v1/ideas")]
 public class IdeaController(IService<Idea> service) : ControllerBase
