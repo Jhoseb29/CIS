@@ -91,6 +91,18 @@ var app = builder.Build();
 app.UseExceptionHandler("/error");
 app.UseAuthentication();
 app.UseAuthorization();
+app.Use(
+    async (context, next) =>
+    {
+        var userIdClaim = context.User.FindFirst("id");
+        if (userIdClaim != null)
+        {
+            GlobalVariables.UserId = userIdClaim.Value;
+        }
+
+        await next.Invoke();
+    }
+);
 app.MapControllers();
 
 if (app.Environment.IsDevelopment())
