@@ -65,7 +65,13 @@ public class VoteService(
     /// <inheritdoc/>
     public Vote Update(BaseRequestDTO entityToSave, string id)
     {
-        throw new NotImplementedException();
+        var existingVoteToUpdate = this.GetByCriteria("id", id);
+        Vote updatedVote = this.Validator.ValidateEntityToUpdate(
+            existingVoteToUpdate,
+            entityToSave
+        );
+        this.Validator.AreThereErrors();
+        return this.voteRepository.Update(updatedVote);
     }
 
     private Vote? GetById(string id)

@@ -44,10 +44,7 @@ public class IdeaService(
                 "The associated Topic doesn't exist in the System."
             );
 
-        // Más adelante obtener el ID del usuario mediante el JWT y ponerlo aquí:
-        ideaValidated.UserId = GuidValidatorUtil.ValidateGuid(
-            "550e8400-e29b-41d4-a716-446655440000"
-        );
+        ideaValidated.UserId = GuidValidatorUtil.ValidateGuid(GlobalVariables.UserId!);
 
         var idea = this.ideaRepository.Save(ideaValidated);
         return idea;
@@ -56,7 +53,21 @@ public class IdeaService(
     /// <inheritdoc/>
     public List<Idea> GetAll(GetAllEntitiesRequestDTO getAllEntitiesRequestDTO)
     {
-        throw new NotImplementedException();
+        List<Idea> ideaList = this.ideaRepository.GetAll().ToList();
+        List<string> fieldsAllowedToOrderBy = ["title", "date"];
+
+        EntitiesListParameterizerUtil<Idea> entitiesListParameterizerUtil =
+            new(ideaList, fieldsAllowedToOrderBy);
+        var finalIdeasListToReturn = entitiesListParameterizerUtil.ApplyGetAllParameters(
+            this.filters,
+            getAllEntitiesRequestDTO
+        );
+
+        if (finalIdeasListToReturn.Count == 0)
+        {
+            throw new EntityNotFoundException("Any Idea were found.");
+        }
+        return finalIdeasListToReturn;
     }
 
     /// <summary>

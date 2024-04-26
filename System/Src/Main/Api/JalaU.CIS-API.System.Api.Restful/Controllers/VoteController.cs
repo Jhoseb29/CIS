@@ -6,6 +6,7 @@
 using global::System.Net;
 using JalaU.CIS_API.System.Core.Application;
 using JalaU.CIS_API.System.Core.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -17,14 +18,13 @@ namespace JalaU.CIS_API.System.Api.Restful;
 /// <remarks>
 /// Initializes a new instance of the <see cref="VoteController"/> class.
 /// </remarks>
-/// <param name="logger">The logger instance for logging.</param>
 /// <param name="service">The service instance for managing votes.</param>
+[Authorize]
 [ApiController]
 [Route("cis-api/v1/votes")]
-public class VoteController(ILogger<VoteController> logger, IService<Vote> service) : ControllerBase
+public class VoteController(IService<Vote> service) : ControllerBase
 {
     private readonly IService<Vote> service = service;
-    private readonly ILogger<VoteController> logger = logger;
 
     /// <summary>
     /// Deletes a topic by its ID using HTTP DELETE method.
@@ -37,31 +37,42 @@ public class VoteController(ILogger<VoteController> logger, IService<Vote> servi
     [HttpDelete("{voteId}")]
     public ActionResult DeleteTopic(string voteId)
     {
-        List<object> errorList = [];
-        Dictionary<string, object> errorMap = [];
-        try
-        {
-            var topic = this.service.DeleteById(voteId);
-            return this.Ok(topic);
-        }
-        catch (EntityNotFoundException notFoundException)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.NotFound, notFoundException.Message)
-            );
-        }
-        catch (WrongDataException wrongDataException)
-        {
-            errorList.AddRange(wrongDataException.MessageLogs);
-        }
-        catch (Exception exception)
-        {
-            errorList.Add(
-                new MessageLogDTO((int)HttpStatusCode.InternalServerError, exception.Message)
-            );
-        }
+        var topic = this.service.DeleteById(voteId);
 
-        errorMap.Add("errors", errorList);
-        return this.BadRequest(errorMap);
+        return this.Ok(topic);
+    }
+
+    /// <summary>
+    /// Updates a vote by its ID using HTTP PUT method.
+    /// </summary>
+    /// <param name="voteRequestDto">The DTO (Data Transfer Object) containing updated vote information.</param>
+    /// <param name="voteId">The ID of the vote to be updated.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the updated vote in the body.
+    /// An HTTP 400 Bad Request response with all error details.
+    /// </returns>
+    [HttpPut("{voteId}")]
+    public ActionResult UpdateVote([FromBody] UpdateVoteRequestDTO voteRequestDto, string voteId)
+    {
+        var updatedVote = this.service.Update(voteRequestDto, voteId);
+
+        return this.Ok(updatedVote);
+    }
+
+    /// <summary>
+    /// Gets a vote by its ID using HTTP GET method.
+    /// </summary>
+    /// <param name="voteId">The ID of the vote to retrieve.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the retrieved vote in the body.
+    /// An HTTP 400 Bad Request response with all error detail.
+    /// An HTTP 422 Unprocessable Entity response if the ID is invalid.
+    /// </returns>
+    [HttpGet("{voteId}")]
+    public ActionResult GetVoteById(string voteId)
+    {
+        var vote = this.service.GetByCriteria("id", voteId);
+
+        return this.Ok(vote);
     }
 }

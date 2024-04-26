@@ -33,14 +33,12 @@ public class EntitiesListParameterizerUtil<T>(
         GetAllEntitiesRequestDTO getAllEntitiesRequestDTO
     )
     {
-        if (!string.IsNullOrEmpty(getAllEntitiesRequestDTO.Filter))
-        {
-            this.FilterTopics(
-                entityFilter,
-                getAllEntitiesRequestDTO.Filter,
-                getAllEntitiesRequestDTO.Keyword
-            );
-        }
+        this.FilterTopics(
+            entityFilter,
+            getAllEntitiesRequestDTO.Filter,
+            getAllEntitiesRequestDTO.Keyword
+        );
+
         this.OrderEntities(getAllEntitiesRequestDTO.OrderBy, getAllEntitiesRequestDTO.Order);
         this.GetPaginatedTopics(
             getAllEntitiesRequestDTO.PageSize,
@@ -52,7 +50,27 @@ public class EntitiesListParameterizerUtil<T>(
 
     private void FilterTopics(EntityFilter<T> entityFilter, string filter, string keyword)
     {
-        this.EntitiesToReturn = entityFilter.Filter(this.EntitiesToReturn, filter, keyword);
+        this.ValidateCorrectFiltering(filter, keyword);
+        if (!string.IsNullOrEmpty(filter))
+        {
+            this.EntitiesToReturn = entityFilter.Filter(this.EntitiesToReturn, filter, keyword);
+        }
+    }
+
+    private void ValidateCorrectFiltering(string filter, string keyword)
+    {
+        if (!string.IsNullOrEmpty(keyword) && string.IsNullOrEmpty(filter))
+        {
+            throw new WrongDataException(
+                "errors",
+                [
+                    new(
+                        (int)HttpStatusCode.UnprocessableContent,
+                        $"The keyword {keyword} can't be used if the filter is empty."
+                    )
+                ]
+            );
+        }
     }
 
     private void OrderEntities(string orderBy, string order)
