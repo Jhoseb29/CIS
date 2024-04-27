@@ -4,6 +4,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.Net;
+
 namespace JalaU.CIS_API.System.Core.Application;
 
 using JalaU.CIS_API.System.Core.Domain;
@@ -17,11 +19,36 @@ public class VoteFilters : EntityFilter<Vote>
     public override List<Vote> Filter(List<Vote> votes, string filter, string keyword)
     {
         this.Entities = votes;
-        filter = filter.ToLower();
-        switch (filter)
+        return filter.ToLower() switch
         {
-            default:
-                return this.Entities;
-        }
+            "id" => this.FilterById(keyword.ToLower()),
+            "positive" => this.FilterByPositive(keyword.ToLower()),
+            "userid" => this.FilterByUserId(keyword.ToLower()),
+            _
+                => throw new WrongDataException(
+                    "errors",
+                    [
+                        new(
+                            (int)HttpStatusCode.UnprocessableContent,
+                            $"The filter {filter} can't be used."
+                        )
+                    ]
+                ),
+        };
+    }
+
+    private List<Vote> FilterById(string keyword)
+    {
+        throw new NotImplementedException();
+    }
+
+    private List<Vote> FilterByPositive(string keyword)
+    {
+        throw new NotImplementedException();
+    }
+
+    private List<Vote> FilterByUserId(string keyword)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -3,6 +3,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+
 using JalaU.CIS_API.System.Core.Domain;
 
 namespace JalaU.CIS_API.System.Core.Application;
@@ -50,6 +51,7 @@ public class VoteService(
         {
             throw new EntityNotFoundException("No votes were found.");
         }
+
         return finalVotesListToReturn;
     }
 
