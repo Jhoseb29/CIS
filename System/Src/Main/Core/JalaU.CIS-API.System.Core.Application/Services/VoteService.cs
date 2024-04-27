@@ -3,6 +3,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+
 using JalaU.CIS_API.System.Core.Domain;
 
 namespace JalaU.CIS_API.System.Core.Application;
@@ -11,19 +12,16 @@ namespace JalaU.CIS_API.System.Core.Application;
 /// Represents a service for managing ideas.
 /// </summary>
 /// <param name="ideaRepository">The repository for Vote entities.</param>
-/// <param name="ideaService">The service for Idea entities.</param>
 /// <param name="validator">The validator for Vote entities.</param>
 /// <param name="entityFilter">The entityFilter for Vote entities.</param>
 public class VoteService(
     IRepository<Vote> ideaRepository,
-    IService<Idea> ideaService,
     AbstractValidator<Vote> validator,
     EntityFilter<Vote> entityFilter
 ) : IService<Vote>
 {
     private readonly IRepository<Vote> voteRepository = ideaRepository;
-    private readonly IService<Idea> ideaService = ideaService;
-    private readonly EntityFilter<Vote> filters = entityFilter;
+    private readonly EntityFilter<Vote> voteFilter = entityFilter;
 
     private AbstractValidator<Vote> Validator { get; set; } = validator;
 
@@ -38,7 +36,23 @@ public class VoteService(
     /// <inheritdoc/>
     public List<Vote> GetAll(GetAllEntitiesRequestDTO getAllEntitiesRequestDTO)
     {
-        throw new NotImplementedException();
+        List<Vote> voteList = this.voteRepository.GetAll().ToList();
+
+        List<string> fieldsAllowedToOrderBy = new List<string> { "id", "positive", "userId", "ideaId" };
+
+        EntitiesListParameterizerUtil<Vote> entitiesListParameterizerUtil =
+            new EntitiesListParameterizerUtil<Vote>(voteList, fieldsAllowedToOrderBy);
+        var finalVotesListToReturn = entitiesListParameterizerUtil.ApplyGetAllParameters(
+            this.voteFilter,
+            getAllEntitiesRequestDTO
+        );
+
+        if (finalVotesListToReturn.Count == 0)
+        {
+            throw new EntityNotFoundException("No votes were found.");
+        }
+
+        return finalVotesListToReturn;
     }
 
     /// <inheritdoc/>
