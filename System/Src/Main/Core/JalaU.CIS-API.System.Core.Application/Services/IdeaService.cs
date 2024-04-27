@@ -133,7 +133,7 @@ public class IdeaService(
         return this.ideaRepository.GetByCriteria(idea => idea.Id == validGuid);
     }
 
-    private Idea? GetByTitleWithinATopic(string title, string idTopic)
+    private Idea? GetByTitleWithinATopic(string? title, string idTopic)
     {
         Guid validGuid = GuidValidatorUtil.ValidateGuid(idTopic);
         return this.ideaRepository.GetByCriteria(
