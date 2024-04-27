@@ -24,6 +24,9 @@ public class IdeaValidatorUtil : AbstractValidator<Idea>
         var mapperConfigurationForTopics = new MapperConfiguration(configuration =>
         {
             configuration.CreateMap<IdeaRequestDTO, Idea>().ReverseMap();
+            configuration.CreateMap<UpdateIdeaRequestDTO, Idea>()
+                         .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
+                         .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
         });
 
         this.topicMapper = new Mapper(mapperConfigurationForTopics);
@@ -32,13 +35,27 @@ public class IdeaValidatorUtil : AbstractValidator<Idea>
     /// <inheritdoc/>
     public override Idea ValidateEntityToSave(BaseRequestDTO baseRequestDTO)
     {
-        this.MessageLogDTOs = [];
-        IdeaRequestDTO ideaRequestDTO = this.ValidateIdeaRequestDTO(baseRequestDTO);
+        this.MessageLogDTOs = new List<MessageLogDTO>();
 
-        this.MessageLogDTOs.AddRange(
-            EntityValidatorUtil.ValidateBlankOrNullEntityFields(ideaRequestDTO)
-        );
-        return this.topicMapper.Map<Idea>(ideaRequestDTO);
+        if (baseRequestDTO is IdeaRequestDTO ideaRequestDTO)
+        {
+            this.MessageLogDTOs.AddRange(
+                EntityValidatorUtil.ValidateBlankOrNullEntityFields(ideaRequestDTO)
+            );
+            return this.topicMapper.Map<Idea>(ideaRequestDTO);
+        }
+        else if (baseRequestDTO is UpdateIdeaRequestDTO updateIdeaRequestDTO)
+        {
+            var ideaToUpdate = this.topicMapper.Map<Idea>(updateIdeaRequestDTO);
+            this.MessageLogDTOs.AddRange(
+                EntityValidatorUtil.ValidateBlankOrNullEntityFields(ideaToUpdate)
+            );
+            return ideaToUpdate;
+        }
+        else
+        {
+            throw new WrongDataException("errors", this.MessageLogDTOs);
+        }
     }
 
     /// <inheritdoc/>
@@ -47,17 +64,15 @@ public class IdeaValidatorUtil : AbstractValidator<Idea>
         BaseRequestDTO baseRequestDTO
     )
     {
-        this.MessageLogDTOs = [];
+        this.MessageLogDTOs = new List<MessageLogDTO>();
 
-        IdeaRequestDTO ideaRequestDTO = this.ValidateIdeaRequestDTO(baseRequestDTO);
-        Idea updatedIdea = UpdatableEntityUtil<Idea>.UpdateEntities(
-            existingIdeaToUpdate,
-            ideaRequestDTO
-        );
+        UpdateIdeaRequestDTO updateIdeaRequestDTO = (UpdateIdeaRequestDTO)baseRequestDTO;
+        existingIdeaToUpdate.Title = updateIdeaRequestDTO.Title;
+        existingIdeaToUpdate.Description = updateIdeaRequestDTO.Description;
 
-        EntityValidatorUtil.ValidateBlankOrNullEntityFields(updatedIdea);
+        EntityValidatorUtil.ValidateBlankOrNullEntityFields(existingIdeaToUpdate);
 
-        return updatedIdea;
+        return existingIdeaToUpdate;
     }
 
     /// <summary>
