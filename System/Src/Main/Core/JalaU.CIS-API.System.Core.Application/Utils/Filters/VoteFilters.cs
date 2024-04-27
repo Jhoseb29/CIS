@@ -3,6 +3,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+
 namespace JalaU.CIS_API.System.Core.Application;
 
 using JalaU.CIS_API.System.Core.Domain;
@@ -13,8 +14,14 @@ using JalaU.CIS_API.System.Core.Domain;
 public class VoteFilters : EntityFilter<Vote>
 {
     /// <inheritdoc/>
-    public override List<Vote> Filter(List<Vote> entitiesToFilter, string filter, string keyword)
+    public override List<Vote> Filter(List<Vote> votes, string filter, string keyword)
     {
-        throw new NotImplementedException();
+        this.Entities = votes;
+        filter = filter.ToLower();
+        switch (filter)
+        {
+            default:
+                return this.Entities;
+        }
     }
 }

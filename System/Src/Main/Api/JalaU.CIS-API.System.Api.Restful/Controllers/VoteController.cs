@@ -3,6 +3,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
+
 using global::System.Net;
 using JalaU.CIS_API.System.Core.Application;
 using JalaU.CIS_API.System.Core.Domain;
@@ -74,5 +75,43 @@ public class VoteController(IService<Vote> service) : ControllerBase
         var vote = this.service.GetByCriteria("id", voteId);
 
         return this.Ok(vote);
+    }
+
+    /// <summary>
+    /// Gets all votes in the system with pagination support.
+    /// </summary>
+    /// <param name="pageSize">Optional. The number of topics to include in a page.</param>
+    /// <param name="pageNumber">Optional. The page number to retrieve.</param>
+    /// <param name="orderBy"> orderBy. </param>
+    /// <param name="order"> order.</param>
+    /// <param name="filter"> filter.</param>
+    /// <param name="keyword">keyword.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the retrieved votes in the body.
+    /// An HTTP 404 Not Found response if no votes are found.
+    /// </returns>
+    [HttpGet]
+    public ActionResult GetAll(
+        [FromQuery] int pageSize = 5,
+        [FromQuery] int pageNumber = 1,
+        [FromQuery] string orderBy = "positive",
+        [FromQuery] string order = "desc",
+        [FromQuery] string filter = "",
+        [FromQuery] string keyword = ""
+    )
+    {
+        var getAllEntitiesDTO = new GetAllEntitiesRequestDTO
+        {
+            PageSize = pageSize,
+            PageNumber = pageNumber,
+            OrderBy = orderBy,
+            Order = order,
+            Filter = filter,
+            Keyword = keyword,
+        };
+
+        var votes = this.service.GetAll(getAllEntitiesDTO);
+
+        return this.Ok(new { count = votes.Count, votes });
     }
 }
