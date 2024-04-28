@@ -27,14 +27,14 @@ public class Idea
     /// </summary>
     [Column("title")]
     [StringLength(200)]
-    public required string? Title { get; set; }
+    public required string Title { get; set; }
 
     /// <summary>
     /// Gets or sets the description of the idea.
     /// </summary>
     [Column("description")]
     [StringLength(500)]
-    public required string? Description { get; set; }
+    public required string Description { get; set; }
 
     /// <summary>
     /// Gets or sets the date when the idea was created.
