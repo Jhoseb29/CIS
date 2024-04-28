@@ -44,6 +44,22 @@ public class VoteController(IService<Vote> service) : ControllerBase
     }
 
     /// <summary>
+    /// Saves a vote by its ID using HTTP POST method.
+    /// </summary>
+    /// <param name="vote">The ID of the vote to be saved.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the saved vote in the body.
+    /// An HTTP 400 Bad Request response with all error details.
+    /// </returns>
+    [HttpPost]
+    public ActionResult SaveVote(VoteRequestDTO vote)
+    {
+        Vote savedVote = this.service.Save(vote);
+
+        return this.StatusCode((int)HttpStatusCode.Created, savedVote);
+    }
+
+    /// <summary>
     /// Updates a vote by its ID using HTTP PUT method.
     /// </summary>
     /// <param name="voteRequestDto">The DTO (Data Transfer Object) containing updated vote information.</param>

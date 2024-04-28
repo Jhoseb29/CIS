@@ -71,9 +71,20 @@ public class VoteService(
     }
 
     /// <inheritdoc/>
-    public Vote Save(BaseRequestDTO entityToSave)
+    public Vote Save(BaseRequestDTO voteToSave)
     {
-        throw new NotImplementedException();
+        Vote voteValidated = this.Validator.ValidateEntityToSave(voteToSave);
+
+        string votedString = voteValidated.IdeaId.ToString();
+
+        this.Validator.CheckDuplicateEntity(
+            this.GetById(votedString)!,
+            "The idea that you have voted is unliked now."
+            );
+        this.Validator.AreThereErrors();
+
+        Vote vote = this.voteRepository.Save(voteValidated);
+        return vote;
     }
 
     /// <inheritdoc/>
