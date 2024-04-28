@@ -24,6 +24,7 @@ public class IdeaValidatorUtil : AbstractValidator<Idea>
         var mapperConfigurationForTopics = new MapperConfiguration(configuration =>
         {
             configuration.CreateMap<IdeaRequestDTO, Idea>().ReverseMap();
+            configuration.CreateMap<UpdateIdeaRequestDTO, Idea>().ReverseMap();
         });
 
         this.topicMapper = new Mapper(mapperConfigurationForTopics);
@@ -47,12 +48,12 @@ public class IdeaValidatorUtil : AbstractValidator<Idea>
         BaseRequestDTO baseRequestDTO
     )
     {
-        this.MessageLogDTOs = [];
+        this.MessageLogDTOs = new List<MessageLogDTO>();
 
-        IdeaRequestDTO ideaRequestDTO = this.ValidateIdeaRequestDTO(baseRequestDTO);
+        UpdateIdeaRequestDTO updateIdeaRequestDTO = this.ValidateUpdateIdeaRequestDTO(baseRequestDTO);
         Idea updatedIdea = UpdatableEntityUtil<Idea>.UpdateEntities(
             existingIdeaToUpdate,
-            ideaRequestDTO
+            updateIdeaRequestDTO
         );
 
         EntityValidatorUtil.ValidateBlankOrNullEntityFields(updatedIdea);
@@ -71,6 +72,27 @@ public class IdeaValidatorUtil : AbstractValidator<Idea>
         try
         {
             return (IdeaRequestDTO)baseRequestDTO;
+        }
+        catch (Exception exception)
+        {
+            this.MessageLogDTOs.Add(
+                new MessageLogDTO((int)HttpStatusCode.UnprocessableEntity, exception.Message)
+            );
+            throw new WrongDataException("errors", this.MessageLogDTOs);
+        }
+    }
+
+    /// <summary>
+    /// Validates and casts a BaseRequestDTO to an UpdateIdeaRequestDTO.
+    /// </summary>
+    /// <param name="baseRequestDTO">The BaseRequestDTO to validate and cast.</param>
+    /// <returns>The validated UpdateIdeaRequestDTO.</returns>
+    /// <exception cref="WrongDataException">Thrown when the validation fails.</exception>
+    private UpdateIdeaRequestDTO ValidateUpdateIdeaRequestDTO(BaseRequestDTO baseRequestDTO)
+    {
+        try
+        {
+            return (UpdateIdeaRequestDTO)baseRequestDTO;
         }
         catch (Exception exception)
         {

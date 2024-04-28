@@ -96,9 +96,15 @@ public class IdeaService(
     }
 
     /// <inheritdoc/>
-    public Idea Update(BaseRequestDTO entityToSave, string id)
+    public Idea Update(BaseRequestDTO ideaToUpdate, string id)
     {
-        throw new NotImplementedException();
+        var existingIdeaToUpdate = this.GetByCriteria("id", id);
+        Idea updatedIdea = this.Validator.ValidateEntityToUpdate(
+            existingIdeaToUpdate!,
+            ideaToUpdate
+        );
+
+        return this.ideaRepository.Update(updatedIdea);
     }
 
     /// <inheritdoc/>
@@ -120,7 +126,7 @@ public class IdeaService(
         return this.ideaRepository.GetByCriteria(idea => idea.Id == validGuid);
     }
 
-    private Idea? GetByTitleWithinATopic(string title, string idTopic)
+    private Idea? GetByTitleWithinATopic(string? title, string idTopic)
     {
         Guid validGuid = GuidValidatorUtil.ValidateGuid(idTopic);
         return this.ideaRepository.GetByCriteria(

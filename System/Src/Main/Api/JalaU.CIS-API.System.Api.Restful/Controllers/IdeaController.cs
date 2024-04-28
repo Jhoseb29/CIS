@@ -110,4 +110,20 @@ public class IdeaController(IService<Idea> service) : ControllerBase
 
         return this.Ok(new { count = ideas.Count, ideas });
     }
+
+    /// <summary>
+    /// Updates a idea by its ID using HTTP PUT method.
+    /// </summary>
+    /// <param name="updateIdeaRequestDTO">The DTO (Data Transfer Object) containing updated idea information.</param>
+    /// <param name="ideaId">The ID of the idea to be updated.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the updated idea in the body.
+    /// An HTTP 400 Bad Request response with all error details.
+    /// </returns>
+    [HttpPut("{ideaId}")]
+    public ActionResult UpdateIdea([FromBody]UpdateIdeaRequestDTO updateIdeaRequestDTO, string ideaId)
+    {
+        var idea = this.service.Update(updateIdeaRequestDTO, ideaId);
+        return this.Ok(idea);
+    }
 }
