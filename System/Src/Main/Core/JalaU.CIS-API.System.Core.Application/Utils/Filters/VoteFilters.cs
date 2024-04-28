@@ -39,16 +39,27 @@ public class VoteFilters : EntityFilter<Vote>
 
     private List<Vote> FilterById(string keyword)
     {
-        throw new NotImplementedException();
+        List<Vote> filteredVotes = this.Entities.Where(
+                vote =>
+                    vote.Id.ToString().Contains(keyword, StringComparison.CurrentCultureIgnoreCase)
+            )
+            .ToList();
+        return filteredVotes;
     }
 
     private List<Vote> FilterByPositive(string keyword)
     {
-        throw new NotImplementedException();
+        bool isPositive = keyword.ToLower() == "true";
+        List<Vote> filteredVotes = this.Entities.Where(vote => vote.Positive == isPositive).ToList();
+        return filteredVotes;
     }
 
     private List<Vote> FilterByUserId(string keyword)
     {
-        throw new NotImplementedException();
+        List<Vote> filteredTopics = this.Entities.Where(
+                vote => vote.UserId.ToString().ToLower().Contains(keyword)
+            )
+            .ToList();
+        return filteredTopics;
     }
 }

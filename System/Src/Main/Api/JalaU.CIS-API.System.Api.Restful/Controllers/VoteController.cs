@@ -91,13 +91,13 @@ public class VoteController(IService<Vote> service) : ControllerBase
     /// An HTTP 404 Not Found response if no votes are found.
     /// </returns>
     [HttpGet]
-    public ActionResult GetAll(
+    public ActionResult GetVotes(
         [FromQuery] int pageSize = 5,
         [FromQuery] int pageNumber = 1,
-        [FromQuery] string orderBy = "positive",
+        [FromQuery] string orderBy = "id",
         [FromQuery] string order = "desc",
-        [FromQuery] string filter = "",
-        [FromQuery] string keyword = ""
+        [FromQuery] string filter = "positive",
+        [FromQuery] string keyword = "true"
     )
     {
         var getAllEntitiesDTO = new GetAllEntitiesRequestDTO
