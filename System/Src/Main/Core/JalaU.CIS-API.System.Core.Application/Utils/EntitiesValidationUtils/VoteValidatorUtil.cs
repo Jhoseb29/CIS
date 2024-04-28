@@ -49,13 +49,16 @@ public class VoteValidatorUtil : AbstractValidator<Vote>
         BaseRequestDTO baseRequestDTO
     )
     {
-        this.MessageLogDTOs = new List<MessageLogDTO>();
+        this.MessageLogDTOs = [];
 
-        UpdateVoteRequestDTO updateRequestDTO = (UpdateVoteRequestDTO)baseRequestDTO;
+        UpdateVoteRequestDTO updateVoteRequestDTO = (UpdateVoteRequestDTO)baseRequestDTO;
 
-        existingVoteToUpdate.Positive = updateRequestDTO.Positive;
+        var updatedTopic = UpdatableEntityUtil<Vote>.UpdateEntities(
+            existingVoteToUpdate,
+            updateVoteRequestDTO
+        );
 
-        EntityValidatorUtil.ValidateBlankOrNullEntityFields(existingVoteToUpdate);
+        EntityValidatorUtil.ValidateBlankOrNullEntityFields(updatedTopic);
 
         return existingVoteToUpdate;
     }
