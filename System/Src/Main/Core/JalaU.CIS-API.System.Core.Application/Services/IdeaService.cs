@@ -38,11 +38,7 @@ public class IdeaService(
         );
         this.Validator.AreThereErrors();
 
-        Topic topic =
-            this.topicService.GetByCriteria("id", ideaValidated.TopicId.ToString())
-            ?? throw new EntityNotFoundException(
-                "The associated Topic doesn't exist in the System."
-            );
+        this.topicService.GetByCriteria("id", ideaValidated.TopicId.ToString());
 
         ideaValidated.UserId = GuidValidatorUtil.ValidateGuid(GlobalVariables.UserId!);
 

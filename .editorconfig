@@ -35,3 +35,6 @@ dotnet_diagnostic.SA1118.severity = none
 
 # SA1011: Closing square brackets should be spaced correctly
 dotnet_diagnostic.SA1011.severity = none
+
+# ASP0014: Suggest using top level route registrations
+dotnet_diagnostic.ASP0014.severity = none

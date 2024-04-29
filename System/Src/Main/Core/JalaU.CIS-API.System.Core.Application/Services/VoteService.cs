@@ -12,15 +12,18 @@ namespace JalaU.CIS_API.System.Core.Application;
 /// Represents a service for managing ideas.
 /// </summary>
 /// <param name="ideaRepository">The repository for Vote entities.</param>
+/// <param name="ideaService">The service for Idea entities.</param>
 /// <param name="validator">The validator for Vote entities.</param>
 /// <param name="entityFilter">The entityFilter for Vote entities.</param>
 public class VoteService(
     IRepository<Vote> ideaRepository,
+    IService<Idea> ideaService,
     AbstractValidator<Vote> validator,
     EntityFilter<Vote> entityFilter
 ) : IService<Vote>
 {
     private readonly IRepository<Vote> voteRepository = ideaRepository;
+    private readonly IService<Idea> ideaService = ideaService;
     private readonly EntityFilter<Vote> voteFilter = entityFilter;
 
     private AbstractValidator<Vote> Validator { get; set; } = validator;
@@ -38,7 +41,13 @@ public class VoteService(
     {
         List<Vote> voteList = this.voteRepository.GetAll().ToList();
 
-        List<string> fieldsAllowedToOrderBy = new List<string> { "id", "positive", "userId", "ideaId" };
+        List<string> fieldsAllowedToOrderBy = new List<string>
+        {
+            "id",
+            "positive",
+            "userId",
+            "ideaId",
+        };
 
         EntitiesListParameterizerUtil<Vote> entitiesListParameterizerUtil =
             new EntitiesListParameterizerUtil<Vote>(voteList, fieldsAllowedToOrderBy);
@@ -65,15 +74,32 @@ public class VoteService(
                 _ => throw new ArgumentException("Invalid field."),
             }
             ?? throw new EntityNotFoundException(
-                $"Idea with the field {field} and the value {valueToSearch} was not found."
+                $"Vote with the field {field} and the value {valueToSearch} was not found."
             );
         return vote;
     }
 
     /// <inheritdoc/>
-    public Vote Save(BaseRequestDTO entityToSave)
+    public Vote Save(BaseRequestDTO voteToSave)
     {
-        throw new NotImplementedException();
+        Vote voteValidated = this.Validator.ValidateEntityToSave(voteToSave);
+
+        voteValidated.UserId = GuidValidatorUtil.ValidateGuid(GlobalVariables.UserId!);
+
+        this.ideaService.GetByCriteria("id", voteValidated.IdeaId.ToString());
+
+        this.Validator.CheckDuplicateEntity(
+            this.GetByIdeaAndUser(
+                voteValidated.IdeaId.ToString(),
+                voteValidated.UserId.ToString()
+            )!,
+            "You have already voted for this Idea."
+        );
+
+        this.Validator.AreThereErrors();
+
+        Vote vote = this.voteRepository.Save(voteValidated);
+        return vote;
     }
 
     /// <inheritdoc/>
@@ -92,5 +118,14 @@ public class VoteService(
     {
         Guid validGuid = GuidValidatorUtil.ValidateGuid(id);
         return this.voteRepository.GetByCriteria(vote => vote.Id == validGuid);
+    }
+
+    private Vote? GetByIdeaAndUser(string ideaId, string userId)
+    {
+        Guid validGuid = GuidValidatorUtil.ValidateGuid(ideaId);
+        Guid validUserGuid = GuidValidatorUtil.ValidateGuid(userId);
+        return this.voteRepository.GetByCriteria(
+            vote => vote.IdeaId == validGuid && vote.UserId == validUserGuid
+        );
     }
 }
