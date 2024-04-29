@@ -12,7 +12,7 @@ build_and_StyleCope:
   script:
     - find . -name '*.csproj' ! -name '*Tests*' -exec dotnet build {} \;
 
-test:
+test_and_Coverage:
   stage: test
   script:
     - find . -name '*Tests*.csproj' -exec dotnet test {} 
