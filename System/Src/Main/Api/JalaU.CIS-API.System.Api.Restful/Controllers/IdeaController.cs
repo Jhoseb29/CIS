@@ -108,7 +108,11 @@ public class IdeaController(IService<Idea> service) : ControllerBase
 
         var ideas = this.service.GetAll(getAllEntitiesDTO);
 
-        return this.Ok(new { count = ideas.Count, ideas });
+        Dictionary<string, object> mapToReturn = [];
+        mapToReturn.Add("count", ideas.Count);
+        mapToReturn.Add("ideas", ideas);
+
+        return this.Ok(mapToReturn);
     }
 
     /// <summary>
@@ -121,7 +125,10 @@ public class IdeaController(IService<Idea> service) : ControllerBase
     /// An HTTP 400 Bad Request response with all error details.
     /// </returns>
     [HttpPut("{ideaId}")]
-    public ActionResult UpdateIdea([FromBody]UpdateIdeaRequestDTO updateIdeaRequestDTO, string ideaId)
+    public ActionResult UpdateIdea(
+        [FromBody] UpdateIdeaRequestDTO updateIdeaRequestDTO,
+        string ideaId
+    )
     {
         var idea = this.service.Update(updateIdeaRequestDTO, ideaId);
         return this.Ok(idea);

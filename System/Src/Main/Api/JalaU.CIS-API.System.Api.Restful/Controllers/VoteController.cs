@@ -78,7 +78,11 @@ public class VoteController(IService<Vote> service) : ControllerBase
 
         var votes = this.service.GetAll(getAllEntitiesDTO);
 
-        return this.Ok(new { count = votes.Count, votes });
+        Dictionary<string, object> mapToReturn = [];
+        mapToReturn.Add("count", votes.Count);
+        mapToReturn.Add("votes", votes);
+
+        return this.Ok(mapToReturn);
     }
 
     /// <summary>
@@ -124,7 +128,7 @@ public class VoteController(IService<Vote> service) : ControllerBase
     /// An HTTP 400 Bad Request response with all error details.
     /// </returns>
     [HttpDelete("{voteId}")]
-    public ActionResult DeleteTopic(string voteId)
+    public ActionResult DeleteVote(string voteId)
     {
         var topic = this.service.DeleteById(voteId);
 

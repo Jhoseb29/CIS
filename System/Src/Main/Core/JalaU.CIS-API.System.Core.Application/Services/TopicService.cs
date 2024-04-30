@@ -80,15 +80,22 @@ public class TopicService(
     /// <inheritdoc/>
     public Topic Update(BaseRequestDTO entityRequestDTO, string id)
     {
+        var topicDTO = (TopicRequestDTO)entityRequestDTO;
+        if (topicDTO.Title != null)
+        {
+            this.Validator.CheckDuplicateEntity(
+                this.GetByTitle(topicDTO.Title)!,
+                "The Topic's title is already registered in the System."
+            );
+        }
+        this.Validator.AreThereErrors();
+
         var existingTopicToUpdate = this.GetByCriteria("id", id);
         Topic updatedTopic = this.Validator.ValidateEntityToUpdate(
             existingTopicToUpdate!,
             entityRequestDTO
         );
-        this.Validator.CheckDuplicateEntity(
-            this.GetByTitle(updatedTopic.Title)!,
-            "The Topic's title is already registered in the System."
-        );
+
         this.Validator.AreThereErrors();
 
         return this.topicRepository.Update(updatedTopic);

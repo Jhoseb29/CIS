@@ -50,7 +50,9 @@ public class IdeaValidatorUtil : AbstractValidator<Idea>
     {
         this.MessageLogDTOs = new List<MessageLogDTO>();
 
-        UpdateIdeaRequestDTO updateIdeaRequestDTO = this.ValidateUpdateIdeaRequestDTO(baseRequestDTO);
+        UpdateIdeaRequestDTO updateIdeaRequestDTO = this.ValidateUpdateIdeaRequestDTO(
+            baseRequestDTO
+        );
         Idea updatedIdea = UpdatableEntityUtil<Idea>.UpdateEntities(
             existingIdeaToUpdate,
             updateIdeaRequestDTO
