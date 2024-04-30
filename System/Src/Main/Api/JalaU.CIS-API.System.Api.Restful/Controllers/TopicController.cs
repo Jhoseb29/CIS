@@ -77,7 +77,11 @@ public class TopicController(IService<Topic> service) : ControllerBase
 
         var topics = this.service.GetAll(getAllEntitiesDTO);
 
-        return this.Ok(new { count = topics.Count, topics });
+        Dictionary<string, object> mapToReturn = [];
+        mapToReturn.Add("count", topics.Count);
+        mapToReturn.Add("topics", topics);
+
+        return this.Ok(mapToReturn);
     }
 
     /// <summary>

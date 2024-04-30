@@ -94,11 +94,22 @@ public class IdeaService(
     /// <inheritdoc/>
     public Idea Update(BaseRequestDTO ideaToUpdate, string id)
     {
+        var ideaRequest = (UpdateIdeaRequestDTO)ideaToUpdate;
+        if (ideaRequest.Title != null)
+        {
+            this.Validator.CheckDuplicateEntity(
+                this.GetByTitle(ideaRequest.Title)!,
+                "The Idea's title is already registered in the System."
+            );
+        }
+        this.Validator.AreThereErrors();
+
         var existingIdeaToUpdate = this.GetByCriteria("id", id);
         Idea updatedIdea = this.Validator.ValidateEntityToUpdate(
             existingIdeaToUpdate!,
             ideaToUpdate
         );
+        this.Validator.AreThereErrors();
 
         return this.ideaRepository.Update(updatedIdea);
     }

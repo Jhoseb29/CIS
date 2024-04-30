@@ -1,4 +1,4 @@
-namespace JalaU.CIS_API.Tests.Core.Application;
+namespace JalaU.CIS_API.Integration.Tests;
 
 public class Tests
 {
