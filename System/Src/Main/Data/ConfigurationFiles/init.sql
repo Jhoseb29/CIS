@@ -1,10 +1,11 @@
+Create DATABASE sd3;
 USE sd3;
 
 CREATE TABLE users 
 (
   id        VARCHAR(36) NOT NULL,
   name      VARCHAR(200) NOT NULL,
-  login     VARCHAR(20) NOT NULL,
+  login     VARCHAR(50) NOT NULL,
   password  VARCHAR(100) NOT NULL,
   PRIMARY KEY (id),
   UNIQUE INDEX id_UNIQUE (id ASC) 
@@ -51,6 +52,40 @@ CREATE TABLE votes
     UNIQUE INDEX unique_user_idea_vote (userId, ideaId) 
 );
 
+CREATE TEMPORARY TABLE global_first_names (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100)
+);
+
+CREATE TEMPORARY TABLE global_last_names (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    last_name VARCHAR(100)
+);
+
+CREATE TEMPORARY TABLE global_topic_titles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    topic_title VARCHAR(200)
+);
+
+CREATE TEMPORARY TABLE global_labels (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    label VARCHAR(50)
+);
+
+CREATE TEMPORARY TABLE global_topic_descriptions (
+    topic_title VARCHAR(200),
+    description VARCHAR(500)
+);
+
+CREATE TEMPORARY TABLE temp_idea_titles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL
+);
+
+CREATE TEMPORARY TABLE temp_idea_descriptions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    description VARCHAR(500) NOT NULL
+);
 -- TRIGGER PARA BORRAR TOPICOS BORRANDO PRIMERO VOTOS E IDEAS RELACIONADAS AUTOMATICAMENTE
 DELIMITER $$
 CREATE TRIGGER before_topic_delete
@@ -77,3 +112,75 @@ BEGIN
 END$$
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE InsertMultipleTopics(IN num_topics INT)
+BEGIN
+    DECLARE i INT DEFAULT 0;
+    
+    WHILE i < num_topics DO
+        INSERT INTO topics (id, title, description, date, labels, userId)
+        SELECT 
+            UUID(), 
+            CONCAT(gtt.topic_title, SUBSTRING(MD5(RAND()) FROM 1 FOR 5)),
+            gtd.description,
+            NOW(),
+            JSON_ARRAYAGG(gl.label),
+            (SELECT id FROM users ORDER BY RAND() LIMIT 1)
+        FROM 
+            (SELECT topic_title 
+             FROM global_topic_titles 
+             ORDER BY RAND() 
+             LIMIT 1) AS gtt
+            CROSS JOIN (
+                SELECT description
+                FROM global_topic_descriptions
+                ORDER BY RAND()
+                LIMIT 1
+            ) AS gtd
+            CROSS JOIN (
+                SELECT label
+                FROM (
+                    SELECT label
+                    FROM global_labels
+                    ORDER BY RAND()
+                    LIMIT 40
+                ) AS shuffled_labels
+                ORDER BY RAND()
+                LIMIT 3
+            ) AS gl
+        GROUP BY gtt.topic_title, gtd.description
+		ORDER BY RAND()
+        LIMIT 1;
+        
+        SET i = i + 1;
+    END WHILE;
+    
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE InsertMultipleIdeas(IN num_iterations INT)
+BEGIN
+    DECLARE i INT DEFAULT 0;
+    
+    WHILE i < num_iterations DO
+        INSERT INTO ideas (id, title, description, date, userId, topicId)
+        SELECT 
+            UUID(), 
+            CONCAT(tit.title, SUBSTRING(MD5(RAND()) FROM 1 FOR 5)),
+            descrip.description,
+            NOW(),
+            (SELECT id FROM users ORDER BY RAND() LIMIT 1),
+            (SELECT id FROM topics ORDER BY RAND() LIMIT 1)
+        FROM 
+            (SELECT title FROM temp_idea_titles ORDER BY RAND() LIMIT 1) AS tit,
+            (SELECT description FROM temp_idea_descriptions ORDER BY RAND() LIMIT 1) AS descrip;
+        
+        SET i = i + 1;
+    END WHILE;
+    
+END //
+
+DELIMITER ;
