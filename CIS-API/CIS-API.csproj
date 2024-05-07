@@ -30,6 +30,7 @@
     <ProjectReference Include="..\System\Src\Main\Api\JalaU.CIS-API.System.Api.Restful\JalaU.CIS-API.System.Api.Restful.csproj" />
     <ProjectReference Include="..\System\Src\Main\Core\JalaU.CIS-API.System.Core.Application\JalaU.CIS-API.System.Core.Application.csproj" />
     <ProjectReference Include="..\System\Src\Main\Data\JalaU.CIS-API.System.Data.Persistance\JalaU.CIS-API.System.Data.Persistance.csproj" />
+    <ProjectReference Include="..\System\Src\Main\Data\JalaU.CIS-API.System.Data.MongoDBPersistance\JalaU.CIS-API.System.Data.MongoDBPersistance.csproj" />
   </ItemGroup>
 
 </Project>
