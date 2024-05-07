@@ -6,6 +6,7 @@
 namespace JalaU.CIS_API.System.Data.Persistance;
 
 using JalaU.CIS_API.System.Core.Domain;
+using Microsoft.EntityFrameworkCore;
 
 /// <summary>
 /// Initializes a new instance of the <see cref="TopicRepository"/> class.
@@ -18,35 +19,40 @@ public class TopicRepository(AppDbContext appDbContext) : IRepository<Topic>
     /// <inheritdoc/>
     public IEnumerable<Topic> GetAll()
     {
-        throw new NotImplementedException();
-    }
-
-    /// <inheritdoc/>
-    public Topic GetById(Guid id)
-    {
-        throw new NotImplementedException();
+        List<Topic> topicList = [.. this.appDbContext.topics];
+        return topicList;
     }
 
     /// <inheritdoc/>
     public Topic Save(Topic entity)
     {
         this.appDbContext.Add(entity);
+        this.appDbContext.SaveChanges();
+        return entity;
+    }
+
+    /// <inheritdoc/>
+    public Topic Update(Topic entity)
+    {
         this.appDbContext.Update(entity);
         this.appDbContext.SaveChanges();
         return entity;
     }
 
     /// <inheritdoc/>
-    public Topic Update(Topic topic)
+    public Topic Delete(Topic entity)
     {
-        this.appDbContext.Update(topic);
+        this.appDbContext.topics.Remove(entity);
+
         this.appDbContext.SaveChanges();
-        return topic;
+
+        return entity;
     }
 
     /// <inheritdoc/>
-    public Topic Delete(Topic entity)
+    public Topic? GetByCriteria(Func<Topic, bool> criteria)
     {
-        throw new NotImplementedException();
+        Topic? topic = this.appDbContext.topics.FirstOrDefault(criteria);
+        return topic;
     }
 }

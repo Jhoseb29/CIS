@@ -22,11 +22,6 @@ public class TopicRequestDTO : BaseRequestDTO
     public string? Description { get; set; }
 
     /// <summary>
-    /// Gets or sets the date of the topic.
-    /// </summary>
-    public DateTime Date { get; set; }
-
-    /// <summary>
     /// Gets or sets the labels associated with the topic.
     /// </summary>
     public List<string>? Labels { get; set; }

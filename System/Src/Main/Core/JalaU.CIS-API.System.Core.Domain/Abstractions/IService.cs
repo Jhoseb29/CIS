@@ -15,15 +15,18 @@ public interface IService<T>
     /// <summary>
     /// Retrieves all entities from the service.
     /// </summary>
+    /// <param name="getAllEntitiesRequestDTO">The query strings.</param>
     /// <returns>A list of entities.</returns>
-    List<T> GetAll();
+    List<T> GetAll(GetAllEntitiesRequestDTO getAllEntitiesRequestDTO);
 
     /// <summary>
-    /// Retrieves an entity from the service by its unique identifier.
+    /// Filter the entities by criteria.
+    /// Filter the entities by criteria.
     /// </summary>
-    /// <param name="guid">The unique identifier of the entity.</param>
-    /// <returns>The entity with the specified identifier.</returns>
-    T GetById(Guid guid);
+    /// <param name="field">The field to search for.</param>
+    /// <param name="valueToSearch">The value to search for.</param>
+    /// <returns>The entity with the specified criteria.</returns>
+    public T GetByCriteria(string field, string valueToSearch);
 
     /// <summary>
     /// Saves an entity to the service.
@@ -45,5 +48,5 @@ public interface IService<T>
     /// </summary>
     /// <param name="guid">The unique identifier of the entity to delete.</param>
     /// <returns>The deleted entity.</returns>
-    T DeleteById(Guid guid);
+    T DeleteById(string guid);
 }
