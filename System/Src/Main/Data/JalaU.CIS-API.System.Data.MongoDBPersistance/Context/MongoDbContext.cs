@@ -35,4 +35,14 @@ public class MongoDbContext(DbContextOptions<MongoDbContext> options) : DbContex
     /// Gets or sets the database set representing the topics table.
     /// </summary>
     public DbSet<Topic> topics { get; set; }
+
+    /// <summary>
+    /// Gets or sets the database set representing the ideas table.
+    /// </summary>
+    public DbSet<Idea> ideas { get; set; }
+
+    /// <summary>
+    /// Gets or sets the database set representing the votes table.
+    /// </summary>
+    public DbSet<Vote> votes { get; set; }
 }

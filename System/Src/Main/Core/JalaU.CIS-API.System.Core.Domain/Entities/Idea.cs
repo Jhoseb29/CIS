@@ -19,7 +19,7 @@ public class Idea
     /// </summary>
     [BsonId]
     [BsonElement("_id")]
-    public required Guid Id { get; set; }
+    public required string Id { get; set; } = Guid.NewGuid().ToString();
 
     /// <summary>
     /// Gets or sets the title of the idea.
@@ -43,17 +43,11 @@ public class Idea
     /// Gets or sets the unique identifier of the topic to which this idea belongs.
     /// </summary>
     [BsonElement("topicId")]
-    public required Guid TopicId { get; set; }
+    public required string TopicId { get; set; }
 
     /// <summary>
     /// Gets or sets the unique identifier of the user who created the idea.
     /// </summary>
     [BsonElement("userId")]
-    public required Guid UserId { get; set; }
-
-    /// <summary>
-    /// Gets or sets the ideas associated with the topic.
-    /// </summary>
-    [BsonElement("votes")]
-    public required List<Vote> Votes { get; set; }
+    public required string UserId { get; set; }
 }

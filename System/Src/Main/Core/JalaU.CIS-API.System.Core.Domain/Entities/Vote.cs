@@ -18,7 +18,7 @@ public class Vote
     /// </summary>
     [BsonId]
     [BsonElement("_id")]
-    public required Guid Id { get; set; }
+    public required string Id { get; set; } = Guid.NewGuid().ToString();
 
     /// <summary>
     /// Gets or sets a value indicating whether gets or sets the title of the idea.
@@ -30,11 +30,11 @@ public class Vote
     /// Gets or sets the unique identifier of the idea to which this vote belongs.
     /// </summary>
     [BsonElement("ideaId")]
-    public required Guid IdeaId { get; set; }
+    public required string IdeaId { get; set; }
 
     /// <summary>
     /// Gets or sets the unique identifier of the user who created the idea.
     /// </summary>
     [BsonElement("userId")]
-    public required Guid UserId { get; set; }
+    public required string UserId { get; set; }
 }

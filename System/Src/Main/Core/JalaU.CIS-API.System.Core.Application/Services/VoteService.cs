@@ -84,7 +84,7 @@ public class VoteService(
     {
         Vote voteValidated = this.Validator.ValidateEntityToSave(voteToSave);
 
-        voteValidated.UserId = GuidValidatorUtil.ValidateGuid(GlobalVariables.UserId!);
+        voteValidated.UserId = GuidValidatorUtil.ValidateGuid(GlobalVariables.UserId!).ToString();
 
         this.ideaService.GetByCriteria("id", voteValidated.IdeaId.ToString());
 
@@ -116,14 +116,14 @@ public class VoteService(
 
     private Vote? GetById(string id)
     {
-        Guid validGuid = GuidValidatorUtil.ValidateGuid(id);
+        string validGuid = GuidValidatorUtil.ValidateGuid(id).ToString();
         return this.voteRepository.GetByCriteria(vote => vote.Id == validGuid);
     }
 
     private Vote? GetByIdeaAndUser(string ideaId, string userId)
     {
-        Guid validGuid = GuidValidatorUtil.ValidateGuid(ideaId);
-        Guid validUserGuid = GuidValidatorUtil.ValidateGuid(userId);
+        string validGuid = GuidValidatorUtil.ValidateGuid(ideaId).ToString();
+        string validUserGuid = GuidValidatorUtil.ValidateGuid(userId).ToString();
         return this.voteRepository.GetByCriteria(
             vote => vote.IdeaId == validGuid && vote.UserId == validUserGuid
         );

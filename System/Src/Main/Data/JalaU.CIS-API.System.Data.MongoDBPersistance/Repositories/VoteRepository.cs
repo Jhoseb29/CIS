@@ -20,89 +20,40 @@ public class VoteRepository(MongoDbContext appDbContext) : IRepository<Vote>
     /// <inheritdoc/>
     public IEnumerable<Vote> GetAll()
     {
-        var votes = this.appDbContext.topics.AsQueryable()
-            .SelectMany(t => t.Ideas)
-            .SelectMany(i => i.Votes);
-        return [.. votes];
+        List<Vote> votesList = [.. this.appDbContext.votes];
+        return votesList;
     }
 
     /// <inheritdoc/>
     public Vote Save(Vote entity)
     {
-        var topic = this.appDbContext.topics.FirstOrDefault(
-            t => t.Ideas.Any(i => i.Id == entity.IdeaId)
-        );
-
-        if (topic != null)
-        {
-            var idea = topic.Ideas.FirstOrDefault(i => i.Id == entity.IdeaId);
-            if (idea != null)
-            {
-                idea.Votes.Add(entity);
-                this.appDbContext.SaveChanges();
-                return entity;
-            }
-        }
-        return null!;
+        this.appDbContext.Add(entity);
+        this.appDbContext.SaveChanges();
+        return entity;
     }
 
     /// <inheritdoc/>
     public Vote Update(Vote entity)
     {
-        var topic = this.appDbContext.topics.FirstOrDefault(
-            t => t.Ideas.Any(i => i.Votes.Any(v => v.Id == entity.Id))
-        );
-
-        if (topic != null)
-        {
-            var ideaToUpdate = topic.Ideas.FirstOrDefault(i => i.Votes.Any(v => v.Id == entity.Id));
-            if (ideaToUpdate != null)
-            {
-                var voteToUpdate = ideaToUpdate.Votes.FirstOrDefault(v => v.Id == entity.Id);
-                if (voteToUpdate != null)
-                {
-                    this.appDbContext.Entry(voteToUpdate).CurrentValues.SetValues(entity);
-                    this.appDbContext.SaveChanges();
-
-                    return entity;
-                }
-            }
-        }
-        return null!;
+        this.appDbContext.Update(entity);
+        this.appDbContext.SaveChanges();
+        return entity;
     }
 
     /// <inheritdoc/>
     public Vote Delete(Vote entity)
     {
-        var topic = this.appDbContext.topics.FirstOrDefault(
-            t => t.Ideas.Any(i => i.Votes.Any(v => v.Id == entity.Id))
-        );
+        this.appDbContext.votes.Remove(entity);
 
-        if (topic != null)
-        {
-            var idea = topic.Ideas.FirstOrDefault(i => i.Votes.Any(v => v.Id == entity.Id));
-            if (idea != null)
-            {
-                var voteToDelete = idea.Votes.FirstOrDefault(v => v.Id == entity.Id);
-                if (voteToDelete != null)
-                {
-                    idea.Votes.Remove(voteToDelete);
-                    this.appDbContext.SaveChanges();
-                    return voteToDelete;
-                }
-            }
-        }
+        this.appDbContext.SaveChanges();
 
-        return null!;
+        return entity;
     }
 
     /// <inheritdoc/>
-    public Vote GetByCriteria(Func<Vote, bool> criteria)
+    public Vote? GetByCriteria(Func<Vote, bool> criteria)
     {
-        var vote = this.appDbContext.topics.AsQueryable()
-            .SelectMany(t => t.Ideas)
-            .SelectMany(i => i.Votes)
-            .FirstOrDefault(criteria);
-        return vote!;
+        Vote? vote = this.appDbContext.votes.FirstOrDefault(criteria);
+        return vote;
     }
 }

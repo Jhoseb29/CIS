@@ -20,71 +20,40 @@ public class IdeaRepository(MongoDbContext appDbContext) : IRepository<Idea>
     /// <inheritdoc/>
     public IEnumerable<Idea> GetAll()
     {
-        List<Idea>? ideas = [.. this.appDbContext.topics.AsQueryable().SelectMany(t => t.Ideas)];
-        return ideas;
+        List<Idea> ideasList = [.. this.appDbContext.ideas];
+        return ideasList;
     }
 
     /// <inheritdoc/>
     public Idea Save(Idea entity)
     {
-        var topic = this.appDbContext.topics.FirstOrDefault(t => t.Id == entity.TopicId);
-
-        if (topic != null)
-        {
-            topic.Ideas.Add(entity);
-            this.appDbContext.SaveChanges();
-            return entity;
-        }
-
-        return null!;
+        this.appDbContext.Add(entity);
+        this.appDbContext.SaveChanges();
+        return entity;
     }
 
     /// <inheritdoc/>
     public Idea Update(Idea entity)
     {
-        var topic = this.appDbContext.topics.Include(t => t.Ideas)
-            .FirstOrDefault(t => t.Id == entity.TopicId);
-
-        if (topic != null)
-        {
-            var ideaToUpdate = topic.Ideas.FirstOrDefault(i => i.Id == entity.Id);
-            if (ideaToUpdate != null)
-            {
-                this.appDbContext.Entry(ideaToUpdate).CurrentValues.SetValues(entity);
-                this.appDbContext.SaveChanges();
-                return entity;
-            }
-        }
-
-        return null!;
+        this.appDbContext.Update(entity);
+        this.appDbContext.SaveChanges();
+        return entity;
     }
 
     /// <inheritdoc/>
     public Idea Delete(Idea entity)
     {
-        var topic = this.appDbContext.topics.Include(t => t.Ideas)
-            .FirstOrDefault(t => t.Id == entity.TopicId);
+        this.appDbContext.ideas.Remove(entity);
 
-        if (topic != null)
-        {
-            var ideaToDelete = topic.Ideas.FirstOrDefault(i => i.Id == entity.Id);
-            if (ideaToDelete != null)
-            {
-                topic.Ideas.Remove(ideaToDelete);
-                this.appDbContext.SaveChanges();
-                return ideaToDelete;
-            }
-        }
+        this.appDbContext.SaveChanges();
 
-        return null!;
+        return entity;
     }
 
     /// <inheritdoc/>
-    public Idea GetByCriteria(Func<Idea, bool> criteria)
+    public Idea? GetByCriteria(Func<Idea, bool> criteria)
     {
-        var idea = this.appDbContext.topics.AsQueryable()
-            .SelectMany(t => t.Ideas)
-            .FirstOrDefault(criteria);
-        return idea!;
+        Idea? idea = this.appDbContext.ideas.FirstOrDefault(criteria);
+        return idea;
     }
 }
