@@ -3,14 +3,12 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-using System.Text;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using CIS_API;
 using JalaU.CIS_API.System.Api.Restful;
 using JalaU.CIS_API.System.Core.Application;
 using JalaU.CIS_API.System.Core.Domain;
-using JalaU.CIS_API.System.Data.Persistance;
+using JalaU.CIS_API.System.Data.MongoDBPersistance;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -18,10 +16,10 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("MySQLDatabaseConnection");
+var connectionString = builder.Configuration.GetConnectionString("MongoDBAtlasDatabaseConnection");
 
-builder.Services.AddDbContext<AppDbContext>(
-    options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+builder.Services.AddDbContext<MongoDbContext>(
+    options => options.UseMongoDB(connectionString!, "CIS_API")
 );
 
 builder
@@ -31,7 +29,7 @@ builder
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
-builder.Services.AddApplication().AddMySQLPersistance();
+builder.Services.AddApplication().AddMongoDbPersistance();
 builder.Services.AddExceptionHandler<ExceptionHandler>();
 builder.Services.AddScoped<EnforceJsonResponseFilter>();
 

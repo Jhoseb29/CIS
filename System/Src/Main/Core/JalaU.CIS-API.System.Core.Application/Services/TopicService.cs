@@ -71,7 +71,7 @@ public class TopicService(
         );
         this.Validator.AreThereErrors();
 
-        topicValidated.UserId = GuidValidatorUtil.ValidateGuid(GlobalVariables.UserId!);
+        topicValidated.UserId = GuidValidatorUtil.ValidateGuid(GlobalVariables.UserId!).ToString();
 
         Topic topic = this.topicRepository.Save(topicValidated);
         return topic;
@@ -116,7 +116,7 @@ public class TopicService(
 
     private Topic? GetById(string id)
     {
-        Guid validGuid = GuidValidatorUtil.ValidateGuid(id);
+        string validGuid = GuidValidatorUtil.ValidateGuid(id).ToString();
         return this.topicRepository.GetByCriteria(t => t.Id == validGuid);
     }
 }
