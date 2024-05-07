@@ -40,7 +40,7 @@ public class IdeaService(
 
         this.topicService.GetByCriteria("id", ideaValidated.TopicId.ToString());
 
-        ideaValidated.UserId = GuidValidatorUtil.ValidateGuid(GlobalVariables.UserId!);
+        ideaValidated.UserId = GuidValidatorUtil.ValidateGuid(GlobalVariables.UserId!).ToString();
 
         var idea = this.ideaRepository.Save(ideaValidated);
         return idea;
@@ -129,13 +129,13 @@ public class IdeaService(
 
     private Idea? GetById(string id)
     {
-        Guid validGuid = GuidValidatorUtil.ValidateGuid(id);
+        string validGuid = GuidValidatorUtil.ValidateGuid(id).ToString();
         return this.ideaRepository.GetByCriteria(idea => idea.Id == validGuid);
     }
 
     private Idea? GetByTitleWithinATopic(string? title, string idTopic)
     {
-        Guid validGuid = GuidValidatorUtil.ValidateGuid(idTopic);
+        string validGuid = GuidValidatorUtil.ValidateGuid(idTopic).ToString();
         return this.ideaRepository.GetByCriteria(
             idea => idea.Title == title && idea.TopicId == validGuid
         );

@@ -3,8 +3,8 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace JalaU.CIS_API.System.Core.Domain;
 
@@ -14,28 +14,27 @@ namespace JalaU.CIS_API.System.Core.Domain;
 public class Vote
 {
     /// <summary>
-    /// Gets or sets the unique identifier of the vote.
+    /// Gets or sets the unique identifier of the idea.
     /// </summary>
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    [Column("id")]
-    public required Guid Id { get; set; }
+    [BsonId]
+    [BsonElement("_id")]
+    public required string Id { get; set; } = Guid.NewGuid().ToString();
 
     /// <summary>
-    /// Gets or sets a value indicating whether the vote is positive or negative.
+    /// Gets or sets a value indicating whether gets or sets the title of the idea.
     /// </summary>
-    [Column("positive")]
+    [BsonElement("positive")]
     public required bool Positive { get; set; }
 
     /// <summary>
-    /// Gets or sets the unique identifier of the user who cast the vote.
+    /// Gets or sets the unique identifier of the idea to which this vote belongs.
     /// </summary>
-    [Column("userId")]
-    public required Guid UserId { get; set; }
+    [BsonElement("ideaId")]
+    public required string IdeaId { get; set; }
 
     /// <summary>
-    /// Gets or sets the unique identifier of the idea that the vote is associated with.
+    /// Gets or sets the unique identifier of the user who created the idea.
     /// </summary>
-    [Column("ideaId")]
-    public required Guid IdeaId { get; set; }
+    [BsonElement("userId")]
+    public required string UserId { get; set; }
 }

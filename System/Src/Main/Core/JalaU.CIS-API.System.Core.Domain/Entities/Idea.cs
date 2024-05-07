@@ -4,8 +4,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace JalaU.CIS_API.System.Core.Domain;
 
@@ -17,40 +17,37 @@ public class Idea
     /// <summary>
     /// Gets or sets the unique identifier of the idea.
     /// </summary>
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    [Column("id")]
-    public required Guid Id { get; set; }
+    [BsonId]
+    [BsonElement("_id")]
+    public required string Id { get; set; } = Guid.NewGuid().ToString();
 
     /// <summary>
     /// Gets or sets the title of the idea.
     /// </summary>
-    [Column("title")]
-    [StringLength(200)]
+    [BsonElement("title")]
     public required string Title { get; set; }
 
     /// <summary>
     /// Gets or sets the description of the idea.
     /// </summary>
-    [Column("description")]
-    [StringLength(500)]
+    [BsonElement("description")]
     public required string Description { get; set; }
 
     /// <summary>
     /// Gets or sets the date when the idea was created.
     /// </summary>
-    [Column("date")]
-    public required DateTime Date { get; set; } = DateTime.Now;
+    [BsonElement("date")]
+    public required DateTime Date { get; set; }
+
+    /// <summary>
+    /// Gets or sets the unique identifier of the topic to which this idea belongs.
+    /// </summary>
+    [BsonElement("topicId")]
+    public required string TopicId { get; set; }
 
     /// <summary>
     /// Gets or sets the unique identifier of the user who created the idea.
     /// </summary>
-    [Column("userId")]
-    public required Guid UserId { get; set; }
-
-    /// <summary>
-    /// Gets or sets the unique identifier of the topic associated with the idea.
-    /// </summary>
-    [Column("topicId")]
-    public required Guid TopicId { get; set; }
+    [BsonElement("userId")]
+    public required string UserId { get; set; }
 }

@@ -51,6 +51,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JalaU.CIS-API.Integration.Tests", "System\Src\Test\Integration\JalaU.CIS-API.Integration.Tests\JalaU.CIS-API.Integration.Tests.csproj", "{3E28BF0D-3C26-4C2B-B303-24A4FCF08D72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JalaU.CIS-API.System.Data.MongoDBPersistance", "System\Src\Main\Data\JalaU.CIS-API.System.Data.MongoDBPersistance\JalaU.CIS-API.System.Data.MongoDBPersistance.csproj", "{7BAD0054-5795-4D81-9DE0-96F35CFBAD01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{3E28BF0D-3C26-4C2B-B303-24A4FCF08D72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E28BF0D-3C26-4C2B-B303-24A4FCF08D72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E28BF0D-3C26-4C2B-B303-24A4FCF08D72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BAD0054-5795-4D81-9DE0-96F35CFBAD01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BAD0054-5795-4D81-9DE0-96F35CFBAD01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BAD0054-5795-4D81-9DE0-96F35CFBAD01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BAD0054-5795-4D81-9DE0-96F35CFBAD01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -122,6 +128,7 @@ Global
 		{126BB27E-5E09-44F4-A28A-CC78166D91F9} = {EAA3C6B3-CA24-4B98-A292-7545CE48F38A}
 		{C408C13D-D89B-48D9-BE07-0C0210C8828D} = {48665849-8062-435F-9DDF-76867824DDC1}
 		{3E28BF0D-3C26-4C2B-B303-24A4FCF08D72} = {C408C13D-D89B-48D9-BE07-0C0210C8828D}
+		{7BAD0054-5795-4D81-9DE0-96F35CFBAD01} = {E7B6730C-18C4-4356-8209-8606E917D41D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {76004E2F-A990-4A00-A8AA-73270BC6E45A}
