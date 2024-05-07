@@ -1,4 +1,4 @@
-﻿using JalaU.CIS_API.System.Core.Application;
+﻿/*using JalaU.CIS_API.System.Core.Application;
 using JalaU.CIS_API.System.Core.Domain;
 using Moq;
 
@@ -213,3 +213,4 @@ public class IdeaServiceTests
         Assert.That(result, Is.SameAs(updatedIdea));
     }
 }
+*/

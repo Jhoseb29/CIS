@@ -20,31 +20,43 @@ public class IdeaRepository(MongoDbContext appDbContext) : IRepository<Idea>
     /// <inheritdoc/>
     public IEnumerable<Idea> GetAll()
     {
-        List<Idea> ideasList = [.. this.appDbContext.ideas];
+        var ideasList = this.appDbContext.topics.SelectMany(topic => topic.Ideas).ToList();
         return ideasList;
     }
 
     /// <inheritdoc/>
     public Idea Save(Idea entity)
     {
-        this.appDbContext.Add(entity);
+        var topic = this.appDbContext.topics.FirstOrDefault(t => t.Id == entity.TopicId);
+
+        topic!.Ideas.Add(entity);
         this.appDbContext.SaveChanges();
+
         return entity;
     }
 
     /// <inheritdoc/>
     public Idea Update(Idea entity)
     {
-        this.appDbContext.Update(entity);
+        var topic = this.appDbContext.topics.FirstOrDefault(
+            t => t.Ideas.Any(i => i.Id == entity.Id)
+        );
+
+        var existingIdea = topic!.Ideas.FirstOrDefault(i => i.Id == entity.Id);
+
+        existingIdea = entity;
         this.appDbContext.SaveChanges();
+
         return entity;
     }
 
     /// <inheritdoc/>
     public Idea Delete(Idea entity)
     {
-        this.appDbContext.ideas.Remove(entity);
-
+        var topic = this.appDbContext.topics.FirstOrDefault(
+            t => t.Ideas.Any(i => i.Id == entity.Id)
+        );
+        topic!.Ideas.Remove(entity);
         this.appDbContext.SaveChanges();
 
         return entity;
@@ -53,7 +65,8 @@ public class IdeaRepository(MongoDbContext appDbContext) : IRepository<Idea>
     /// <inheritdoc/>
     public Idea? GetByCriteria(Func<Idea, bool> criteria)
     {
-        Idea? idea = this.appDbContext.ideas.FirstOrDefault(criteria);
+        var ideasList = this.GetAll();
+        Idea? idea = ideasList.FirstOrDefault(criteria);
         return idea;
     }
 }

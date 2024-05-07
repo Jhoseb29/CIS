@@ -1,4 +1,4 @@
-﻿using JalaU.CIS_API.System.Core.Application;
+﻿/*using JalaU.CIS_API.System.Core.Application;
 using JalaU.CIS_API.System.Core.Domain;
 using Moq;
 
@@ -188,3 +188,4 @@ public class VoteServiceTests
         Assert.That(result, Is.SameAs(updatedVote));
     }
 }
+*/

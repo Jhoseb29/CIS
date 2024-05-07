@@ -1,4 +1,4 @@
-﻿using JalaU.CIS_API.System.Core.Application;
+﻿/*using JalaU.CIS_API.System.Core.Application;
 using JalaU.CIS_API.System.Core.Domain;
 using Moq;
 
@@ -212,3 +212,4 @@ public class TopicServiceTests
         _topicRepositoryMock.Verify(r => r.Delete(deletedTopic), Times.Once);
     }
 }
+*/

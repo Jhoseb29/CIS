@@ -20,31 +20,52 @@ public class VoteRepository(MongoDbContext appDbContext) : IRepository<Vote>
     /// <inheritdoc/>
     public IEnumerable<Vote> GetAll()
     {
-        List<Vote> votesList = [.. this.appDbContext.votes];
-        return votesList;
+        var votes = this.appDbContext.topics.SelectMany(topic => topic.Ideas)
+            .SelectMany(idea => idea.Votes)
+            .ToList();
+        return votes;
     }
 
     /// <inheritdoc/>
     public Vote Save(Vote entity)
     {
-        this.appDbContext.Add(entity);
+        var topic = this.appDbContext.topics.FirstOrDefault(
+            t => t.Ideas.Any(idea => idea.Id == entity.IdeaId)
+        );
+
+        var idea = topic!.Ideas.FirstOrDefault(idea => idea.Id == entity.IdeaId);
+
+        idea!.Votes.Add(entity);
         this.appDbContext.SaveChanges();
+
         return entity;
     }
 
     /// <inheritdoc/>
     public Vote Update(Vote entity)
     {
-        this.appDbContext.Update(entity);
+        var topic = this.appDbContext.topics.FirstOrDefault(
+            t => t.Ideas.Any(idea => idea.Id == entity.IdeaId)
+        );
+
+        var idea = topic!.Ideas.FirstOrDefault(idea => idea.Id == entity.IdeaId);
+        var vote = idea!.Votes.FirstOrDefault(vote => vote.Id == entity.Id);
+
+        vote = entity;
         this.appDbContext.SaveChanges();
+
         return entity;
     }
 
     /// <inheritdoc/>
     public Vote Delete(Vote entity)
     {
-        this.appDbContext.votes.Remove(entity);
+        var topic = this.appDbContext.topics.FirstOrDefault(
+            t => t.Ideas.Any(idea => idea.Id == entity.IdeaId)
+        );
 
+        var idea = topic!.Ideas.FirstOrDefault(idea => idea.Id == entity.IdeaId);
+        idea!.Votes.Remove(entity);
         this.appDbContext.SaveChanges();
 
         return entity;
@@ -53,7 +74,8 @@ public class VoteRepository(MongoDbContext appDbContext) : IRepository<Vote>
     /// <inheritdoc/>
     public Vote? GetByCriteria(Func<Vote, bool> criteria)
     {
-        Vote? vote = this.appDbContext.votes.FirstOrDefault(criteria);
+        var votes = this.GetAll();
+        Vote? vote = votes.FirstOrDefault(criteria);
         return vote;
     }
 }

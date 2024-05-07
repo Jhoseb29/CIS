@@ -7,6 +7,7 @@ namespace JalaU.CIS_API.System.Data.MongoDBPersistance;
 
 using JalaU.CIS_API.System.Core.Domain;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson;
 
 /// <summary>
 /// Initializes a new instance of the <see cref="TopicRepository"/> class.
@@ -19,8 +20,11 @@ public class TopicRepository(MongoDbContext appDbContext) : IRepository<Topic>
     /// <inheritdoc/>
     public IEnumerable<Topic> GetAll()
     {
-        List<Topic> topicList = [.. this.appDbContext.topics];
-        return topicList;
+        var topicsWithIdeasAndVotes = this.appDbContext.topics.Include(topic => topic.Ideas)
+            .ThenInclude(idea => idea.Votes)
+            .ToList();
+
+        return topicsWithIdeasAndVotes!;
     }
 
     /// <inheritdoc/>

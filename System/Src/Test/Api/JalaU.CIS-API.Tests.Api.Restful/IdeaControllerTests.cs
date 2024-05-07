@@ -26,16 +26,17 @@ public class IdeaControllerTests
         {
             Title = "Test Idea",
             Description = "This is a test idea",
-            TopicId = Guid.NewGuid()
+            TopicId = Guid.NewGuid(),
         };
         var savedIdea = new Idea
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.NewGuid().ToString(),
             Title = ideaRequestDTO.Title,
             Description = ideaRequestDTO.Description,
             Date = DateTime.Now,
-            UserId = Guid.NewGuid(),
-            TopicId = ideaRequestDTO.TopicId
+            UserId = Guid.NewGuid().ToString(),
+            TopicId = ideaRequestDTO.TopicId.ToString(),
+            Votes = []
         };
         _serviceMock.Setup(s => s.Save(ideaRequestDTO)).Returns(savedIdea);
 
@@ -56,12 +57,13 @@ public class IdeaControllerTests
         var ideaId = Guid.NewGuid();
         var idea = new Idea
         {
-            Id = ideaId,
+            Id = ideaId.ToString(),
             Title = "Test Idea",
             Description = "This is a test idea",
             Date = DateTime.Now,
-            UserId = Guid.NewGuid(),
-            TopicId = Guid.NewGuid()
+            UserId = Guid.NewGuid().ToString(),
+            TopicId = Guid.NewGuid().ToString(),
+            Votes = []
         };
         _serviceMock.Setup(s => s.GetByCriteria("id", ideaId.ToString())).Returns(idea);
 
@@ -78,12 +80,13 @@ public class IdeaControllerTests
         var ideaId = Guid.NewGuid();
         var deletedIdea = new Idea
         {
-            Id = ideaId,
+            Id = ideaId.ToString(),
             Title = "Test Idea",
             Description = "This is a test idea",
             Date = DateTime.Now,
-            UserId = Guid.NewGuid(),
-            TopicId = Guid.NewGuid()
+            UserId = Guid.NewGuid().ToString(),
+            TopicId = Guid.NewGuid().ToString(),
+            Votes = []
         };
         _serviceMock.Setup(s => s.DeleteById(ideaId.ToString())).Returns(deletedIdea);
 
@@ -101,21 +104,23 @@ public class IdeaControllerTests
         {
             new()
             {
-                Id = Guid.NewGuid(),
-                Title = "Test Idea 1",
-                Description = "This is the first test idea",
+                Id = Guid.NewGuid().ToString(),
+                Title = "Test Idea",
+                Description = "This is a test idea",
                 Date = DateTime.Now,
-                UserId = Guid.NewGuid(),
-                TopicId = Guid.NewGuid()
+                UserId = Guid.NewGuid().ToString(),
+                TopicId = Guid.NewGuid().ToString(),
+                Votes = []
             },
             new()
             {
-                Id = Guid.NewGuid(),
-                Title = "Test Idea 2",
-                Description = "This is the second test idea",
+                Id = Guid.NewGuid().ToString(),
+                Title = "Test Idea2",
+                Description = "This is a test idea2",
                 Date = DateTime.Now,
-                UserId = Guid.NewGuid(),
-                TopicId = Guid.NewGuid()
+                UserId = Guid.NewGuid().ToString(),
+                TopicId = Guid.NewGuid().ToString(),
+                Votes = []
             }
         };
         var getAllEntitiesDTO = new GetAllEntitiesRequestDTO
@@ -160,12 +165,13 @@ public class IdeaControllerTests
         };
         var updatedIdea = new Idea
         {
-            Id = ideaId,
+            Id = ideaId.ToString(),
             Title = updateIdeaRequestDTO.Title,
             Description = updateIdeaRequestDTO.Description,
             Date = DateTime.Now,
-            UserId = Guid.NewGuid(),
-            TopicId = Guid.NewGuid(),
+            UserId = Guid.NewGuid().ToString(),
+            TopicId = Guid.NewGuid().ToString(),
+            Votes = []
         };
         _serviceMock
             .Setup(s => s.Update(updateIdeaRequestDTO, ideaId.ToString()))

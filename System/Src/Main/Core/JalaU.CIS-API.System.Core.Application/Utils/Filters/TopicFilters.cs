@@ -92,7 +92,10 @@ public class TopicFilters : EntityFilter<Topic>
     private List<Topic> FilterByLabels(string keyword)
     {
         List<Topic> filteredTopics = this.Entities.Where(
-            topic => topic.Labels.Any(label => label.ToLower().Contains(keyword.ToLower()))
+            topic =>
+                topic.Labels.Any(
+                    label => label.Contains(keyword, StringComparison.CurrentCultureIgnoreCase)
+                )
         )
             .ToList();
         return filteredTopics;

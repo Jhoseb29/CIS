@@ -19,7 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("MongoDBAtlasDatabaseConnection");
 
 builder.Services.AddDbContext<MongoDbContext>(
-    options => options.UseMongoDB(connectionString!, "CIS_API")
+    options => options.UseMongoDB(connectionString!, "cis")
 );
 
 builder

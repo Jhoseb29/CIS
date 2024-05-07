@@ -50,4 +50,10 @@ public class Idea
     /// </summary>
     [BsonElement("userId")]
     public required string UserId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the Ideas associated with the topic.
+    /// </summary>
+    [BsonElement("votes")]
+    public required List<Vote> Votes { get; set; }
 }
