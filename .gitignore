@@ -1,0 +1,29 @@
+# Ignorar archivos compilados de C#
+*.dll
+*.exe
+*.pdb
+
+# Ignorar archivos de salida de Visual Studio
+bin/
+obj/
+
+# Ignorar archivos de configuración
+*.user
+*.vsconfig
+
+# Ignorar archivos de caché y de dependencias
+*.cache
+packages/
+
+# Ignorar archivos generados automáticamente
+*.log
+*.vs
+.vscode/
+.idea
+*.tmp
+
+# Ignore files within the TestResults directory
+**/TestResults/*
+
+# Ignore coverage.json files
+**/coverage.json

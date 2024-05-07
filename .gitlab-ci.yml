@@ -12,20 +12,16 @@ build_and_StyleCope:
   script:
     - find . -name '*.csproj' ! -name '*Tests*' -exec dotnet build {} \;
 
-test:
+test_and_Coverage:
   stage: test
   script:
-    - find . -name '*Tests*.csproj' -exec dotnet test {} \;
-
-coverage:
-  stage: test
-  script:
-    - find . -name '*Tests*.csproj' -exec bash -c 'dotnet test "$1" && coverlet "$(dirname "$1")/bin/Debug/netcoreapp3.1/$(basename "$1" .csproj).dll" --target "dotnet" --targetargs "test $1 --no-build" --format opencover' _ {} \;
+    - find . -name '*Tests*.csproj' -exec dotnet test {} 
+      --collect:"XPlat Code Coverage"
+      --results-directory cobertura \;
+    - cd cobertura
+    - ls -l
   artifacts:
     paths:
-      - '**/*.coverage'
-  dependencies:
-    - test
-
+       - cobertura/**/*.cobertura.xml
 
 
