@@ -17,7 +17,7 @@ public class WrongDataException(string message, List<MessageLogDTO> messageLogDT
         IAbstractApiException
 {
     /// <inheritdoc/>
-    public HttpStatusCode StatusCode() => HttpStatusCode.NotFound;
+    public HttpStatusCode StatusCode() => HttpStatusCode.BadRequest;
 
     /// <summary>
     /// Gets or sets the list of message log DTOs associated with the exception.

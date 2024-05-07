@@ -52,6 +52,9 @@ CREATE TABLE votes
     UNIQUE INDEX unique_user_idea_vote (userId, ideaId) 
 );
 
+
+# TEMP TABLES
+
 CREATE TEMPORARY TABLE global_first_names (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100)
@@ -86,6 +89,11 @@ CREATE TEMPORARY TABLE temp_idea_descriptions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     description VARCHAR(500) NOT NULL
 );
+
+
+# TRIGGERS
+
+
 -- TRIGGER PARA BORRAR TOPICOS BORRANDO PRIMERO VOTOS E IDEAS RELACIONADAS AUTOMATICAMENTE
 DELIMITER $$
 CREATE TRIGGER before_topic_delete
@@ -111,6 +119,24 @@ BEGIN
     DELETE FROM votes WHERE ideaId = OLD.id;
 END$$
 DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# PROCEDURES
+
+
 
 DELIMITER //
 CREATE PROCEDURE InsertMultipleTopics(IN num_topics INT)
