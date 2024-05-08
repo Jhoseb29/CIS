@@ -44,37 +44,6 @@ public class IdeaController(IService<Idea> service) : ControllerBase
     }
 
     /// <summary>
-    /// Retrieves an idea by its ID using HTTP GET method.
-    /// </summary>
-    /// <param name="ideaId">The ID of the idea to retrieve.</param>
-    /// <returns>
-    /// An HTTP 200 OK response with the retrieved idea in the body if found.
-    /// An HTTP 404 Not Found response if the idea is not found.
-    /// </returns>
-    [HttpGet("{ideaId}")]
-    public ActionResult GetIdeaByCriteria(string ideaId)
-    {
-        var idea = this.service.GetByCriteria("id", ideaId);
-
-        return this.Ok(idea);
-    }
-
-    /// <summary>
-    /// Deletes an idea by its ID using HTTP DELETE method.
-    /// </summary>
-    /// <param name="ideaId">The ID of the idea to be deleted.</param>
-    /// <returns>
-    /// An HTTP 200 OK response with the updated idea in the body.
-    /// An HTTP 400 Bad Request response with all error details.
-    /// </returns>
-    [HttpDelete("{ideaId}")]
-    public ActionResult DeleteIdea(string ideaId)
-    {
-        var idea = this.service.DeleteById(ideaId);
-        return this.Ok(idea);
-    }
-
-    /// <summary>
     /// Retrieves a paginated list of Ideas.
     /// </summary>
     /// <param name="pageSize">Optional. The number of Idea to include in a page.</param>
@@ -116,6 +85,22 @@ public class IdeaController(IService<Idea> service) : ControllerBase
     }
 
     /// <summary>
+    /// Retrieves an idea by its ID using HTTP GET method.
+    /// </summary>
+    /// <param name="ideaId">The ID of the idea to retrieve.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the retrieved idea in the body if found.
+    /// An HTTP 404 Not Found response if the idea is not found.
+    /// </returns>
+    [HttpGet("{ideaId}")]
+    public ActionResult GetIdeaByCriteria(string ideaId)
+    {
+        var idea = this.service.GetByCriteria("id", ideaId);
+
+        return this.Ok(idea);
+    }
+
+    /// <summary>
     /// Updates a idea by its ID using HTTP PUT method.
     /// </summary>
     /// <param name="updateIdeaRequestDTO">The DTO (Data Transfer Object) containing updated idea information.</param>
@@ -131,6 +116,21 @@ public class IdeaController(IService<Idea> service) : ControllerBase
     )
     {
         var idea = this.service.Update(updateIdeaRequestDTO, ideaId);
+        return this.Ok(idea);
+    }
+
+    /// <summary>
+    /// Deletes an idea by its ID using HTTP DELETE method.
+    /// </summary>
+    /// <param name="ideaId">The ID of the idea to be deleted.</param>
+    /// <returns>
+    /// An HTTP 200 OK response with the updated idea in the body.
+    /// An HTTP 400 Bad Request response with all error details.
+    /// </returns>
+    [HttpDelete("{ideaId}")]
+    public ActionResult DeleteIdea(string ideaId)
+    {
+        var idea = this.service.DeleteById(ideaId);
         return this.Ok(idea);
     }
 }
