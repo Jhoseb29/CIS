@@ -92,7 +92,23 @@ CREATE TEMPORARY TABLE temp_idea_descriptions (
 
 
 # TRIGGERS
+-- TRIGGER PARA BORRAR TOPICOS BORRANDO PRIMERO VOTOS E IDEAS RELACIONADAS AUTOMATICAMENTE
+DELIMITER $$
+CREATE TRIGGER before_user_delete
+BEFORE DELETE ON users
+FOR EACH ROW
+BEGIN
+    -- Borra los votos relacionados con las ideas que se están eliminando
+    DELETE FROM topics WHERE topicId IN (SELECT id FROM ideas WHERE topicId = OLD.id);
+    DELETE FROM ideas WHERE ideaId IN (SELECT id FROM ideas WHERE topicId = OLD.id);
+    DELETE FROM votes WHERE ideaId IN (SELECT id FROM ideas WHERE topicId = OLD.id);
 
+    -- Borra las ideas relacionadas con el tema que se está eliminando
+    DELETE FROM ideas WHERE topicId = OLD.id;
+
+    DELETE FROM votes WHERE ideaId IN (SELECT id FROM ideas WHERE topicId = OLD.id);
+END$$
+DELIMITER ;
 
 -- TRIGGER PARA BORRAR TOPICOS BORRANDO PRIMERO VOTOS E IDEAS RELACIONADAS AUTOMATICAMENTE
 DELIMITER $$
