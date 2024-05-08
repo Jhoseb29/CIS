@@ -24,10 +24,10 @@ public class VoteControllerTests
         var voteRequestDTO = new VoteRequestDTO { Positive = true, IdeaId = Guid.NewGuid(), };
         var savedVote = new Vote
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.NewGuid().ToString(),
             Positive = voteRequestDTO.Positive,
-            UserId = Guid.NewGuid(),
-            IdeaId = voteRequestDTO.IdeaId
+            UserId = Guid.NewGuid().ToString(),
+            IdeaId = voteRequestDTO.IdeaId.ToString()
         };
         _serviceMock.Setup(s => s.Save(voteRequestDTO)).Returns(savedVote);
 
@@ -48,10 +48,10 @@ public class VoteControllerTests
         var voteId = Guid.NewGuid();
         var vote = new Vote
         {
-            Id = voteId,
+            Id = voteId.ToString(),
             Positive = true,
-            UserId = Guid.NewGuid(),
-            IdeaId = Guid.NewGuid(),
+            UserId = Guid.NewGuid().ToString(),
+            IdeaId = Guid.NewGuid().ToString(),
         };
         _serviceMock.Setup(s => s.GetByCriteria("id", voteId.ToString())).Returns(vote);
 
@@ -68,10 +68,10 @@ public class VoteControllerTests
         var voteId = Guid.NewGuid();
         var deletedVote = new Vote
         {
-            Id = voteId,
+            Id = voteId.ToString(),
             Positive = false,
-            UserId = Guid.NewGuid(),
-            IdeaId = Guid.NewGuid(),
+            UserId = Guid.NewGuid().ToString(),
+            IdeaId = Guid.NewGuid().ToString(),
         };
         _serviceMock.Setup(s => s.DeleteById(voteId.ToString())).Returns(deletedVote);
 
@@ -89,17 +89,17 @@ public class VoteControllerTests
         {
             new()
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString(),
                 Positive = false,
-                UserId = Guid.NewGuid(),
-                IdeaId = Guid.NewGuid()
+                UserId = Guid.NewGuid().ToString(),
+                IdeaId = Guid.NewGuid().ToString()
             },
             new()
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString(),
                 Positive = true,
-                UserId = Guid.NewGuid(),
-                IdeaId = Guid.NewGuid()
+                UserId = Guid.NewGuid().ToString(),
+                IdeaId = Guid.NewGuid().ToString()
             }
         };
         var getAllEntitiesDTO = new GetAllEntitiesRequestDTO
@@ -140,10 +140,10 @@ public class VoteControllerTests
         var updateVoteRequestDTO = new UpdateVoteRequestDTO { Positive = true, };
         var updatedVote = new Vote
         {
-            Id = voteId,
+            Id = voteId.ToString(),
             Positive = true,
-            UserId = Guid.NewGuid(),
-            IdeaId = Guid.NewGuid(),
+            UserId = Guid.NewGuid().ToString(),
+            IdeaId = Guid.NewGuid().ToString(),
         };
         _serviceMock
             .Setup(s => s.Update(updateVoteRequestDTO, voteId.ToString()))

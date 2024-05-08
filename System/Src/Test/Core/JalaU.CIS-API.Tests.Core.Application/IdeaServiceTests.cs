@@ -34,12 +34,12 @@ public class IdeaServiceTests
         var ideaId = Guid.NewGuid().ToString();
         var deletedIdea = new Idea()
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.NewGuid().ToString(),
             Title = "Test topic",
             Description = "Test Topic",
             Date = DateTime.Now,
-            TopicId = Guid.NewGuid(),
-            UserId = Guid.NewGuid(),
+            TopicId = Guid.NewGuid().ToString(),
+            UserId = Guid.NewGuid().ToString(),
         };
         _voteRepositoryMock
             .Setup(repository => repository.GetByCriteria(It.IsAny<Func<Idea, bool>>()))
@@ -57,30 +57,30 @@ public class IdeaServiceTests
         {
             new()
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString(),
                 Title = "3 Test topic",
                 Description = "Test Topic",
                 Date = DateTime.Now,
-                TopicId = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                TopicId = Guid.NewGuid().ToString(),
+                UserId = Guid.NewGuid().ToString(),
             },
             new()
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString(),
                 Title = "2 Test topic",
                 Description = "Test Topic",
                 Date = DateTime.Now,
-                TopicId = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                TopicId = Guid.NewGuid().ToString(),
+                UserId = Guid.NewGuid().ToString(),
             },
             new()
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString(),
                 Title = "1 Test topic",
                 Description = "Test Topic",
                 Date = DateTime.Now,
-                TopicId = Guid.NewGuid(),
-                UserId = Guid.NewGuid(),
+                TopicId = Guid.NewGuid().ToString(),
+                UserId = Guid.NewGuid().ToString(),
             }
         };
         var getAllEntitiesDTO = new GetAllEntitiesRequestDTO
@@ -108,12 +108,12 @@ public class IdeaServiceTests
         var ideaId = Guid.NewGuid().ToString();
         var idea = new Idea()
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.NewGuid().ToString(),
             Title = "1 Test topic",
             Description = "Test Topic",
             Date = DateTime.Now,
-            TopicId = Guid.NewGuid(),
-            UserId = Guid.NewGuid(),
+            TopicId = Guid.NewGuid().ToString(),
+            UserId = Guid.NewGuid().ToString(),
         };
         _voteRepositoryMock.Setup(r => r.GetByCriteria(It.IsAny<Func<Idea, bool>>())).Returns(idea);
 
@@ -142,12 +142,12 @@ public class IdeaServiceTests
         };
         var newIdea = new Idea
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.NewGuid().ToString(),
             Title = "1 Test topic",
             Description = "Test Topic",
             Date = DateTime.Now,
-            TopicId = Guid.NewGuid(),
-            UserId = Guid.NewGuid(),
+            TopicId = Guid.NewGuid().ToString(),
+            UserId = Guid.NewGuid().ToString(),
         };
         _validatorMock.Setup(idea => idea.ValidateEntityToSave(ideaRequestDTO)).Returns(newIdea);
         _topicServiceMock
@@ -155,12 +155,12 @@ public class IdeaServiceTests
             .Returns(
                 new Topic()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString(),
                     Title = "Test Idea",
                     Description = "This is a test idea",
                     Labels = ["ddd", "sss"],
                     Date = DateTime.Now,
-                    UserId = Guid.NewGuid(),
+                    UserId = Guid.NewGuid().ToString(),
                 }
             );
         _voteRepositoryMock.Setup(r => r.Save(newIdea)).Returns(newIdea);
@@ -176,12 +176,12 @@ public class IdeaServiceTests
         var voteId = Guid.NewGuid().ToString();
         var existingIdea = new Idea
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.NewGuid().ToString(),
             Title = "1 Test topic",
             Description = "Test Topic",
             Date = DateTime.Now,
-            TopicId = Guid.NewGuid(),
-            UserId = Guid.NewGuid(),
+            TopicId = Guid.NewGuid().ToString(),
+            UserId = Guid.NewGuid().ToString(),
         };
         var updateRequestDTO = new UpdateIdeaRequestDTO
         {
