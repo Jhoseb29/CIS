@@ -98,12 +98,17 @@ CREATE TRIGGER before_user_delete
 BEFORE DELETE ON users
 FOR EACH ROW
 BEGIN
-    -- Borra los votos relacionados con las ideas que se están eliminando
-    DELETE FROM topics WHERE userId IN (SELECT id FROM topics WHERE userId = OLD.id);
-    DELETE FROM ideas WHERE userId IN (SELECT id FROM ideas WHERE userId = OLD.id);
-    DELETE FROM votes WHERE userId IN (SELECT id FROM votes WHERE userId = OLD.id);
+    DELETE FROM votes WHERE userId = OLD.id;
+
+    -- Eliminar ideas
+    DELETE FROM ideas WHERE userId = OLD.id;
+
+    -- Eliminar temas
+    DELETE FROM topics WHERE userId = OLD.id;
+
 END$$
 DELIMITER ;
+
 
 -- TRIGGER PARA BORRAR TOPICOS BORRANDO PRIMERO VOTOS E IDEAS RELACIONADAS AUTOMATICAMENTE
 DELIMITER $$
@@ -146,8 +151,6 @@ DELIMITER ;
 
 
 # PROCEDURES
-
-
 
 DELIMITER //
 CREATE PROCEDURE InsertMultipleTopics(IN num_topics INT)
