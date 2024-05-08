@@ -99,14 +99,9 @@ BEFORE DELETE ON users
 FOR EACH ROW
 BEGIN
     -- Borra los votos relacionados con las ideas que se están eliminando
-    DELETE FROM topics WHERE topicId IN (SELECT id FROM ideas WHERE topicId = OLD.id);
-    DELETE FROM ideas WHERE ideaId IN (SELECT id FROM ideas WHERE topicId = OLD.id);
-    DELETE FROM votes WHERE ideaId IN (SELECT id FROM ideas WHERE topicId = OLD.id);
-
-    -- Borra las ideas relacionadas con el tema que se está eliminando
-    DELETE FROM ideas WHERE topicId = OLD.id;
-
-    DELETE FROM votes WHERE ideaId IN (SELECT id FROM ideas WHERE topicId = OLD.id);
+    DELETE FROM topics WHERE userId IN (SELECT id FROM topics WHERE userId = OLD.id);
+    DELETE FROM ideas WHERE userId IN (SELECT id FROM ideas WHERE userId = OLD.id);
+    DELETE FROM votes WHERE userId IN (SELECT id FROM votes WHERE userId = OLD.id);
 END$$
 DELIMITER ;
 
