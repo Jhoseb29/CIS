@@ -42,6 +42,15 @@ public class TopicRepository(MongoDbContext appDbContext) : IRepository<Topic>
     /// <inheritdoc/>
     public Topic Delete(Topic entity)
     {
+        var ideas = this.appDbContext.ideas.Where(idea => idea.TopicId == entity.Id);
+        foreach (var idea in ideas)
+        {
+            this.appDbContext.votes.RemoveRange(
+                this.appDbContext.votes.Where(vote => vote.IdeaId == idea.Id)
+            );
+        }
+        this.appDbContext.ideas.RemoveRange(ideas);
+
         this.appDbContext.topics.Remove(entity);
 
         this.appDbContext.SaveChanges();
