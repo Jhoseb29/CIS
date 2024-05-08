@@ -62,8 +62,8 @@ public class VoteController(IService<Vote> service) : ControllerBase
         [FromQuery] int pageNumber = 1,
         [FromQuery] string orderBy = "id",
         [FromQuery] string order = "desc",
-        [FromQuery] string filter = "positive",
-        [FromQuery] string keyword = "true"
+        [FromQuery] string filter = "",
+        [FromQuery] string keyword = ""
     )
     {
         var getAllEntitiesDTO = new GetAllEntitiesRequestDTO

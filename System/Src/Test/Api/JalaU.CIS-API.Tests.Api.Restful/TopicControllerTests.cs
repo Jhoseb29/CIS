@@ -29,11 +29,11 @@ public class TopicControllerTests
         };
         var savedTopic = new Topic
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.NewGuid().ToString(),
             Title = topicRequestDTO.Title,
             Description = topicRequestDTO.Description,
             Date = DateTime.Now,
-            UserId = Guid.NewGuid(),
+            UserId = Guid.NewGuid().ToString(),
             Labels = ["save", "topic"],
         };
         _serviceMock.Setup(s => s.Save(topicRequestDTO)).Returns(savedTopic);
@@ -55,11 +55,11 @@ public class TopicControllerTests
         var topicId = Guid.NewGuid();
         var topic = new Topic
         {
-            Id = topicId,
+            Id = topicId.ToString(),
             Title = "Test Idea",
             Description = "This is a test idea",
             Date = DateTime.Now,
-            UserId = Guid.NewGuid(),
+            UserId = Guid.NewGuid().ToString(),
             Labels = ["get", "topic"],
         };
         _serviceMock.Setup(s => s.GetByCriteria("id", topicId.ToString())).Returns(topic);
@@ -77,11 +77,11 @@ public class TopicControllerTests
         var topicId = Guid.NewGuid();
         var deletedTopic = new Topic
         {
-            Id = topicId,
+            Id = topicId.ToString(),
             Title = "Test Idea",
             Description = "This is a test idea",
             Date = DateTime.Now,
-            UserId = Guid.NewGuid(),
+            UserId = Guid.NewGuid().ToString(),
             Labels = ["delete", "topic"],
         };
         _serviceMock.Setup(s => s.DeleteById(topicId.ToString())).Returns(deletedTopic);
@@ -100,20 +100,20 @@ public class TopicControllerTests
         {
             new()
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString(),
                 Title = "Test Topic 1",
                 Description = "This is the first test Topic",
                 Date = DateTime.Now,
-                UserId = Guid.NewGuid(),
+                UserId = Guid.NewGuid().ToString(),
                 Labels = ["get", "topics"],
             },
             new()
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString(),
                 Title = "Test Topic 2",
                 Description = "This is the second test Topic",
                 Date = DateTime.Now,
-                UserId = Guid.NewGuid(),
+                UserId = Guid.NewGuid().ToString(),
                 Labels = ["get", "topics"],
             }
         };
@@ -160,11 +160,11 @@ public class TopicControllerTests
         };
         var updatedTopic = new Topic
         {
-            Id = topicId,
+            Id = topicId.ToString(),
             Title = fieldOfTopicToUpdate.Title,
             Description = fieldOfTopicToUpdate.Description,
             Date = DateTime.Now,
-            UserId = Guid.NewGuid(),
+            UserId = Guid.NewGuid().ToString(),
             Labels = ["update", "topic"]
         };
         _serviceMock
